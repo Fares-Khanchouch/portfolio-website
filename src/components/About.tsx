@@ -83,7 +83,7 @@ const About = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 grid-flow-row-dense">
           {/* Main Paragraph */}
           <div className="bg-black/60 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition lg:col-span-2 lg:row-span-2 flex flex-col justify-center min-h-[10rem]">
-            <h3 className="text-xl lg:text-2xl font-semibold mb-3">Hi, I'm Fares Khanchouch</h3>
+                          <h3 className="text-xl lg:text-2xl font-semibold mb-3">Hi, I&apos;m Fares Khanchouch</h3>
             <p className="leading-relaxed opacity-90 text-base">
               I love turning tricky problems into smooth, reliable systems. Whether I&apos;m writing infrastructure-as-code to spin up cloud environments, setting up seamless CI/CD pipelines, or baking security checks right into the build process, I aim to bring clarity and confidence to every project. I&apos;m passionate about crafting clean, maintainable architectures and delivering solutions that not only work today but keep running strong as you grow.
             </p>

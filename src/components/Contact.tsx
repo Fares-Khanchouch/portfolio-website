@@ -28,7 +28,7 @@ export default function Contact() {
     >
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Let's Get in Touch
+          Let&apos;s Get in Touch
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mb-12">
           Have a question or want to work together? Fill out the form below or send me an email.

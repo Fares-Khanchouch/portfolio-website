@@ -36,7 +36,7 @@ export default function Hero() {
             {/* Headline */}
             <h1 className="text-4xl font-bold leading-snug text-[#f8fafc] sm:text-5xl">
               <span className="block">
-                Hi, I'm Fares —{" "}
+                Hi, I&apos;m Fares —{" "}
                 <span className="font-extrabold text-[#3b82f6]">
                   Cloud & DevOps Engineer
                 </span>

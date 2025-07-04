@@ -1,6 +1,6 @@
 # 🚀 Fares Khanchouch - Portfolio Website
 
-A modern, responsive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features smooth animations, interactive components, and a dynamic background system.
+A modern, responsive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features smooth animations, interactive components, dynamic background system, and comprehensive SEO optimization.
 
 ![Portfolio Preview](https://img.shields.io/badge/Next.js-15.3.4-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
@@ -9,14 +9,16 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 
 ## ✨ Features
 
-- **🎨 Modern Design**: Clean, professional design with smooth animations
+- **🎨 Modern Design**: Clean, professional design with smooth animations and hover effects
 - **📱 Fully Responsive**: Optimized for all devices and screen sizes
 - **🎭 Interactive Elements**: Hover effects, drag-and-drop technology cards, animated backgrounds
-- **⚡ Performance Optimized**: Built with Next.js 15 for optimal performance
-- **🎯 SEO Ready**: Proper meta tags and structured data
+- **⚡ Performance Optimized**: Built with Next.js 15 for optimal performance and Core Web Vitals
+- **🔍 SEO Optimized**: Comprehensive meta tags, structured data, sitemap, and robots.txt
 - **🌙 Dark Theme**: Beautiful dark theme with dynamic background transitions
-- **📄 Contact Form**: Functional contact form with email integration
-- **🔗 Social Links**: Direct links to LinkedIn and GitHub profiles
+- **📄 Contact Form**: Functional contact form with FormSubmit integration
+- **🔗 Social Links**: Direct links to GitHub and other professional profiles
+- **📱 PWA Ready**: Web app manifest for installable experience
+- **🎯 Accessibility**: Semantic HTML and proper ARIA labels
 
 ## 🛠️ Tech Stack
 
@@ -30,6 +32,13 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 - **Framer Motion 12.23.0** - Smooth animations and transitions
 - **Lucide React 0.523.0** - Beautiful icon library
 - **React Icons 5.5.0** - Comprehensive icon collection
+
+### SEO & Performance
+- **Structured Data (JSON-LD)** - Rich snippets for search engines
+- **Open Graph Tags** - Social media sharing optimization
+- **Twitter Cards** - Twitter sharing optimization
+- **Sitemap.xml** - Search engine discovery
+- **Robots.txt** - Crawler guidance
 
 ### Utilities
 - **clsx 2.1.1** - Conditional className utility
@@ -55,7 +64,7 @@ Before running this project, make sure you have the following installed:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/portfolio-website.git
+git clone https://github.com/Fares-Khanchouch/portfolio-website.git
 
 # Navigate to the project directory
 cd portfolio-website
@@ -109,18 +118,18 @@ portfolio-website/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── globals.css         # Global styles
-│   │   ├── layout.tsx          # Root layout
+│   │   ├── layout.tsx          # Root layout with SEO metadata
 │   │   ├── page.tsx            # Home page
 │   │   └── favicon.ico         # Site favicon
 │   ├── components/             # React components
-│   │   ├── About.tsx           # About section
-│   │   ├── BackgroundLayout.tsx # Background system
-│   │   ├── Contact.tsx         # Contact form
+│   │   ├── About.tsx           # About section with tech stack
+│   │   ├── BackgroundLayout.tsx # Dynamic background system
+│   │   ├── Contact.tsx         # Contact form with FormSubmit
 │   │   ├── Footer.tsx          # Footer component
 │   │   ├── Hero.tsx            # Hero section
 │   │   ├── Navbar.tsx          # Navigation bar
-│   │   ├── Projects.tsx        # Projects showcase
-│   │   └── WorkHistory.tsx     # Work experience
+│   │   ├── Projects.tsx        # Projects showcase with modal
+│   │   └── WorkHistory.tsx     # Work experience timeline
 │   ├── lib/                    # Utility functions
 │   │   ├── hooks/
 │   │   │   └── useSectionInView.ts # Intersection observer hook
@@ -128,11 +137,14 @@ portfolio-website/
 │   └── types/                  # TypeScript types
 │       └── work.ts             # Work experience types
 ├── public/                     # Static assets
-│   ├── icon/                   # Technology icons
+│   ├── icon/                   # Technology icons (SVG)
 │   ├── projects/               # Project images
 │   ├── avatar.png              # Profile picture
 │   ├── globe.png               # Globe image
-│   └── resume.pdf              # Resume file
+│   ├── resume.pdf              # Resume file
+│   ├── robots.txt              # Search engine crawler guidance
+│   ├── sitemap.xml             # Search engine sitemap
+│   └── manifest.json           # PWA manifest
 ├── package.json                # Dependencies and scripts
 ├── tsconfig.json               # TypeScript configuration
 ├── tailwind.config.js          # Tailwind CSS configuration
@@ -153,26 +165,27 @@ Update the following files with your information:
 2. **About Section** (`src/components/About.tsx`)
    - Personal description
    - Location information
-   - Language skills
-   - Technology stack
+   - Technology stack and icons
 
 3. **Work History** (`src/components/WorkHistory.tsx`)
-   - Work experience data
+   - Work experience data in `src/types/work.ts`
    - Company information
    - Job descriptions
 
 4. **Projects Section** (`src/components/Projects.tsx`)
    - Project details
-   - Project images
+   - Project images in `public/projects/`
    - GitHub links
 
 5. **Contact Section** (`src/components/Contact.tsx`)
-   - Email address
+   - Email address for FormSubmit
    - Contact form configuration
 
-6. **Footer** (`src/components/Footer.tsx`)
+6. **SEO & Metadata** (`src/app/layout.tsx`)
+   - Page title and description
+   - Open Graph tags
+   - Structured data
    - Social media links
-   - Copyright information
 
 ### Styling
 - **Colors**: Update color scheme in `src/app/globals.css`
@@ -183,13 +196,14 @@ Update the following files with your information:
 - **Meta Tags**: Update SEO information in `src/app/layout.tsx`
 - **Images**: Replace images in `public/` directory
 - **Icons**: Add/remove technology icons in `public/icon/`
+- **Sitemap**: Update `public/sitemap.xml` with your domain
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
 1. Push your code to GitHub
 2. Connect your repository to [Vercel](https://vercel.com)
-3. Deploy automatically
+3. Deploy automatically with zero configuration
 
 ### Netlify
 1. Build the project: `npm run build`
@@ -218,6 +232,19 @@ npm run type-check   # TypeScript type checking
 - **`tailwind.config.js`** - Tailwind CSS configuration
 - **`eslint.config.mjs`** - ESLint configuration
 - **`postcss.config.mjs`** - PostCSS configuration
+
+## 🔍 SEO Features
+
+This portfolio includes comprehensive SEO optimization:
+
+- **Meta Tags**: Title, description, keywords, and social media tags
+- **Structured Data**: JSON-LD schema for Person and WebSite
+- **Open Graph**: Facebook and LinkedIn sharing optimization
+- **Twitter Cards**: Twitter sharing optimization
+- **Sitemap**: XML sitemap for search engine discovery
+- **Robots.txt**: Crawler guidance
+- **PWA Manifest**: Installable web app capabilities
+- **Semantic HTML**: Proper heading hierarchy and semantic elements
 
 ## 🐛 Troubleshooting
 
@@ -253,6 +280,12 @@ npm run type-check   # TypeScript type checking
    npm run build
    ```
 
+5. **ESLint errors**
+   ```bash
+   # Fix auto-fixable issues
+   npm run lint -- --fix
+   ```
+
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
@@ -266,7 +299,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 If you have any questions or need help, feel free to:
 - Open an issue on GitHub
 - Contact me at [fares.khanchouch@gmail.com](mailto:fares.khanchouch@gmail.com)
-- Connect on [LinkedIn](https://www.linkedin.com/in/fares-khanchouch/)
+- Connect on [GitHub](https://github.com/Fares-Khanchouch/)
 
 ## 🙏 Acknowledgments
 
@@ -274,6 +307,7 @@ If you have any questions or need help, feel free to:
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Animated with [Framer Motion](https://www.framer.com/motion/)
 - Icons from [Lucide](https://lucide.dev/) and [React Icons](https://react-icons.github.io/react-icons/)
+- Contact form powered by [FormSubmit](https://formsubmit.co/)
 
 ---
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
+import Image from "next/image";
 
 const Projects = () => {
   const { setSection } = useSectionBackground();
@@ -33,9 +34,11 @@ const Projects = () => {
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
-          <img
+          <Image
             src="/projects/1/workflow.png"
             alt="Workflow Overview"
+            width={800}
+            height={176}
             className="w-full object-cover h-44 object-top"
           />
           <div className="p-6 text-left">
@@ -43,7 +46,7 @@ const Projects = () => {
               Save & Tailor
             </h3>
             <p className="mt-2 text-gray-600 dark:text-gray-300">
-              One-click job capture and instant, tailored résumé & cover-letter generation.
+              One-click job capture and instant, tailored résumé &amp; cover-letter generation.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {["Chrome Extension", "n8n Workflows", "Airtable", "Puppeteer"].map((tag) => (
@@ -110,15 +113,15 @@ const Projects = () => {
                   
                   <section>
                     <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Architecture at a Glance</h4>
-                    <img src="/projects/1/workflow.png" className="rounded-md w-full mb-2" />
+                    <Image src="/projects/1/workflow.png" alt="Workflow Architecture" width={800} height={400} className="rounded-md w-full mb-2" />
                     <p className="text-gray-700 dark:text-gray-300">
-                      Data flows from a custom Chrome extension to an n8n "Job Parser" workflow, is stored in Airtable, and then used by an n8n "Document Generator" workflow to create and upload the final PDFs.
+                      Data flows from a custom Chrome extension to an n8n &quot;Job Parser&quot; workflow, is stored in Airtable, and then used by an n8n &quot;Document Generator&quot; workflow to create and upload the final PDFs.
                     </p>
                   </section>
 
                   <section>
                     <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Chrome Extension</h4>
-                    <img src="/projects/1/extension.png" className="rounded-md w-full mb-2 max-h-80 object-contain bg-gray-100 dark:bg-zinc-800 p-2" />
+                    <Image src="/projects/1/extension.png" alt="Chrome Extension Interface" width={800} height={400} className="rounded-md w-full mb-2 max-h-80 object-contain bg-gray-100 dark:bg-zinc-800 p-2" />
                     <p className="text-gray-700 dark:text-gray-300">
                       The custom extension automatically detects and scrapes the full text and URL of LinkedIn job listings as you browse. The popup allows you to see a live count of captured jobs and send them to the n8n webhook for processing.
                     </p>
@@ -131,11 +134,11 @@ const Projects = () => {
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <img src="/projects/1/Resume_sample.png" className="rounded-md w-full mb-2" />
+                            <Image src="/projects/1/Resume_sample.png" alt="Tailored Résumé PDF Sample" width={400} height={500} className="rounded-md w-full mb-2" />
                             <p className="text-center text-sm text-gray-600 dark:text-gray-400">Tailored Résumé PDF</p>
                         </div>
                         <div>
-                            <img src="/projects/1/Cover_letter_sample.png" className="rounded-md w-full mb-2" />
+                            <Image src="/projects/1/Cover_letter_sample.png" alt="Tailored Cover Letter PDF Sample" width={400} height={500} className="rounded-md w-full mb-2" />
                             <p className="text-center text-sm text-gray-600 dark:text-gray-400">Tailored Cover Letter PDF</p>
                         </div>
                     </div>
@@ -148,7 +151,7 @@ const Projects = () => {
                     <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Key Achievements</h4>
                     <ul className="list-disc pl-5 space-y-2 text-gray-700 dark:text-gray-300">
                       <li><b>End-to-End Automation:</b> A fully automated pipeline from data capture to document storage.</li>
-                      <li><b>Robust Scraping:</b> Reliably captures data from LinkedIn's dynamic single-page application structure.</li>
+                      <li><b>Robust Scraping:</b> Reliably captures data from LinkedIn&apos;s dynamic single-page application structure.</li>
                       <li><b>Modular Architecture:</b> Decoupled components (extension, parser, generator) make the system resilient and easy to maintain.</li>
                       <li><b>On-Demand Personalization:</b> Leverages LLMs to transform a generic master résumé into a highly specific document for each job.</li>
                     </ul>
@@ -158,8 +161,8 @@ const Projects = () => {
                     <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Future Roadmap</h4>
                     <ul className="list-disc pl-5 space-y-2 text-gray-700 dark:text-gray-300">
                       <li><b>Multi-Platform Support:</b> Expand the scraper to work on other job boards like Indeed and Glassdoor.</li>
-                      <li><b>Expanded Template Library:</b> Introduce multiple visual templates for résumés and add new document types like "Thank You" notes.</li>
-                      <li><b>Advanced AI Features:</b> Implement a "match score" to analyze job descriptions against the master résumé and suggest keywords.</li>
+                      <li><b>Expanded Template Library:</b> Introduce multiple visual templates for résumés and add new document types like &quot;Thank You&quot; notes.</li>
+                      <li><b>Advanced AI Features:</b> Implement a &quot;match score&quot; to analyze job descriptions against the master résumé and suggest keywords.</li>
                       <li><b>Deeper ATS Functionality:</b> Evolve the Airtable base to track interview stages, contacts, and follow-up dates.</li>
                     </ul>
                   </section>

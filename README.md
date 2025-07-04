@@ -15,7 +15,7 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 - **⚡ Performance Optimized**: Built with Next.js 15 for optimal performance and Core Web Vitals
 - **🔍 SEO Optimized**: Comprehensive meta tags, structured data, sitemap, and robots.txt
 - **🌙 Dark Theme**: Beautiful dark theme with dynamic background transitions
-- **📄 Contact Form**: Functional contact form with FormSubmit integration
+- **📄 Contact Form**: Functional contact form with EmailJS integration
 - **🔗 Social Links**: Direct links to GitHub and other professional profiles
 - **📱 PWA Ready**: Web app manifest for installable experience
 - **🎯 Accessibility**: Semantic HTML and proper ARIA labels
@@ -32,6 +32,9 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 - **Framer Motion 12.23.0** - Smooth animations and transitions
 - **Lucide React 0.523.0** - Beautiful icon library
 - **React Icons 5.5.0** - Comprehensive icon collection
+
+### Contact & Communication
+- **EmailJS 4.1.0** - Reliable email service for contact forms
 
 ### SEO & Performance
 - **Structured Data (JSON-LD)** - Rich snippets for search engines
@@ -178,8 +181,8 @@ Update the following files with your information:
    - GitHub links
 
 5. **Contact Section** (`src/components/Contact.tsx`)
-   - Email address for FormSubmit
-   - Contact form configuration
+   - EmailJS service configuration
+   - Contact form validation and state management
 
 6. **SEO & Metadata** (`src/app/layout.tsx`)
    - Page title and description
@@ -224,6 +227,29 @@ npm run lint         # Run ESLint
 # Additional
 npm run type-check   # TypeScript type checking
 ```
+
+## 📧 Contact Form Setup
+
+This portfolio uses EmailJS for reliable contact form functionality:
+
+### EmailJS Configuration
+- **Service ID**: `service_1jmn1ld` (Gmail service)
+- **Template ID**: `template_ty6k1xs` (Email template)
+- **Public Key**: `A1yyyeM4xJuzcDdAA`
+
+### Features
+- ✅ **Reliable delivery** - No more FormSubmit downtime
+- ✅ **Form validation** - Client-side validation
+- ✅ **Success feedback** - Animated success message
+- ✅ **Error handling** - Graceful error management
+- ✅ **Loading states** - Visual feedback during submission
+- ✅ **Form clearing** - Automatic form reset after submission
+
+### Setup Instructions
+1. Install EmailJS: `npm install @emailjs/browser`
+2. Configure EmailJS service with Gmail
+3. Create email template with variables: `{{name}}`, `{{email}}`, `{{subject}}`, `{{message}}`
+4. Update credentials in `src/components/Contact.tsx`
 
 ## 🔧 Configuration Files
 
@@ -307,7 +333,7 @@ If you have any questions or need help, feel free to:
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Animated with [Framer Motion](https://www.framer.com/motion/)
 - Icons from [Lucide](https://lucide.dev/) and [React Icons](https://react-icons.github.io/react-icons/)
-- Contact form powered by [FormSubmit](https://formsubmit.co/)
+- Contact form powered by [EmailJS](https://www.emailjs.com/)
 
 ---
 

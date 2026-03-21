@@ -7,142 +7,145 @@ import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import { about, sectionTitles } from "@/data/content";
 import { skills } from "@/data/skills";
+import { BlurFade } from "@/components/ui/blur-fade";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.08, ease: "easeOut" },
-  }),
-};
+const STATS = [
+  { value: "3+", label: "Years Experience" },
+  { value: "10+", label: "Tech Stacks" },
+  { value: "3", label: "Cloud Platforms" },
+];
 
 export default function About() {
   const { setSection } = useSectionBackground();
-  const { ref, inView } = useSectionInView("About", 0.3);
+  const { ref, inView } = useSectionInView("About", 0.25);
 
   React.useEffect(() => {
     if (inView) setSection("about");
   }, [inView, setSection]);
 
   return (
-    <section
-      id="about"
-      ref={ref}
-      className="py-24 px-4"
-    >
+    <section id="about" ref={ref} className="py-28 px-6">
       <div className="max-w-5xl mx-auto">
-        {/* Section heading */}
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-[#f8fafc] mb-16 text-center"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          {sectionTitles.about}
-          <span className="block w-8 h-px bg-[#4a7fa5] mx-auto mt-4" />
-        </motion.h2>
 
-        {/* Top bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          {/* Bio — spans 2 cols */}
-          <motion.div
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="md:col-span-2 rounded-xl border border-white/5 bg-white/[0.03] p-7 flex flex-col justify-center"
-          >
-            <h3 className="text-lg font-semibold text-[#f8fafc] mb-3">
-              Hi, I&apos;m Fares Khanchouch
-            </h3>
-            <p className="text-[#94a3b8] leading-relaxed text-sm">
-              {about.bio}
+        {/* Section heading */}
+        <BlurFade inView delay={0.05}>
+          <div className="mb-16 text-center">
+            <p className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5] mb-3">
+              01 / About
             </p>
-          </motion.div>
+            <h2 className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#f8fafc] md:text-5xl">
+              {sectionTitles.about}
+            </h2>
+          </div>
+        </BlurFade>
+
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+          {/* Bio — 2 cols, glass card */}
+          <BlurFade inView delay={0.1} className="md:col-span-2">
+            <div className="h-full rounded-xl border border-white/[0.07] bg-white/[0.025] p-8 backdrop-blur-sm">
+              <h3 className="font-[family-name:var(--font-geist)] text-xl font-bold text-[#f8fafc] mb-4">
+                Hi, I&apos;m Fares
+              </h3>
+              <p className="text-[#94a3b8] leading-[1.8] text-sm">
+                {about.bio}
+              </p>
+            </div>
+          </BlurFade>
 
           {/* Location */}
-          <motion.div
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative rounded-xl border border-white/5 bg-white/[0.03] p-7 overflow-hidden"
-          >
-            <h3 className="text-lg font-semibold text-[#f8fafc] mb-2 relative z-10">
-              {about.location.heading}
-            </h3>
-            <p className="text-[#94a3b8] text-sm relative z-10 leading-relaxed">
-              {about.location.description}
-            </p>
-            <Image
-              src="/globe.png"
-              alt="Globe"
-              width={160}
-              height={160}
-              className="absolute right-0 bottom-0 w-36 h-36 object-cover opacity-10 z-0"
-              style={{ transform: "translate(20%, 20%)" }}
-            />
-          </motion.div>
-        </div>
+          <BlurFade inView delay={0.15}>
+            <div className="relative h-full min-h-[180px] rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 overflow-hidden backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-2">
+                Location
+              </p>
+              <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc] mb-2">
+                France
+              </h3>
+              <p className="text-[#64748b] text-xs leading-relaxed">
+                Open to remote &amp; on-site worldwide
+              </p>
+              <Image
+                src="/globe.png"
+                alt="Globe"
+                width={140}
+                height={140}
+                className="absolute -right-4 -bottom-4 opacity-[0.07] pointer-events-none select-none"
+              />
+            </div>
+          </BlurFade>
 
-        {/* Languages */}
-        <motion.div
-          custom={2}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="rounded-xl border border-white/5 bg-white/[0.03] p-7 mb-4"
-        >
-          <h3 className="text-lg font-semibold text-[#f8fafc] mb-4">
-            {about.languages.heading}
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {about.languages.items.map((lang) => (
-              <div key={lang.name} className="flex items-center gap-2">
-                <span className="text-sm font-medium text-[#f8fafc]">{lang.name}</span>
-                <span className="text-xs text-[#4a7fa5] border border-[#4a7fa5]/30 rounded px-2 py-0.5">
-                  {lang.level}
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Skills grid */}
-        <motion.div
-          custom={3}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="rounded-xl border border-white/5 bg-white/[0.03] p-7"
-        >
-          <h3 className="text-lg font-semibold text-[#f8fafc] mb-6">Tech Stack</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((group) => (
-              <div key={group.category}>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#4a7fa5] mb-3">
-                  {group.category}
+          {/* Stats row */}
+          {STATS.map((stat, i) => (
+            <BlurFade inView delay={0.2 + i * 0.05} key={stat.label}>
+              <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-6 text-center backdrop-blur-sm">
+                <p className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#4a7fa5] mb-1">
+                  {stat.value}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="text-xs text-[#94a3b8] border border-white/10 rounded px-2.5 py-1 bg-white/[0.02] hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] transition-colors duration-150"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.15em] text-[#64748b]">
+                  {stat.label}
+                </p>
               </div>
-            ))}
-          </div>
-        </motion.div>
+            </BlurFade>
+          ))}
+
+          {/* Languages */}
+          <BlurFade inView delay={0.35} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-5">
+                Languages
+              </p>
+              <div className="flex flex-wrap gap-4">
+                {about.languages.items.map((lang) => (
+                  <div key={lang.name} className="flex items-center gap-2.5">
+                    <span className="font-[family-name:var(--font-geist)] text-sm font-semibold text-[#f8fafc]">
+                      {lang.name}
+                    </span>
+                    <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-[#4a7fa5] border border-[#4a7fa5]/30 rounded px-2 py-0.5 bg-[#4a7fa5]/5">
+                      {lang.level}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+
+          {/* Tech stack — full width */}
+          <BlurFade inView delay={0.4} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-6">
+                Tech Stack
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {skills.map((group, gi) => (
+                  <motion.div
+                    key={group.category}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: gi * 0.07 }}
+                  >
+                    <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.18em] text-[#4a7fa5]/70 mb-3">
+                      {group.category}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map((item) => (
+                        <span
+                          key={item}
+                          className="text-xs text-[#94a3b8] border border-white/8 rounded px-2.5 py-1 bg-white/[0.02] transition-all duration-200 hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5 cursor-default"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+
+        </div>
       </div>
     </section>
   );

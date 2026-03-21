@@ -4,8 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import { about, sectionTitles } from "@/data/content";
-import { skills } from "@/data/skills";
+import { about, sectionTitles, skills } from "@/data";
 import { BlurFade } from "@/components/ui/blur-fade";
 import {
   SiAmazonwebservices, SiGooglecloud, SiTerraform, SiAnsible,
@@ -102,6 +101,23 @@ export default function About() {
               <p className="text-[#64748b] text-xs leading-relaxed">
                 {about.location.description}
               </p>
+              {/* Tunisia outline SVG — decorative background */}
+              <svg
+                viewBox="0 0 100 155"
+                className="absolute -right-3 -bottom-3 h-36 w-auto opacity-[0.18] pointer-events-none select-none"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 32 14 L 55 14 L 65 17 L 80 19 L 74 40 L 74 60 L 74 71 L 61 74 L 74 81 L 88 108 L 61 140 L 47 140 L 20 126 L 14 90 L 10 72 L 24 28 Z"
+                  fill="#4a7fa5"
+                  stroke="#4a7fa5"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+                {/* Tunis capital dot */}
+                <circle cx="65" cy="17" r="3" fill="#4a7fa5" opacity="1" />
+              </svg>
             </div>
           </BlurFade>
 

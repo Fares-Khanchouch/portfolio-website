@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import { useSectionBackground } from "./BackgroundLayout";
 import React from "react";
-import { experiences } from "@/data/work";
-import { sectionTitles } from "@/data/content";
+import { experiences, sectionTitles } from "@/data";
 import { BlurFade } from "@/components/ui/blur-fade";
 
 export default function WorkHistory() {

@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import { projects, type Project } from "@/data/projects";
-import { sectionTitles } from "@/data/content";
+import { projects, type Project, sectionTitles } from "@/data";
 import { X, ArrowUpRight } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 
@@ -49,6 +48,10 @@ export default function Projects() {
                 whileHover={{ borderColor: "rgba(74,127,165,0.25)" }}
                 transition={{ duration: 0.2 }}
                 onClick={() => setActiveProject(project)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setActiveProject(project); }}
+                aria-label={`View case study for ${project.title}`}
               >
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] md:min-h-[220px]">
 
@@ -156,6 +159,7 @@ export default function Projects() {
                 {/* Close */}
                 <button
                   onClick={() => setActiveProject(null)}
+                  aria-label="Close project details"
                   className="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-[#64748b] hover:text-[#f8fafc] hover:border-white/20 transition-colors z-10"
                 >
                   <X size={14} />

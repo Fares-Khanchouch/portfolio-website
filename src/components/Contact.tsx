@@ -7,13 +7,12 @@ import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import emailjs from "@emailjs/browser";
 import { ArrowUpRight, Send, CheckCircle2 } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { sectionTitles } from "@/data/content";
-import { social, emailjs as ejsConfig } from "@/data/social";
+import { sectionTitles, social, emailjs as ejsConfig } from "@/data";
 
 const FIELDS = [
-  { id: "name",    label: "Full Name",     type: "text",  rows: undefined },
-  { id: "email",   label: "Email Address", type: "email", rows: undefined },
-  { id: "subject", label: "Subject",       type: "text",  rows: undefined },
+  { id: "name",    label: "Full Name",     type: "text",  autocomplete: "name" },
+  { id: "email",   label: "Email Address", type: "email", autocomplete: "email" },
+  { id: "subject", label: "Subject",       type: "text",  autocomplete: "off" },
 ] as const;
 
 type FieldId = typeof FIELDS[number]["id"] | "message";
@@ -26,6 +25,7 @@ export default function Contact() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (inView) setSection("contact");
@@ -53,7 +53,7 @@ export default function Contact() {
       }
     } catch (err) {
       console.error("EmailJS error:", err);
-      alert("Failed to send message. Please try again.");
+      setError("Failed to send. Please try again or email me directly.");
     } finally {
       setIsSubmitting(false);
     }
@@ -161,6 +161,7 @@ export default function Contact() {
                         value={formData[field.id]}
                         onChange={handleChange}
                         required
+                        autoComplete={field.autocomplete}
                         className="w-full bg-transparent border-b border-white/10 py-2.5 text-sm text-[#f8fafc] placeholder-[#4a5568] outline-none transition-all duration-200 focus:border-[#4a7fa5]"
                         placeholder={`Your ${field.label.toLowerCase()}`}
                       />
@@ -188,6 +189,9 @@ export default function Contact() {
                   </div>
 
                   {/* Submit */}
+                  {error && (
+                    <p className="text-xs text-red-400/80 mt-1">{error}</p>
+                  )}
                   <div className="mt-2">
                     <button
                       type="submit"

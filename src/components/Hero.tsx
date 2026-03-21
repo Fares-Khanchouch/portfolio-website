@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Download, ArrowDown } from "lucide-react";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import { useSectionBackground } from "./BackgroundLayout";
-import { hero } from "@/data/content";
+import { hero } from "@/data";
 import React from "react";
 
 const stagger = {
@@ -62,7 +62,7 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="flex items-center gap-3 justify-center md:justify-start">
               <span className="h-px w-8 bg-[#4a7fa5]" />
               <span className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5]">
-                Cloud &amp; DevOps Engineer
+                {hero.eyebrow}
               </span>
             </motion.div>
 
@@ -83,14 +83,6 @@ export default function Hero() {
                 />
               </span>
             </motion.h1>
-
-            {/* Role */}
-            <motion.p
-              variants={fadeUp}
-              className="font-[family-name:var(--font-geist)] text-lg font-medium text-[#94a3b8] sm:text-xl"
-            >
-              {hero.title}
-            </motion.p>
 
             {/* Divider */}
             <motion.div variants={fadeUp} className="flex justify-center md:justify-start">

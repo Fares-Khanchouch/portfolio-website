@@ -41,7 +41,7 @@ export default function BackgroundLayout({ children }: { children: ReactNode }) 
           className="fixed inset-0 z-0 w-full h-full"
           initial={{ backgroundColor: SECTION_COLORS.hero }}
           animate={{ backgroundColor: SECTION_COLORS[currentSection] ?? SECTION_COLORS.hero }}
-          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
           style={{ position: "fixed", inset: 0 }}
         />
       </AnimatePresence>

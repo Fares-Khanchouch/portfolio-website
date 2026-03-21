@@ -43,7 +43,7 @@ export const about = {
     heading: "Education",
     degree: "Engineering in Information & Communication Technology Architectures",
     school: "ISTY Vélizy — Université de Versailles Saint-Quentin",
-    years: "2020 – 2023",
+    years: "2021 – 2024",
   },
   languages: {
     heading: "Languages",

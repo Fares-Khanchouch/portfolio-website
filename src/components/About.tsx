@@ -85,55 +85,46 @@ export default function About() {
 
           {/* Location */}
           <BlurFade inView delay={0.15}>
-            <div className="relative h-full min-h-[180px] rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 overflow-hidden backdrop-blur-sm">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
-                Location
-              </p>
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a7fa5] opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4a7fa5]" />
-                </span>
-                <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc]">
-                  {about.location.city}
-                </h3>
-              </div>
-              <p className="text-[#64748b] text-xs leading-relaxed">
-                {about.location.description}
-              </p>
-              {/* Tunisia map — inline SVG, real path from tn.svg, viewBox cropped to TN */}
-              <svg
-                viewBox="308 208 84 128"
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute -right-3 -bottom-3 h-40 w-auto pointer-events-none select-none"
+            <div className="relative h-full min-h-[220px] rounded-xl border border-white/[0.07] bg-white/[0.025] overflow-hidden backdrop-blur-sm">
+              {/* Full regional PNG map as card background */}
+              <div
+                className="absolute inset-0 pointer-events-none select-none"
                 aria-hidden="true"
               >
-                <defs>
-                  <filter id="tn-glow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="1.8" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                {/* Sea tint */}
-                <rect x="308" y="208" width="84" height="128" fill="#4a7fa5" fillOpacity="0.04" />
-                {/* Tunisia shape */}
-                <path
-                  d="M382.3,273.09l0,.51-.58,3.66-.12,1.31-.09,2.23v2.67l1.3,2.26,0,1-.5,1.14-2.39,1.31-3.09,1.69-2.64,1.6-2.91,1.76-.89,1.14-1.44.87-1.2.87-.22.84-.85,1.58-1.1,1.26-2.76.6-.51.37-1.28,1.9-.59.74-.72,1.56.93,4,1.15,4.13.22,1.71v1.43l-.65,1.54L359.9,321l-1.08,1.62-2.07,2.89-.6.72-1.43.85L352,328.18l-1.94,1-1-4.42-.84-3.78-.7-3.12-1.22-5.51-1-4.7-1-4.69-1-4.27-.94-4.31-.41-.63-2.84-2-2.62-1.88-2.72-2.14-2.95-2.32-.48-2.93L328.8,278l-1.6-2.48-.6-.64-3.22-1.61-1.86-1.18-.51-.69-.36-1.81L319.33,266l-1.51-3.28-.56-2.23-.07-2.81.29-2,.66-.86,3.15-2.54,1.46-3,1.8-1.14,1.56-.86,1.27-1,1.12-1.62.86-1.72.14-1.87.36-3,.58-2.07,1.33-2.36-.56-1.9-.71-2,.2-3.56-.18-1.45-.57-1.28-.58-1.64,0-1.37.56-3.6.43-2.76.68-3.6-.24-1-.51-.76-1.53-.79,0-.48.37-.53,2.26-1.76,1.21-2.59,1-.53,1.54-.94-.06-1-.34-1.08,4-1.22,3.81-3.2,1.35-.79,8.86-3,1.16.2,1.29.43-.37,1.11-.51.87.75,1.55,1.07-.95-.27-.63-.06-.84,1.82-.07,1.62.13,1.77.92-.13,3.49,2.37,3.41-.67,1.69,1.93,1,1.72-1.2.86-1.78,3.17-1,3-2.61,1.66-.27.38,2.15.8,1.87-1.14.66-1.44,2-2.75,5-2.53,1.47-1.9,1.93-.61,1.38-.19,1.59.48,2.86,1.38,2.9,1.6,1.75,1.54.54,3.58,2.75-.06,1.64.5,1.93.19,2.36,1.24,1.88-2.66,4.08-1.46,3-2.84,4-2.54,2.62-5.42,3.9-1.34,1.29-.86,1.33-.4,1.4.14,1.64,1.79,4,2.38,2.36,2.42,1.28,4.2-.51-.14,1.54.3,1.85,1.7-.09,1.15-.29,1-1.8,2.05,1.23,1.07,3.75,1.74,1.17.2.44-.61.28-.48.43.52.31,1.68.46,1-.29,1.72.86Zm-3.68-30.63-2.5,1.42.48-1.23,1.65-1.5.43.36Zm-5.2,20.17-.43.09-.78.53-.42.06-1.18-.6h-.45l-.57-.42.19-2.27.19-.64,2.87-.09,1.55,1.36.26.36.06.39-.72.76-.57.46Z"
-                  fill="#4a7fa5"
-                  fillOpacity="0.18"
-                  stroke="#4a7fa5"
-                  strokeWidth="0.6"
-                  strokeOpacity="0.55"
-                  strokeLinejoin="round"
-                  filter="url(#tn-glow)"
+                {/* PNG — full Mediterranean region, Tunisia highlighted */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/tn-region.png"
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{
+                    filter: "brightness(0.22) saturate(0.85)",
+                    objectPosition: "55% 45%",
+                  }}
                 />
-                {/* Tunis capital dot */}
-                <circle cx="361" cy="226" r="2" fill="#4a7fa5" fillOpacity="0.9" />
-                <circle cx="361" cy="226" r="4" fill="#4a7fa5" fillOpacity="0.2" />
-              </svg>
+                {/* Gradient fades — blend edges into dark card */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/85 via-[#0a0f1e]/20 to-[#0a0f1e]/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/65 via-transparent to-transparent" />
+              </div>
+
+              {/* Card content */}
+              <div className="relative z-10 p-7">
+                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
+                  Location
+                </p>
+                <div className="flex items-center gap-2.5 mb-2">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a7fa5] opacity-60" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4a7fa5]" />
+                  </span>
+                  <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc]">
+                    {about.location.city}
+                  </h3>
+                </div>
+                <p className="text-[#94a3b8] text-sm leading-relaxed max-w-[160px]">
+                  {about.location.description}
+                </p>
+              </div>
             </div>
           </BlurFade>
 

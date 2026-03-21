@@ -13,7 +13,7 @@ export default function Footer() {
           <span className="font-[family-name:var(--font-geist-mono)] text-sm font-bold tracking-[0.08em] text-[#f8fafc]">
             fk<span className="text-[#4a7fa5]">.</span>
           </span>
-          <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a5568]">
+          <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#64748b]">
             © {year} Fares Khanchouch
           </p>
         </div>
@@ -23,7 +23,7 @@ export default function Footer() {
           <a
             href={`mailto:${social.email}`}
             aria-label="Email"
-            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
           >
             <Mail className="h-4 w-4" />
           </a>
@@ -32,7 +32,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
           >
             <Github className="h-4 w-4" />
           </a>
@@ -41,7 +41,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
           >
             <Linkedin className="h-4 w-4" />
           </a>
@@ -50,7 +50,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Resume"
-            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
           >
             <FileText className="h-4 w-4" />
           </a>

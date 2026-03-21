@@ -44,7 +44,7 @@ export default function WorkHistory() {
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
               >
                 {/* Left: date + company */}
                 <div className="md:w-[200px] md:pr-10 flex flex-col md:items-end md:text-right shrink-0 pt-1">

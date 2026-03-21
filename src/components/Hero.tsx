@@ -15,7 +15,7 @@ const stagger = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 
 export default function Hero() {
@@ -82,7 +82,7 @@ export default function Hero() {
                   style={{ width: "100%" }}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                 />
               </span>
             </motion.h1>
@@ -124,17 +124,16 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── Right: Floating cutout figure ── */}
+          {/* ── Right: Floating cutout figure — desktop ── */}
           <motion.div
             className="hidden md:flex items-center justify-end self-center"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           >
             <div className="relative">
               {/* Glow behind figure */}
               <div className="absolute inset-0 -z-10 scale-75 translate-y-8 rounded-full bg-[#4a7fa5] opacity-[0.12] blur-[60px]" />
-
               {/* Cutout photo — black bg disappears via mix-blend-mode */}
               <div
                 className="relative"
@@ -153,6 +152,31 @@ export default function Hero() {
                 {/* Fade to floor */}
                 <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0f1e] to-transparent" />
               </div>
+            </div>
+          </motion.div>
+
+          {/* ── Mobile: Cutout figure as background ── */}
+          <motion.div
+            className="md:hidden absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+            aria-hidden="true"
+          >
+            <div className="absolute inset-0" style={{ overflow: "hidden" }}>
+              <Image
+                src="/fares-cutout.png"
+                alt=""
+                fill
+                sizes="100vw"
+                quality={90}
+                className="object-cover object-top"
+                style={{ mixBlendMode: "lighten", opacity: 0.18 }}
+                priority
+              />
+              {/* Heavy vignette so text stays readable */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-[#0a0f1e]/40 to-[#0a0f1e]/80" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/70 via-transparent to-[#0a0f1e]/70" />
             </div>
           </motion.div>
 

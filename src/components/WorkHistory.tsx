@@ -4,107 +4,84 @@ import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import { useSectionBackground } from "./BackgroundLayout";
 import React from "react";
-import { Experience } from "@/types/work";
-
-// Internships only
-const experiences: Experience[] = [
-  {
-    date: "May 2024 – August 2024",
-    title: "Cloud & DevSecOps Intern",
-    job: "Nuage Up, Paris",
-    contents: [
-      "✅ Deployed AWS infrastructure using Terraform and AWS Lambda, ensuring scalable and resilient architecture.",
-      "✅ Implemented CI/CD pipelines with GitHub Actions integrating security scans via Trivy, OWASP ZAP, and Docker Bench.",
-      "✅ Orchestrated containerized workloads on Kubernetes (EC2) with fine‑grained security policies.",
-      "✅ Improved code quality and consistency using ESLint (JavaScript) and Staticcheck (Go).",
-    ],
-  },
-  {
-    date: "May 2023 – August 2023",
-    title: "Web Development Intern",
-    job: "WAY2CLOUD, Paris",
-    contents: [
-      "✅ Built a full‑stack e-commerce platform using React.js, Node.js, and MongoDB, enhancing the online shopping experience.",
-      "✅ Integrated secure authentication, product management, and shopping cart features.",
-      "✅ Automated database backups to AWS S3 with custom Node.js scripts.",
-      "✅ Optimized frontend performance and wrote unit tests for critical components.",
-    ],
-  },
-  {
-    date: "June 2022 – July 2022",
-    title: "DevOps Intern",
-    job: "WAY2CLOUD, Paris",
-    contents: [
-      "✅ Developed a Python-based REST API to automate cluster provisioning and management.",
-      "✅ Containerized services with Docker and deployed to Kubernetes using Helm charts.",
-      "✅ Established CI/CD workflows with GitHub Actions for seamless testing and deployments.",
-    ],
-  },
-];
+import { experiences } from "@/data/work";
+import { sectionTitles } from "@/data/content";
 
 export default function WorkHistory() {
-  const { ref, inView } = useSectionInView("Work History");
+  const { ref, inView } = useSectionInView("Work History", 0.3);
   const { setSection } = useSectionBackground();
 
   React.useEffect(() => {
-    if (inView) {
-      console.log('Section in view: work', { inView });
-      setSection("work");
-    }
+    if (inView) setSection("work");
   }, [inView, setSection]);
 
   return (
     <section
       ref={ref}
       id="work"
-      className="min-h-screen text-gray-300 py-24 px-6"
+      className="py-24 px-4"
     >
-      <motion.h2
-        className="max-w-5xl mx-auto text-3xl md:text-4xl font-bold text-white mb-20 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        My Work Experience
-      </motion.h2>
-      <div className="relative max-w-5xl mx-auto pl-4 md:pl-0">
-        {/* Vertical timeline line: only on desktop */}
-        <span className="hidden md:block absolute top-0 left-1/3 bottom-0 w-px bg-gray-700" />
+      <div className="max-w-5xl mx-auto">
+        {/* Heading */}
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold text-[#f8fafc] mb-16 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          {sectionTitles.work}
+          <span className="block w-8 h-px bg-[#4a7fa5] mx-auto mt-4" />
+        </motion.h2>
 
-        {experiences.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex flex-col md:flex-row items-start mb-20 relative"
-          >
-            {/* Mobile horizontal timeline: dot and bar */}
-            <div className="flex items-center mb-4 md:hidden">
-              <span className="w-4 h-4 bg-black/60 border-2 border-purple-500 rounded-full mr-2" />
-              <span className="h-1 w-8 bg-gray-700 rounded mr-2" />
-              <span className="uppercase text-sm text-gray-500">{item.date}</span>
-            </div>
-            {/* Left column: marker & heading */}
-            <div className="pl-0 md:pl-0 md:w-1/3 flex flex-col items-start md:items-end pr-8 relative text-left md:text-right">
-              {/* Timeline point: desktop version, in left column */}
-              <span className="hidden md:block absolute left-full translate-x-0 -translate-x-1/2 -ml-2 w-4 h-4 bg-black/60 border-2 border-purple-500 rounded-full" />
-              <p className="uppercase text-sm text-gray-500 mb-2 md:mt-1 hidden md:block">
-                {item.date}
-              </p>
-              <h3 className="text-2xl font-semibold text-white leading-snug mb-2 md:mb-0">
-                {item.title}
-              </h3>
-              <p className="text-md text-gray-400 mb-4 md:mb-0">{item.job}</p>
-            </div>
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical line — desktop */}
+          <span className="hidden md:block absolute left-[180px] top-0 bottom-0 w-px bg-white/8" />
 
-            {/* Right column: details */}
-            <div className="pl-0 md:pl-8 md:w-2/3 space-y-3">
-              {item.contents.map((line, i) => (
-                <p key={i} className="leading-relaxed">
-                  {line}
-                </p>
-              ))}
-            </div>
+          <div className="flex flex-col gap-14">
+            {experiences.map((item, idx) => (
+              <motion.div
+                key={idx}
+                className="flex flex-col md:flex-row gap-6 md:gap-0 relative"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+              >
+                {/* Left: date + company */}
+                <div className="md:w-[180px] md:pr-8 flex flex-col md:items-end md:text-right shrink-0">
+                  <span className="text-xs uppercase tracking-widest text-[#4a7fa5] mb-1">
+                    {item.date}
+                  </span>
+                  <span className="text-sm text-[#64748b]">
+                    {item.company}, {item.location}
+                  </span>
+                </div>
+
+                {/* Timeline dot — desktop */}
+                <div className="hidden md:flex absolute left-[180px] top-1 -translate-x-1/2 items-center justify-center">
+                  <span className="w-3 h-3 rounded-full border-2 border-[#4a7fa5] bg-[#0a0f1e]" />
+                </div>
+
+                {/* Right: content */}
+                <div className="md:pl-10 flex-1">
+                  <h3 className="text-xl font-semibold text-[#f8fafc] mb-4">
+                    {item.title}
+                  </h3>
+                  <ul className="space-y-2.5">
+                    {item.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-[#94a3b8] leading-relaxed">
+                        <span className="mt-[7px] w-1 h-1 rounded-full bg-[#4a7fa5] shrink-0" />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

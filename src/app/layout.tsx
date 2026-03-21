@@ -1,6 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import BackgroundLayout from "../components/BackgroundLayout";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Fares Khanchouch | Cloud & DevOps Engineer Portfolio",
@@ -74,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <head>
         {/* Structured Data for Person */}
         <script

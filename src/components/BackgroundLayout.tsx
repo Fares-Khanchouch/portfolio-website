@@ -4,13 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-// Section background color mapping
+// Section background color mapping — unified deep navy palette
 const SECTION_COLORS: Record<string, string> = {
-  hero: "#0f172a",      // dark blue
-  about: "#0a0a0a",     // black
-  work: "#0f172a",      // dark blue
-  projects: "#0a0a0a",  // black
-  contact: "#0f172a",   // dark blue
+  hero:     "#0a0f1e",
+  about:    "#0d1224",
+  work:     "#0a0f1e",
+  projects: "#0d1224",
+  contact:  "#0a0f1e",
 };
 
 interface SectionBackgroundContextType {
@@ -32,7 +32,6 @@ export default function BackgroundLayout({ children }: { children: ReactNode }) 
     setCurrentSection(section);
   }, []);
 
-  console.log('BackgroundLayout: currentSection', currentSection, 'color', SECTION_COLORS[currentSection]);
   return (
     <SectionBackgroundContext.Provider value={{ setSection, currentSection }}>
       {/* Animated global background color */}

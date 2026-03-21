@@ -138,7 +138,7 @@ export default function Hero() {
               {/* Cutout photo — black bg disappears via mix-blend-mode */}
               <div
                 className="relative"
-                style={{ width: "380px", height: "520px" }}
+                style={{ width: "400px", height: "640px" }}
               >
                 <Image
                   src="/fares-cutout.png"

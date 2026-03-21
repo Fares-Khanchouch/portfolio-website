@@ -40,10 +40,12 @@ export default function Navbar() {
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="#home" className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
-          <span className="text-[#f8fafc]">Fares </span>
-          <span className="text-[#4a7fa5] font-extrabold">Khanchouch</span>
+        {/* Monogram mark */}
+        <Link
+          href="#home"
+          className="font-[family-name:var(--font-geist-mono)] text-base font-bold tracking-[0.08em] text-[#f8fafc] hover:text-[#4a7fa5] transition-colors duration-200"
+        >
+          fk<span className="text-[#4a7fa5]">.</span>
         </Link>
 
         {/* Desktop nav */}

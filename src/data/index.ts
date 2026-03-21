@@ -19,8 +19,8 @@ export const meta = {
 export const hero = {
   name: "Fares Khanchouch",
   title: "Infrastructure & Automation Engineer",
-  eyebrow: "Infrastructure & Automation Engineer",
-  tagline: "I build scalable systems and automate modern infrastructure.",
+  eyebrow: "Open to opportunities · Based in Tunisia",
+  tagline: "I turn complex infrastructure into boring, reliable systems, so engineers can ship faster and sleep better.",
   photo: "/fares-cutout.png",
   cta: {
     primary:   { label: "Contact Me",      href: "#contact"     },
@@ -33,11 +33,11 @@ export const hero = {
 
 export const about = {
   heading: "About Me",
-  bio: "I build the infrastructure layer that lets engineering teams move fast and sleep well. Cloud environments defined as code, CI/CD pipelines that ship reliably, and security baked in from the start — not bolted on at the end. I care about systems that are transparent, resilient, and easy for any engineer to operate.",
+  bio: "I build the infrastructure layer that lets engineering teams move fast and sleep well. Cloud environments defined as code, CI/CD pipelines that ship reliably, and security baked in from the start rather than bolted on at the end. I care about systems that are transparent, resilient, and easy for any engineer to operate.",
   location: {
     heading: "Location",
     city: "Tunisia",
-    description: "Open to on-site and remote collaborations worldwide.",
+    description: "Based in Tunisia, open to remote roles worldwide.",
   },
   education: {
     heading: "Education",
@@ -81,10 +81,10 @@ export const experiences: Experience[] = [
     company: "Nuage Up",
     location: "Paris",
     bullets: [
-      "Deployed AWS infrastructure using Terraform and AWS Lambda, ensuring scalable and resilient architecture.",
-      "Implemented CI/CD pipelines with GitHub Actions integrating security scans via Trivy, OWASP ZAP, and Docker Bench.",
-      "Orchestrated containerised workloads on Kubernetes (EC2) with fine-grained security policies.",
-      "Improved code quality and consistency using ESLint (JavaScript) and Staticcheck (Go).",
+      "Provisioned production AWS infrastructure as code with Terraform and Lambda, delivering consistent and reproducible environments with no manual steps.",
+      "Built GitHub Actions pipelines with automated security gates (Trivy, OWASP ZAP, Docker Bench), integrating shift-left security into every deployment.",
+      "Orchestrated containerised workloads on Kubernetes with RBAC and network policies, enforcing a zero-trust posture across the cluster.",
+      "Enforced code quality standards with ESLint and Staticcheck, catching issues in CI before they reached review.",
     ],
   },
   {
@@ -93,10 +93,10 @@ export const experiences: Experience[] = [
     company: "WAY2CLOUD",
     location: "Paris",
     bullets: [
-      "Built a full-stack e-commerce platform using React.js, Node.js, and MongoDB, enhancing the online shopping experience.",
-      "Integrated secure authentication, product management, and shopping cart features.",
-      "Automated database backups to AWS S3 with custom Node.js scripts.",
-      "Optimised frontend performance and wrote unit tests for critical components.",
+      "Built a full-stack e-commerce platform (React, Node.js, MongoDB) from scratch, covering product management, cart, and checkout end-to-end.",
+      "Implemented JWT-based authentication and role management, keeping the platform secure from the first commit.",
+      "Automated database backups to AWS S3 with custom Node.js scripts, eliminating manual backup risk.",
+      "Improved frontend performance and wrote unit tests for critical paths, establishing a reliable testing baseline.",
     ],
   },
   {
@@ -105,9 +105,9 @@ export const experiences: Experience[] = [
     company: "WAY2CLOUD",
     location: "Paris",
     bullets: [
-      "Developed a Python-based REST API to automate cluster provisioning and management.",
-      "Containerised services with Docker and deployed to Kubernetes using Helm charts.",
-      "Established CI/CD workflows with GitHub Actions for seamless testing and deployments.",
+      "Automated cluster provisioning with a Python REST API, replacing multi-step manual setup with a single API call.",
+      "Containerised services with Docker and deployed to Kubernetes via Helm charts, eliminating environment drift.",
+      "Set up CI/CD with GitHub Actions, giving the team a reliable pipeline to ship and test without friction.",
     ],
   },
 ];
@@ -205,7 +205,7 @@ export const projects: Project[] = [
         },
       ],
       achievements: [
-        "Mastered the Operator Pattern — reconciliation loops, self-healing, and extending the Kubernetes API with CRDs.",
+        "Mastered the Operator Pattern: reconciliation loops, self-healing, and extending the Kubernetes API with CRDs.",
         "Simplified a multi-component infrastructure setup into a single easy-to-use custom resource.",
         "Implemented robust health checks and status reporting for multi-resource deployments.",
         "End-to-end automation handling the complete n8n lifecycle from provisioning to updates.",

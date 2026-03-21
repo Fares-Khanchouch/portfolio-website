@@ -1,38 +1,62 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Github, Linkedin, Mail, FileText } from "lucide-react";
+import { social } from "@/data";
 
-const Footer = () => {
+export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="w-full bg-black/40 backdrop-blur-sm border-t border-gray-700 py-6 px-6">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        {/* Left side: Copyright */}
-        <p className="text-sm text-gray-300">
-          © 2025 Fares Khanchouch. All rights reserved.
-        </p>
+    <footer className="w-full border-t border-[#4a7fa5]/10 bg-[#0a0f1e] py-8 px-6">
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
 
-        {/* Right side: Social Icons */}
-        <div className="flex items-center space-x-6">
+        {/* Left: monogram + copyright */}
+        <div className="flex items-center gap-4">
+          <span className="font-[family-name:var(--font-geist-mono)] text-sm font-bold tracking-[0.08em] text-[#f8fafc]">
+            fk<span className="text-[#4a7fa5]">.</span>
+          </span>
+          <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a5568]">
+            © {year} Fares Khanchouch
+          </p>
+        </div>
+
+        {/* Right: social links */}
+        <div className="flex items-center gap-5">
           <a
-            href="https://www.linkedin.com/in/fares-khanchouch/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-gray-400 hover:text-blue-400 transition-transform duration-300 hover:scale-110"
+            href={`mailto:${social.email}`}
+            aria-label="Email"
+            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
           >
-            <FaLinkedin size={24} />
+            <Mail className="h-4 w-4" />
           </a>
           <a
-            href="https://github.com/Fares-Khanchouch"
+            href={social.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-gray-400 hover:text-blue-400 transition-transform duration-300 hover:scale-110"
+            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
           >
-            <FaGithub size={24} />
+            <Github className="h-4 w-4" />
+          </a>
+          <a
+            href={social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+          >
+            <Linkedin className="h-4 w-4" />
+          </a>
+          <a
+            href={social.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Resume"
+            className="text-[#4a5568] hover:text-[#4a7fa5] transition-colors duration-200"
+          >
+            <FileText className="h-4 w-4" />
           </a>
         </div>
+
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

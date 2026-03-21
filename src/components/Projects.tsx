@@ -31,7 +31,7 @@ export default function Projects() {
         <BlurFade inView delay={0.05}>
           <div className="mb-16 text-center">
             <p className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5] mb-3">
-              03 / Work
+              03 / Projects
             </p>
             <h2 className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#f8fafc] md:text-5xl">
               {sectionTitles.projects}

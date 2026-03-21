@@ -1,164 +1,228 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import React from "react";
+import { motion } from "framer-motion";
 import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import Image from "next/image";
-
+import { about, sectionTitles, skills } from "@/data";
+import { BlurFade } from "@/components/ui/blur-fade";
 import {
-  FaPython,
-  FaJava,
-  FaJsSquare,
-  FaDocker,
-  FaAws,
-  FaJenkins,
-} from "react-icons/fa";
+  SiAmazonwebservices, SiGooglecloud, SiTerraform, SiAnsible,
+  SiKubernetes, SiDocker, SiGithubactions, SiJenkins,
+  SiGo, SiPython, SiJavascript, SiTypescript,
+  SiNextdotjs, SiReact, SiNodedotjs, SiTailwindcss,
+  SiPrometheus, SiGrafana, SiZapier,
+} from "react-icons/si";
 
-const globeUrl = "/globe.png";
+type IconComponent = React.ComponentType<{ className?: string; size?: number }>;
 
-const cards = [
-  {
-    title: "Programming & Languages",
-    technologies: [
-      // Hexagonal/circular, more center-filled
-      { name: "C", icon: <Image src="/icon/C.svg" alt="C logo" width={64} height={64} className="w-16 h-16" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[18%] left-[50%] -translate-x-1/2", rotation: "rotate-6" },
-      { name: "C++", icon: <Image src="/icon/C++.svg" alt="C++ logo" width={64} height={64} className="w-16 h-16" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[35%] left-[78%] -translate-x-1/2", rotation: "-rotate-6" },
-      { name: "Go", icon: <Image src="/icon/go.svg" alt="Go logo" width={80} height={80} className="w-20 h-20" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[68%] left-[70%] -translate-x-1/2", rotation: "rotate-12" },
-      { name: "Python", icon: <FaPython size={64} className="text-yellow-400" />, position: "top-[78%] left-[50%] -translate-x-1/2", rotation: "-rotate-12" },
-      { name: "Java", icon: <FaJava size={68} className="text-orange-500" />, position: "top-[68%] left-[30%] -translate-x-1/2", rotation: "rotate-3" },
-      { name: "JavaScript", icon: <FaJsSquare size={64} className="text-yellow-300" />, position: "top-[35%] left-[22%] -translate-x-1/2", rotation: "-rotate-3" },
-    ],
-  },
-  {
-    title: "DevOps & Cloud",
-    technologies: [
-      // Arranged in a hexagonal/circular layout
-      { name: "Docker", icon: <FaDocker size={60} className="text-blue-400" />, position: "top-[10%] left-[50%] -translate-x-1/2", rotation: "rotate-6" },
-      { name: "Kubernetes", icon: <Image src="/icon/kubernetes.svg" alt="Kubernetes logo" width={56} height={56} className="w-14 h-14" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[28%] left-[85%] -translate-x-1/2", rotation: "rotate-12" },
-      { name: "Terraform", icon: <Image src="/icon/terraform.svg" alt="Terraform logo" width={56} height={56} className="w-14 h-14" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[65%] left-[80%] -translate-x-1/2", rotation: "-rotate-12" },
-      { name: "AWS", icon: <FaAws size={58} className="text-orange-400" />, position: "top-[80%] left-[50%] -translate-x-1/2", rotation: "-rotate-6" },
-      { name: "Ansible", icon: <Image src="/icon/ansible.svg" alt="Ansible logo" width={56} height={56} className="w-14 h-14" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[65%] left-[20%] -translate-x-1/2", rotation: "rotate-6" },
-      { name: "Google Cloud", icon: <Image src="/icon/gcp.svg" alt="Google Cloud logo" width={56} height={56} className="w-14 h-14" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[28%] left-[15%] -translate-x-1/2", rotation: "-rotate-12" },
-      { name: "Jenkins", icon: <FaJenkins size={56} className="text-gray-400" />, position: "top-[45%] left-[50%] -translate-x-1/2", rotation: "rotate-12" },
-    ],
-  },
-  {
-    title: "Automation & Integration",
-    technologies: [
-      // Triangle layout
-      { name: "n8n", icon: <Image src="/icon/n8n.svg" alt="n8n logo" width={96} height={96} className="w-24 h-24" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2", rotation: "rotate-6" },
-      { name: "Zapier", icon: <Image src="/icon/zapier.svg" alt="Zapier logo" width={96} height={96} className="w-24 h-24" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[70%] left-[25%] -translate-x-1/2 -translate-y-1/2", rotation: "-rotate-12" },
-      { name: "Make", icon: <Image src="/icon/make.svg" alt="Make.com logo" width={96} height={96} className="w-24 h-24" draggable={false} onDragStart={e => e.preventDefault()} />, position: "top-[70%] left-[75%] -translate-x-1/2 -translate-y-1/2", rotation: "rotate-12" },
-    ],
-  },
+const SKILL_ICONS: Record<string, IconComponent> = {
+  "AWS": SiAmazonwebservices,
+  "GCP": SiGooglecloud,
+  "Terraform": SiTerraform,
+  "Ansible": SiAnsible,
+  "Kubernetes": SiKubernetes,
+  "Docker": SiDocker,
+  "GitHub Actions": SiGithubactions,
+  "Jenkins": SiJenkins,
+  "Go": SiGo,
+  "Python": SiPython,
+  "JavaScript": SiJavascript,
+  "TypeScript": SiTypescript,
+  "Next.js": SiNextdotjs,
+  "React": SiReact,
+  "Node.js": SiNodedotjs,
+  "Tailwind CSS": SiTailwindcss,
+  "Prometheus": SiPrometheus,
+  "Grafana": SiGrafana,
+  "Zapier": SiZapier,
+};
+
+const STATS = [
+  { value: "3+", label: "Years Experience" },
+  { value: "10+", label: "Tech Stacks" },
+  { value: "3", label: "Cloud Platforms" },
 ];
 
-
-const About = () => {
+export default function About() {
   const { setSection } = useSectionBackground();
-  const { ref, inView } = useSectionInView("About", 0.5);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveCardIndex((prev) => (prev + 1) % cards.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const { ref, inView } = useSectionInView("About", 0.25);
 
   React.useEffect(() => {
-    if (inView) {
-      console.log('Section in view: about', { inView });
-      setSection("about");
-    }
+    if (inView) setSection("about");
   }, [inView, setSection]);
 
-  const activeCard = cards[activeCardIndex];
-
   return (
-    <section id="about" ref={ref} className="min-h-[70vh] flex items-center justify-center py-16 text-white mb-60">
-      <div className="max-w-5xl mx-auto px-2 sm:px-4 lg:px-6">
-        <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
+    <section id="about" ref={ref} className="py-28 px-6">
+      <div className="max-w-5xl mx-auto">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 grid-flow-row-dense">
-          {/* Main Paragraph */}
-          <div className="bg-black/60 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition lg:col-span-2 lg:row-span-2 flex flex-col justify-center min-h-[10rem]">
-                          <h3 className="text-xl lg:text-2xl font-semibold mb-3">Hi, I&apos;m Fares Khanchouch</h3>
-            <p className="leading-relaxed opacity-90 text-base">
-              I love turning tricky problems into smooth, reliable systems. Whether I&apos;m writing infrastructure-as-code to spin up cloud environments, setting up seamless CI/CD pipelines, or baking security checks right into the build process, I aim to bring clarity and confidence to every project. I&apos;m passionate about crafting clean, maintainable architectures and delivering solutions that not only work today but keep running strong as you grow.
+        {/* Section heading */}
+        <BlurFade inView delay={0.05}>
+          <div className="mb-16 text-center">
+            <p className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5] mb-3">
+              01 / About
             </p>
+            <h2 className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#f8fafc] md:text-5xl">
+              {sectionTitles.about}
+            </h2>
           </div>
+        </BlurFade>
 
-          {/* Location Card */}
-          <div className="relative bg-black/40 rounded-2xl p-6 shadow-xl overflow-hidden min-h-[10rem] transform hover:scale-105 transition">
-            <div className="relative z-10">
-              <h3 className="text-xl lg:text-2xl font-semibold mb-3">Location</h3>
-              <p className="opacity-80">
-                Based in France and ready for both on-site and remote collaborations anywhere in the world.
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+          {/* Bio — 2 cols, glass card */}
+          <BlurFade inView delay={0.1} className="md:col-span-2">
+            <div className="h-full rounded-xl border border-white/[0.07] bg-white/[0.025] p-8 backdrop-blur-sm">
+              <h3 className="font-[family-name:var(--font-geist)] text-xl font-bold text-[#f8fafc] mb-4">
+                Hi, I&apos;m Fares
+              </h3>
+              <p className="text-[#b8c7d8] leading-[1.9] text-sm font-normal">
+                {about.bio}
               </p>
             </div>
-            <Image src={globeUrl} alt="Globe" width={192} height={192} className="absolute right-0 bottom-0 w-48 h-48 object-cover opacity-30 z-0" style={{ transform: 'translate(25%, 25%)' }}/>
-          </div>
+          </BlurFade>
 
-          {/* Languages Card */}
-          <div className="bg-black/40 rounded-2xl shadow-xl p-6 flex flex-col justify-center min-h-[10rem] transform hover:scale-105 transition">
-            <h3 className="text-xl lg:text-2xl font-semibold mb-3">Languages</h3>
-            <p className="leading-relaxed opacity-90">
-              I am fluent in <span className="font-medium">English</span>, <span className="font-medium">Arabic</span>, and <span className="font-medium">French</span>, with a foundational knowledge of <span className="font-medium">German</span>.
-            </p>
-          </div>
-
-          {/* Skills Carousel */}
-          <div className="lg:col-span-3 bg-black/40 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row min-h-[18rem] overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeCardIndex}
-                className="w-full h-full flex flex-col md:flex-row"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
+          {/* Location */}
+          <BlurFade inView delay={0.15}>
+            <div className="relative h-full min-h-[220px] rounded-xl border border-white/[0.07] bg-white/[0.025] overflow-hidden backdrop-blur-sm">
+              {/* Full regional PNG map as card background */}
+              <div
+                className="absolute inset-0 pointer-events-none select-none"
+                aria-hidden="true"
               >
-                {/* Title Container */}
-                <div className="w-full md:w-1/3 flex items-center justify-center">
-                  <h3 className="text-2xl lg:text-3xl font-bold text-center leading-tight">
-                    {(() => {
-                      const titleParts = activeCard.title.split(' & ');
-                      if (titleParts.length === 2) {
-                        return (
-                          <>
-                            <span>{titleParts[0]}</span><br />
-                            <span className="text-purple-400">&amp;</span><br />
-                            <span>{titleParts[1]}</span>
-                          </>
-                        );
-                      }
-                      return activeCard.title;
-                    })()}
+                {/* PNG — full Mediterranean region, Tunisia highlighted */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/tn-region.png"
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{
+                    filter: "brightness(0.22) saturate(0.85)",
+                    objectPosition: "55% 45%",
+                  }}
+                />
+                {/* Gradient fades — blend edges into dark card */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/85 via-[#0a0f1e]/20 to-[#0a0f1e]/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/65 via-transparent to-transparent" />
+              </div>
+
+              {/* Card content */}
+              <div className="relative z-10 p-7">
+                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
+                  Location
+                </p>
+                <div className="flex items-center gap-2.5 mb-2">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a7fa5] opacity-60" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4a7fa5]" />
+                  </span>
+                  <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc]">
+                    {about.location.city}
                   </h3>
                 </div>
-                {/* Icons container with absolute positioning */}
-                <motion.div className="relative flex-1 w-full h-80 md:h-auto mt-8 md:mt-0" id="drag-container">
-                  {activeCard.technologies.map((tech) => (
-                    <motion.div
-                      key={tech.name}
-                      title={tech.name}
-                      className={`absolute p-3 bg-gray-700/50 backdrop-blur-sm rounded-xl cursor-grab active:cursor-grabbing ${tech.position} ${tech.rotation}`}
-                      drag
-                      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                      dragElastic={0.2}
-                    >
-                      {tech.icon}
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                <p className="text-[#94a3b8] text-sm leading-relaxed max-w-[160px]">
+                  {about.location.description}
+                </p>
+              </div>
+            </div>
+          </BlurFade>
+
+          {/* Stats row */}
+          {STATS.map((stat, i) => (
+            <BlurFade inView delay={0.2 + i * 0.05} key={stat.label}>
+              <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-6 text-center backdrop-blur-sm">
+                <p className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#4a7fa5] mb-1">
+                  {stat.value}
+                </p>
+                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.15em] text-[#64748b]">
+                  {stat.label}
+                </p>
+              </div>
+            </BlurFade>
+          ))}
+
+          {/* Languages */}
+          <BlurFade inView delay={0.35} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-5">
+                Languages
+              </p>
+              <div className="flex flex-wrap gap-4">
+                {about.languages.items.map((lang) => (
+                  <div key={lang.name} className="flex items-center gap-2.5">
+                    <span className="font-[family-name:var(--font-geist)] text-sm font-semibold text-[#f8fafc]">
+                      {lang.name}
+                    </span>
+                    <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-[#4a7fa5] border border-[#4a7fa5]/30 rounded px-2 py-0.5 bg-[#4a7fa5]/5">
+                      {lang.level}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+
+          {/* Education */}
+          <BlurFade inView delay={0.38} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-4">
+                {about.education.heading}
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="font-[family-name:var(--font-geist)] text-base font-bold text-[#f8fafc]">
+                    {about.education.degree}
+                  </h3>
+                  <p className="text-sm text-[#94a3b8]">{about.education.school}</p>
+                </div>
+                <span className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a7fa5] shrink-0">
+                  {about.education.years}
+                </span>
+              </div>
+            </div>
+          </BlurFade>
+
+          {/* Tech stack — full width */}
+          <BlurFade inView delay={0.4} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-6">
+                Tech Stack
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {skills.map((group, gi) => (
+                  <motion.div
+                    key={group.category}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: gi * 0.07 }}
+                  >
+                    <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.18em] text-[#4a7fa5]/70 mb-3">
+                      {group.category}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map((item) => {
+                        const Icon = SKILL_ICONS[item];
+                        return (
+                          <span
+                            key={item}
+                            className="inline-flex items-center gap-1.5 text-xs text-[#94a3b8] border border-white/[0.08] rounded px-2.5 py-1.5 bg-white/[0.02] transition-all duration-200 hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5 cursor-default"
+                          >
+                            {Icon && <Icon size={11} className="opacity-70 shrink-0" />}
+                            {item}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+
         </div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

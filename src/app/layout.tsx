@@ -1,6 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import BackgroundLayout from "../components/BackgroundLayout";
+import { Geist, Geist_Mono } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Fares Khanchouch | Cloud & DevOps Engineer Portfolio",
@@ -74,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn(geist.variable, geistMono.variable)}>
       <head>
         {/* Structured Data for Person */}
         <script
@@ -144,7 +158,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         
         {/* Additional meta tags for better SEO */}
-        <meta name="theme-color" content="#3b82f6" />
+        <meta name="theme-color" content="#0a0f1e" />
         <meta name="color-scheme" content="dark light" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

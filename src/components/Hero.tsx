@@ -10,12 +10,12 @@ import React from "react";
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
 
 export default function Hero() {
@@ -30,15 +30,17 @@ export default function Hero() {
     <section
       ref={ref}
       id="home"
-      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen w-full items-center overflow-hidden"
     >
-      {/* Premium atmosphere — single soft radial from top-right, no grid */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Main glow — top right */}
-        <div className="absolute -top-40 right-0 w-[600px] h-[600px] rounded-full bg-[#4a7fa5] opacity-[0.05] blur-[120px]" />
-        {/* Secondary glow — bottom left */}
-        <div className="absolute bottom-0 -left-20 w-[400px] h-[400px] rounded-full bg-[#2a5f85] opacity-[0.04] blur-[100px]" />
-        {/* Noise texture overlay */}
+      {/* ── Background atmosphere ── */}
+      <div className="pointer-events-none absolute inset-0">
+        {/* Right-side glow — behind the figure */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#4a7fa5] opacity-[0.07] blur-[130px]" />
+        {/* Secondary soft glow top-right */}
+        <div className="absolute -top-20 right-1/4 w-[400px] h-[400px] rounded-full bg-[#2a5f85] opacity-[0.05] blur-[100px]" />
+        {/* Bottom-left counter glow */}
+        <div className="absolute bottom-0 -left-20 w-[350px] h-[350px] rounded-full bg-[#1a3f65] opacity-[0.04] blur-[90px]" />
+        {/* Grain texture */}
         <div
           className="absolute inset-0 opacity-[0.018]"
           style={{
@@ -48,51 +50,52 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-6 md:px-12 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-16 md:gap-12">
+      {/* ── Main content grid ── */}
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center min-h-screen">
 
           {/* ── Left: Text ── */}
           <motion.div
-            className="flex flex-col gap-7 text-center md:text-left"
+            className="flex flex-col gap-6 text-center md:text-left py-32 md:py-0"
             variants={stagger}
             initial="hidden"
             animate="visible"
           >
             {/* Eyebrow */}
             <motion.div variants={fadeUp} className="flex items-center gap-3 justify-center md:justify-start">
-              <span className="h-px w-8 bg-[#4a7fa5]" />
+              <span className="h-px w-8 bg-[#4a7fa5] shrink-0" />
               <span className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5]">
                 {hero.eyebrow}
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Name — two-line stacked */}
             <motion.h1
               variants={fadeUp}
-              className="font-[family-name:var(--font-geist)] text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-[#f8fafc] sm:text-6xl lg:text-7xl"
+              className="font-[family-name:var(--font-geist)] font-extrabold leading-[1.0] tracking-tight text-[#f8fafc]"
             >
-              Fares{" "}
-              <span className="relative inline-block">
+              <span className="block text-[3rem] sm:text-[4.5rem] lg:text-[5.5rem]">Fares</span>
+              <span className="block text-[3rem] sm:text-[4.5rem] lg:text-[5.5rem] relative">
                 <span className="text-[#4a7fa5]">Khanchouch</span>
-                {/* Underline accent */}
                 <motion.span
-                  className="absolute -bottom-1 left-0 h-[2px] w-full bg-[#4a7fa5] origin-left"
+                  className="absolute -bottom-1 left-0 h-[2px] bg-[#4a7fa5] origin-left"
+                  style={{ width: "100%" }}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 />
               </span>
             </motion.h1>
 
             {/* Divider */}
             <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
-              <div className="h-px w-16 bg-gradient-to-r from-[#4a7fa5] to-transparent" />
+              <div className="h-px w-12 bg-gradient-to-r from-[#4a7fa5] to-transparent" />
             </motion.div>
 
             {/* Tagline */}
             <motion.p
               variants={fadeUp}
-              className="max-w-md text-base text-[#64748b] leading-relaxed mx-auto md:mx-0"
+              className="max-w-sm text-base text-[#64748b] leading-relaxed mx-auto md:mx-0"
             >
               {hero.tagline}
             </motion.p>
@@ -100,13 +103,12 @@ export default function Hero() {
             {/* CTAs */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-col gap-3 sm:flex-row justify-center md:justify-start"
+              className="flex flex-col gap-3 sm:flex-row justify-center md:justify-start pt-2"
             >
               <a
                 href={hero.cta.primary.href}
                 className="group relative flex items-center justify-center overflow-hidden rounded bg-[#4a7fa5] px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#5a8fb5]"
               >
-                {/* Shimmer on hover */}
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
                 {hero.cta.primary.label}
               </a>
@@ -122,66 +124,57 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── Right: Portrait ── */}
+          {/* ── Right: Floating cutout figure ── */}
           <motion.div
-            className="flex items-center justify-center md:justify-end"
-            initial={{ opacity: 0, scale: 0.94, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden md:flex items-end justify-end self-end"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative">
-              {/* Outer decorative border */}
-              <div className="absolute -inset-3 rounded-2xl border border-[#4a7fa5]/10" />
-              <div className="absolute -inset-6 rounded-3xl border border-[#4a7fa5]/05" />
+              {/* Glow behind figure */}
+              <div className="absolute inset-0 -z-10 scale-75 translate-y-8 rounded-full bg-[#4a7fa5] opacity-[0.12] blur-[60px]" />
 
-              {/* Corner accents */}
-              <span className="absolute -top-px -left-px w-8 h-8 border-t-2 border-l-2 border-[#4a7fa5] rounded-tl-xl" />
-              <span className="absolute -bottom-px -right-px w-8 h-8 border-b-2 border-r-2 border-[#4a7fa5] rounded-br-xl" />
-
-              {/* Photo */}
-              <div className="relative w-[260px] h-[340px] sm:w-[310px] sm:h-[400px] md:w-[360px] md:h-[460px] rounded-xl overflow-hidden">
+              {/* Cutout photo — black bg disappears via mix-blend-mode */}
+              <div
+                className="relative"
+                style={{ width: "380px", height: "520px" }}
+              >
                 <Image
-                  src={hero.photo}
+                  src="/fares-cutout.png"
                   alt={`${hero.name} portrait`}
                   fill
+                  sizes="380px"
                   className="object-cover object-top"
+                  style={{ mixBlendMode: "lighten" }}
                   priority
                 />
-                {/* Bottom gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/50 via-transparent to-transparent" />
+                {/* Fade to floor */}
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0f1e] to-transparent" />
               </div>
-
-              {/* Title badge */}
-              <motion.div
-                className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <span className="font-[family-name:var(--font-geist-mono)] inline-block rounded bg-[#0d1224] border border-[#4a7fa5]/25 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5]">
-                  {hero.title}
-                </span>
-              </motion.div>
             </div>
           </motion.div>
-        </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-        >
-          <span className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5]/50">scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          >
-            <ArrowDown className="h-4 w-4 text-[#4a7fa5]/40" />
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
+
+      {/* ── Scroll indicator ── */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
+      >
+        <span className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5]/40">
+          scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+        >
+          <ArrowDown className="h-4 w-4 text-[#4a7fa5]/35" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

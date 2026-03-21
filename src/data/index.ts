@@ -21,7 +21,7 @@ export const hero = {
   title: "Infrastructure & Automation Engineer",
   eyebrow: "Infrastructure & Automation Engineer",
   tagline: "I build scalable systems and automate modern infrastructure.",
-  photo: "/DSC06493.jpg",
+  photo: "/fares-cutout.png",
   cta: {
     primary:   { label: "Contact Me",      href: "#contact"     },
     secondary: { label: "Download Resume", href: "/resume.pdf"  },

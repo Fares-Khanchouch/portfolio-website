@@ -144,7 +144,8 @@ export default function Hero() {
                   src="/fares-cutout.png"
                   alt={`${hero.name} portrait`}
                   fill
-                  sizes="380px"
+                  sizes="(max-width: 1280px) 420px, 500px"
+                  quality={95}
                   className="object-cover object-top"
                   style={{ mixBlendMode: "lighten" }}
                   priority

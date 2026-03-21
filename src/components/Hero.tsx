@@ -126,7 +126,7 @@ export default function Hero() {
 
           {/* ── Right: Floating cutout figure ── */}
           <motion.div
-            className="hidden md:flex items-end justify-end self-end"
+            className="hidden md:flex items-center justify-end self-center"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}

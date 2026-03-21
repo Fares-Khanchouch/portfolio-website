@@ -2,12 +2,42 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useSectionBackground } from "./BackgroundLayout";
 import { useSectionInView } from "@/lib/hooks/useSectionInView";
 import { about, sectionTitles } from "@/data/content";
 import { skills } from "@/data/skills";
 import { BlurFade } from "@/components/ui/blur-fade";
+import {
+  SiAmazonwebservices, SiGooglecloud, SiTerraform, SiAnsible,
+  SiKubernetes, SiDocker, SiGithubactions, SiJenkins,
+  SiGo, SiPython, SiJavascript, SiTypescript,
+  SiNextdotjs, SiReact, SiNodedotjs, SiTailwindcss,
+  SiPrometheus, SiGrafana, SiZapier,
+} from "react-icons/si";
+
+type IconComponent = React.ComponentType<{ className?: string; size?: number }>;
+
+const SKILL_ICONS: Record<string, IconComponent> = {
+  "AWS": SiAmazonwebservices,
+  "GCP": SiGooglecloud,
+  "Terraform": SiTerraform,
+  "Ansible": SiAnsible,
+  "Kubernetes": SiKubernetes,
+  "Docker": SiDocker,
+  "GitHub Actions": SiGithubactions,
+  "Jenkins": SiJenkins,
+  "Go": SiGo,
+  "Python": SiPython,
+  "JavaScript": SiJavascript,
+  "TypeScript": SiTypescript,
+  "Next.js": SiNextdotjs,
+  "React": SiReact,
+  "Node.js": SiNodedotjs,
+  "Tailwind CSS": SiTailwindcss,
+  "Prometheus": SiPrometheus,
+  "Grafana": SiGrafana,
+  "Zapier": SiZapier,
+};
 
 const STATS = [
   { value: "3+", label: "Years Experience" },
@@ -48,7 +78,7 @@ export default function About() {
               <h3 className="font-[family-name:var(--font-geist)] text-xl font-bold text-[#f8fafc] mb-4">
                 Hi, I&apos;m Fares
               </h3>
-              <p className="text-[#94a3b8] leading-[1.8] text-sm">
+              <p className="text-[#b8c7d8] leading-[1.9] text-sm font-normal">
                 {about.bio}
               </p>
             </div>
@@ -57,22 +87,26 @@ export default function About() {
           {/* Location */}
           <BlurFade inView delay={0.15}>
             <div className="relative h-full min-h-[180px] rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 overflow-hidden backdrop-blur-sm">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-2">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
                 Location
               </p>
-              <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc] mb-2">
-                France
-              </h3>
-              <p className="text-[#64748b] text-xs leading-relaxed">
-                Open to remote &amp; on-site worldwide
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a7fa5] opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4a7fa5]" />
+                </span>
+                <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc]">
+                  {about.location.city}
+                </h3>
+              </div>
+              <p className="text-[#64748b] text-xs leading-relaxed mb-4">
+                {about.location.description}
               </p>
-              <Image
-                src="/globe.png"
-                alt="Globe"
-                width={140}
-                height={140}
-                className="absolute -right-4 -bottom-4 opacity-[0.07] pointer-events-none select-none"
-              />
+              <div className="absolute bottom-5 right-6 text-right">
+                <p className="font-[family-name:var(--font-geist-mono)] text-[9px] uppercase tracking-widest text-[#4a7fa5]/30 mb-0.5">coords</p>
+                <p className="font-[family-name:var(--font-geist-mono)] text-[11px] text-[#4a7fa5]/25 leading-relaxed">33.8869° N</p>
+                <p className="font-[family-name:var(--font-geist-mono)] text-[11px] text-[#4a7fa5]/25">9.5375° E</p>
+              </div>
             </div>
           </BlurFade>
 
@@ -111,6 +145,26 @@ export default function About() {
             </div>
           </BlurFade>
 
+          {/* Education */}
+          <BlurFade inView delay={0.38} className="md:col-span-3">
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-4">
+                {about.education.heading}
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div>
+                  <h3 className="font-[family-name:var(--font-geist)] text-base font-bold text-[#f8fafc]">
+                    {about.education.degree}
+                  </h3>
+                  <p className="text-sm text-[#94a3b8] mt-0.5">{about.education.school}</p>
+                </div>
+                <span className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a7fa5] shrink-0">
+                  {about.education.years}
+                </span>
+              </div>
+            </div>
+          </BlurFade>
+
           {/* Tech stack — full width */}
           <BlurFade inView delay={0.4} className="md:col-span-3">
             <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
@@ -130,14 +184,18 @@ export default function About() {
                       {group.category}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {group.items.map((item) => (
-                        <span
-                          key={item}
-                          className="text-xs text-[#94a3b8] border border-white/8 rounded px-2.5 py-1 bg-white/[0.02] transition-all duration-200 hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5 cursor-default"
-                        >
-                          {item}
-                        </span>
-                      ))}
+                      {group.items.map((item) => {
+                        const Icon = SKILL_ICONS[item];
+                        return (
+                          <span
+                            key={item}
+                            className="inline-flex items-center gap-1.5 text-xs text-[#94a3b8] border border-white/[0.08] rounded px-2.5 py-1.5 bg-white/[0.02] transition-all duration-200 hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5 cursor-default"
+                          >
+                            {Icon && <Icon size={11} className="opacity-70 shrink-0" />}
+                            {item}
+                          </span>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 ))}

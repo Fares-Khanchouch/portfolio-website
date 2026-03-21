@@ -8,6 +8,7 @@ export const meta = {
 export const hero = {
   name: "Fares Khanchouch",
   title: "Infrastructure & Automation Engineer",
+  eyebrow: "Infrastructure & Automation Engineer",
   tagline: "I build scalable systems and automate modern infrastructure.",
   photo: "/DSC06493.jpg",
   cta: {
@@ -18,11 +19,17 @@ export const hero = {
 
 export const about = {
   heading: "About Me",
-  bio: "I love turning complex problems into smooth, reliable systems. Whether I'm writing infrastructure-as-code to spin up cloud environments, setting up seamless CI/CD pipelines, or baking security checks right into the build process, I aim to bring clarity and confidence to every project. I'm passionate about crafting clean, maintainable architectures and delivering solutions that not only work today but keep running strong as you grow.",
+  bio: "I build the infrastructure layer that lets engineering teams move fast and sleep well. Cloud environments defined as code, CI/CD pipelines that ship reliably, and security baked in from the start — not bolted on at the end. I care about systems that are transparent, resilient, and easy for any engineer to operate.",
   location: {
     heading: "Location",
-    description:
-      "Based in France — open to on-site and remote collaborations worldwide.",
+    city: "Tunisia",
+    description: "Open to on-site and remote collaborations worldwide.",
+  },
+  education: {
+    heading: "Education",
+    degree: "Bachelor's in Computer Science",
+    school: "ISTY Vélizy — Université de Versailles",
+    years: "2020 – 2023",
   },
   languages: {
     heading: "Languages",

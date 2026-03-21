@@ -148,16 +148,10 @@ export default function About() {
               </p>
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                 <div className="flex flex-col gap-1.5">
-                  <div className="flex items-center gap-2.5 flex-wrap">
-                    <h3 className="font-[family-name:var(--font-geist)] text-base font-bold text-[#f8fafc]">
-                      {about.education.degree}
-                    </h3>
-                    <span className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-wider text-[#4a7fa5] border border-[#4a7fa5]/30 rounded px-2 py-0.5 bg-[#4a7fa5]/5 shrink-0">
-                      {about.education.badge}
-                    </span>
-                  </div>
+                  <h3 className="font-[family-name:var(--font-geist)] text-base font-bold text-[#f8fafc]">
+                    {about.education.degree}
+                  </h3>
                   <p className="text-sm text-[#94a3b8]">{about.education.school}</p>
-                  <p className="font-[family-name:var(--font-geist-mono)] text-[10px] text-[#4a7fa5]/60">{about.education.note}</p>
                 </div>
                 <span className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a7fa5] shrink-0">
                   {about.education.years}

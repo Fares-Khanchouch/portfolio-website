@@ -27,11 +27,9 @@ export const about = {
   },
   education: {
     heading: "Education",
-    badge: "Diplôme d'Ingénieur",
     degree: "Engineering in Information & Communication Technology Architectures",
     school: "ISTY Vélizy — Université de Versailles Saint-Quentin",
     years: "2020 – 2023",
-    note: "5-year engineering programme (Cycle Préparatoire Intégré)",
   },
   languages: {
     heading: "Languages",

@@ -48,6 +48,21 @@ export default function Hero() {
             backgroundSize: "200px 200px",
           }}
         />
+        {/* Mobile: cutout photo as faded background — lives here so it's always behind text */}
+        <div className="md:hidden absolute inset-0" style={{ overflow: "hidden" }}>
+          <Image
+            src="/fares-cutout.png"
+            alt=""
+            fill
+            sizes="100vw"
+            quality={90}
+            className="object-cover object-top"
+            style={{ mixBlendMode: "lighten", opacity: 0.18 }}
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-[#0a0f1e]/40 to-[#0a0f1e]/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/70 via-transparent to-[#0a0f1e]/70" />
+        </div>
       </div>
 
       {/* ── Main content grid ── */}
@@ -155,30 +170,6 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ── Mobile: Cutout figure as background ── */}
-          <motion.div
-            className="md:hidden absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.2 }}
-            aria-hidden="true"
-          >
-            <div className="absolute inset-0" style={{ overflow: "hidden" }}>
-              <Image
-                src="/fares-cutout.png"
-                alt=""
-                fill
-                sizes="100vw"
-                quality={90}
-                className="object-cover object-top"
-                style={{ mixBlendMode: "lighten", opacity: 0.18 }}
-                priority
-              />
-              {/* Heavy vignette so text stays readable */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-[#0a0f1e]/40 to-[#0a0f1e]/80" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/70 via-transparent to-[#0a0f1e]/70" />
-            </div>
-          </motion.div>
 
         </div>
       </div>

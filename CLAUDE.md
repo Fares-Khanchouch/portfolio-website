@@ -1,10 +1,15 @@
 # Fares Khanchouch — Portfolio Redesign
 
-## Who I Am
-Cloud & DevOps / Infrastructure & Automation Engineer based in France.
-Stack: AWS, GCP, Terraform, Ansible, Kubernetes, Docker, Helm, GitHub Actions,
-Jenkins, n8n, Python, Go, JavaScript, Next.js, React, Tailwind CSS.
-Fluent in English, French, Arabic, basic German.
+## Who I Am (updated 2026-09-29)
+Forward Deployed Engineer · Integrations & LLM Agent Tooling, based in Tunis.
+Integration Consultant at Axe Finance (credit-platform delivery for banks in
+Qatar and Saudi Arabia, Python MCP servers + Claude skills); before that a
+freelance automation engineer (n8n, Make, LLM pipelines). Stack worth showing:
+Python, TypeScript, C#, Go, T-SQL, MCP / Claude agent skills, REST APIs, n8n,
+Docker, Kubernetes, Terraform, AWS. Arabic (native), French, English.
+Content rules and the current plan: docs/PLAN_2026-10.md (public page: no
+job-search signals, no client names or client-internal figures). Where this
+file's older sections below conflict with that plan, the plan wins.
 
 ## The Goal
 Full visual redesign of this Next.js 15 portfolio. Make it feel premium,

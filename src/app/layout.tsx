@@ -1,169 +1,80 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import BackgroundLayout from "../components/BackgroundLayout";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { about, hero, site, social } from "@/data";
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-  display: "swap",
-});
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Fares Khanchouch | Cloud & DevOps Engineer Portfolio",
-  description: "Cloud & DevOps Engineer specializing in AWS, Kubernetes, Terraform, and automation. Building scalable infrastructure and CI/CD pipelines. View my projects and experience.",
-  keywords: [
-    "Cloud Engineer",
-    "DevOps Engineer", 
-    "AWS",
-    "Kubernetes",
-    "Terraform",
-    "Docker",
-    "CI/CD",
-    "Infrastructure as Code",
-    "Automation",
-    "Python",
-    "Go",
-    "JavaScript",
-    "Portfolio"
-  ],
-  authors: [{ name: "Fares Khanchouch" }],
-  creator: "Fares Khanchouch",
-  publisher: "Fares Khanchouch",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://fares-khanchouch.vercel.app'),
-  alternates: {
-    canonical: '/',
-  },
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: `%s · ${site.name}` },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  alternates: { canonical: "/" },
+  formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
-    title: "Fares Khanchouch | Cloud & DevOps Engineer Portfolio",
-    description: "Cloud & DevOps Engineer specializing in AWS, Kubernetes, Terraform, and automation. Building scalable infrastructure and CI/CD pipelines.",
-    url: 'https://fares-khanchouch.vercel.app',
-    siteName: 'Fares Khanchouch Portfolio',
-    images: [
-      {
-        url: '/avatar.png',
-        width: 1200,
-        height: 630,
-        alt: 'Fares Khanchouch - Cloud & DevOps Engineer',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+    type: "profile",
+    firstName: hero.firstName,
+    lastName: hero.lastName,
+    url: site.url,
+    siteName: site.name,
+    title: site.title,
+    description: site.description,
+    locale: site.locale,
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Fares Khanchouch | Cloud & DevOps Engineer Portfolio",
-    description: "Cloud & DevOps Engineer specializing in AWS, Kubernetes, Terraform, and automation. Building scalable infrastructure and CI/CD pipelines.",
-    images: ['/avatar.png'],
-  },
+  twitter: { card: "summary_large_image", title: site.title, description: site.description },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en" className={cn(geist.variable, geistMono.variable)}>
-      <head>
-        {/* Structured Data for Person */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Fares Khanchouch",
-              "jobTitle": "Cloud & DevOps Engineer",
-              "description": "Cloud & DevOps Engineer specializing in AWS, Kubernetes, Terraform, and automation",
-              "url": "https://fares-khanchouch.vercel.app",
-              "image": "https://fares-khanchouch.vercel.app/avatar.png",
-              "sameAs": [
-                "https://github.com/Fares-Khanchouch"
-              ],
-              "knowsAbout": [
-                "AWS",
-                "Kubernetes", 
-                "Terraform",
-                "Docker",
-                "CI/CD",
-                "Infrastructure as Code",
-                "Python",
-                "Go",
-                "JavaScript",
-                "DevOps",
-                "Cloud Computing"
-              ],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Freelance"
-              },
-              "alumniOf": {
-                "@type": "Organization", 
-                "name": "Nuage Up"
-              }
-            })
-          }}
-        />
-        
-        {/* Structured Data for WebSite */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "Fares Khanchouch Portfolio",
-              "url": "https://fares-khanchouch.vercel.app",
-              "description": "Cloud & DevOps Engineer Portfolio",
-              "author": {
-                "@type": "Person",
-                "name": "Fares Khanchouch"
-              }
-            })
-          }}
-        />
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0f1e" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f8fa" },
+  ],
+  colorScheme: "dark light",
+};
 
-        {/* Preconnect to external domains for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Favicon and app icons */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/avatar.png" />
-        <link rel="manifest" href="/manifest.json" />
-        
-        {/* Additional meta tags for better SEO */}
-        <meta name="theme-color" content="#0a0f1e" />
-        <meta name="color-scheme" content="dark light" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
+// Structured data so search engines connect this page, the GitHub and the
+// LinkedIn profiles to one person.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  image: `${site.url}/avatar-512.jpg`,
+  jobTitle: hero.headline,
+  description: site.description,
+  email: `mailto:${social.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Tunis", addressCountry: "TN" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "ISTY, Université Paris-Saclay" },
+  knowsLanguage: ["ar", "fr", "en"],
+  knowsAbout: about.skills,
+  sameAs: [social.github, social.linkedin],
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>
-        <BackgroundLayout>{children}</BackgroundLayout>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-bg-raised focus:px-4 focus:py-2 focus:text-fg"
+        >
+          Skip to content
+        </a>
+        {children}
+        <script
+          type="application/ld+json"
+          // JSON.stringify output of static data; "<" escaped so it can't close the tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        />
       </body>
     </html>
   );

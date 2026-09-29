@@ -1,111 +1,109 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { nav, social } from "@/data";
 import { cn } from "@/lib/utils";
-import { social } from "@/data";
 
-const navLinks = [
-  { name: "Home", id: "home" },
-  { name: "About", id: "about" },
-  { name: "Work", id: "work" },
-  { name: "Projects", id: "projects" },
-  { name: "Contact", id: "contact" },
-];
-
-export default function Navbar() {
+// On the home page links are in-page anchors; on other pages they point
+// back to the home page's sections.
+export default function Navbar({ home = true }: { home?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close menu on resize to desktop
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 640) setMenuOpen(false); };
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onResize = () => window.innerWidth >= 768 && setOpen(false);
+    window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
+  const href = (id: string) => (home ? `#${id}` : `/#${id}`);
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-        scrolled
-          ? "bg-[#0a0f1e]/90 backdrop-blur-md border-b border-white/5 shadow-sm"
-          : "bg-transparent"
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200",
+        scrolled || open
+          ? "border-b border-line bg-bg/85 backdrop-blur-md"
+          : "border-b border-transparent",
       )}
     >
-      <nav className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
-        {/* Monogram mark */}
+      <nav
+        aria-label="Main"
+        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6"
+      >
         <Link
-          href="#home"
-          className="font-[family-name:var(--font-geist-mono)] text-base font-bold tracking-[0.08em] text-[#f8fafc] hover:text-[#4a7fa5] transition-colors duration-200"
+          href="/"
+          className="font-mono text-sm font-semibold tracking-wider text-fg transition-colors duration-200 hover:text-accent"
+          aria-label="Fares Khanchouch, home"
         >
-          fk<span className="text-[#4a7fa5]">.</span>
+          fk<span className="text-accent">.</span>
         </Link>
 
-        {/* Desktop nav */}
-        <ul className="hidden sm:flex items-center space-x-8 text-sm font-medium text-[#94a3b8]">
-          {navLinks.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                className="uppercase tracking-wider transition-colors duration-200 hover:text-[#4a7fa5] relative group"
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#4a7fa5] transition-all duration-300 group-hover:w-full" />
+        <ul className="hidden items-center gap-7 text-sm text-fg-muted md:flex">
+          {nav.map((l) => (
+            <li key={l.id}>
+              <a href={href(l.id)} className="transition-colors duration-200 hover:text-fg">
+                {l.name}
               </a>
             </li>
           ))}
           <li>
             <a
               href={social.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-[#4a7fa5] text-[#4a7fa5] px-4 py-1.5 rounded text-xs uppercase tracking-wider hover:bg-[#4a7fa5] hover:text-white transition-colors duration-200"
+              className="rounded-md border border-line-strong px-3 py-1.5 text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
             >
-              Resume
+              Résumé
             </a>
           </li>
         </ul>
 
-        {/* Mobile hamburger */}
         <button
-          className="sm:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
+          type="button"
+          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-fg md:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((o) => !o)}
         >
-          <span className={cn("block w-5 h-px bg-[#f8fafc] transition-all duration-300", menuOpen && "rotate-45 translate-y-2")} />
-          <span className={cn("block w-5 h-px bg-[#f8fafc] transition-all duration-300", menuOpen && "opacity-0")} />
-          <span className={cn("block w-5 h-px bg-[#f8fafc] transition-all duration-300", menuOpen && "-rotate-45 -translate-y-2")} />
+          {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="sm:hidden bg-[#0a0f1e]/95 backdrop-blur-md border-t border-white/5 px-6 py-4 flex flex-col gap-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={() => setMenuOpen(false)}
-              className="text-sm font-medium uppercase tracking-wider text-[#94a3b8] hover:text-[#4a7fa5] transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          <a
-            href={social.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium uppercase tracking-wider text-[#4a7fa5] hover:text-white transition-colors"
-          >
-            Resume
-          </a>
+      {open && (
+        <div id="mobile-menu" className="border-t border-line px-4 pb-4 md:hidden">
+          <ul className="flex flex-col">
+            {nav.map((l) => (
+              <li key={l.id}>
+                <a
+                  href={href(l.id)}
+                  onClick={() => setOpen(false)}
+                  className="block py-3 text-base text-fg-muted transition-colors hover:text-fg"
+                >
+                  {l.name}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={social.resume} className="block py-3 text-base text-accent">
+                Résumé (PDF)
+              </a>
+            </li>
+          </ul>
         </div>
       )}
     </header>

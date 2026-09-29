@@ -1,61 +1,31 @@
-import { Github, Linkedin, Mail, FileText } from "lucide-react";
-import { social } from "@/data";
+import { social, site } from "@/data";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
+  const links = [
+    { label: "Email", href: `mailto:${social.email}` },
+    { label: "GitHub", href: social.github },
+    { label: "LinkedIn", href: social.linkedin },
+    { label: "Résumé", href: social.resume },
+  ];
   return (
-    <footer className="w-full border-t border-[#4a7fa5]/10 bg-[#0a0f1e] py-8 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-
-        {/* Left: monogram + copyright */}
-        <div className="flex items-center gap-4">
-          <span className="font-[family-name:var(--font-geist-mono)] text-sm font-bold tracking-[0.08em] text-[#f8fafc]">
-            fk<span className="text-[#4a7fa5]">.</span>
-          </span>
-          <p className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#64748b]">
-            © {year} Fares Khanchouch
-          </p>
-        </div>
-
-        {/* Right: social links */}
-        <div className="flex items-center gap-5">
-          <a
-            href={`mailto:${social.email}`}
-            aria-label="Email"
-            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
-          >
-            <Mail className="h-4 w-4" />
-          </a>
-          <a
-            href={social.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
-          >
-            <Github className="h-4 w-4" />
-          </a>
-          <a
-            href={social.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
-          >
-            <Linkedin className="h-4 w-4" />
-          </a>
-          <a
-            href={social.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Resume"
-            className="text-[#64748b] hover:text-[#4a7fa5] transition-colors duration-200"
-          >
-            <FileText className="h-4 w-4" />
-          </a>
-        </div>
-
+    <footer className="border-t border-line">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm text-fg-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p>
+          © {new Date().getFullYear()} {site.name}
+        </p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          {links.map((l) => (
+            <li key={l.label}>
+              <a
+                href={l.href}
+                {...(l.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="transition-colors duration-200 hover:text-fg"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );

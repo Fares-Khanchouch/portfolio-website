@@ -1,288 +1,216 @@
 // ================================================================
-//  PORTFOLIO CONTENT — edit this file to update your entire site
-//  No component files need to be touched.
+//  PORTFOLIO CONTENT: edit this file to update the entire site.
+//  Components only read from here.
+//
+//  Rules (docs/PLAN_2026-10.md): every fact matches the résumé; no
+//  job-search signals (no "open to opportunities", relocation or
+//  availability); no client names or client-internal figures on this
+//  public page.
 // ================================================================
 
-
-// ─── SITE META ──────────────────────────────────────────────────
-
-export const meta = {
-  title: "Fares Khanchouch — Infrastructure & Automation Engineer",
-  description:
-    "Cloud & DevOps engineer specialising in scalable infrastructure, CI/CD automation, and Kubernetes. Based in Tunisia, open to remote.",
+export const site = {
   url: "https://fareskhanchouch.com",
+  name: "Fares Khanchouch",
+  title: "Fares Khanchouch · Forward Deployed Engineer",
+  description:
+    "Forward deployed engineer building integrations and LLM agent tooling for enterprise systems: credit-platform delivery for banks, MCP servers and Claude skills, and automation.",
+  locale: "en_US",
 };
 
+export const social = {
+  email: "fares.khanchouch@gmail.com",
+  github: "https://github.com/Fares-Khanchouch",
+  linkedin: "https://www.linkedin.com/in/fares-khanchouch/",
+  resume: "/resume.pdf",
+};
 
-// ─── HERO ───────────────────────────────────────────────────────
+// EmailJS keys are public by design (they can only trigger this template).
+// Restrict allowed origins in the EmailJS dashboard.
+export const emailjs = {
+  serviceId: "service_1jmn1ld",
+  templateId: "template_ty6k1xs",
+  publicKey: "A1yyyeM4xJuzcDdAA",
+};
+
+export const nav = [
+  { name: "Work", id: "work" },
+  { name: "Projects", id: "projects" },
+  { name: "About", id: "about" },
+  { name: "Contact", id: "contact" },
+];
 
 export const hero = {
-  name: "Fares Khanchouch",
-  title: "Infrastructure & Automation Engineer",
-  eyebrow: "Open to opportunities · Based in Tunisia",
-  tagline: "I turn complex infrastructure into boring, reliable systems, so engineers can ship faster and sleep better.",
-  photo: "/fares-cutout.png",
-  cta: {
-    primary:   { label: "Contact Me",      href: "#contact"     },
-    secondary: { label: "Download Resume", href: "/resume.pdf"  },
-  },
+  firstName: "Fares",
+  lastName: "Khanchouch",
+  eyebrow: "Integrations & LLM agent tooling",
+  headline: "Forward Deployed Engineer",
+  tagline:
+    "I build the software between a company's systems and the people, and now the AI agents, that use them.",
+  photo: "/portrait.jpg",
+  photoAlt: "Portrait of Fares Khanchouch",
 };
-
-
-// ─── ABOUT ──────────────────────────────────────────────────────
 
 export const about = {
-  heading: "About Me",
-  bio: "I build the infrastructure layer that lets engineering teams move fast and sleep well. Cloud environments defined as code, CI/CD pipelines that ship reliably, and security baked in from the start rather than bolted on at the end. I care about systems that are transparent, resilient, and easy for any engineer to operate.",
-  location: {
-    heading: "Location",
-    city: "Tunisia",
-    description: "Based in Tunisia, open to remote roles worldwide.",
-  },
-  education: {
-    heading: "Education",
-    degree: "Engineering in Information & Communication Technology Architectures",
-    school: "ISTY Vélizy — Université de Versailles Saint-Quentin",
-    years: "2021 – 2024",
-  },
-  languages: {
-    heading: "Languages",
-    items: [
-      { name: "English", level: "Fluent"  },
-      { name: "French",  level: "Fluent"  },
-      { name: "Arabic",  level: "Fluent"  },
-      { name: "German",  level: "Basic"   },
-    ],
-  },
+  heading: "About",
+  paragraphs: [
+    "Hi, I'm Fares. Today I deliver credit-platform changes for banks in Qatar and Saudi Arabia, from scoping to go-live, and build agent tooling that lets an AI explain a live deployment and cite its sources.",
+    "Before that I automated workflows for clients as a freelancer. On my own time I build things like a job-market data platform and a Kubernetes operator for n8n.",
+  ],
+  facts: [
+    { label: "Based in", value: "Tunis, Tunisia" },
+    {
+      label: "Education",
+      value:
+        "Engineering degree in Computer Science · ISTY, Université Paris-Saclay · 2021 – 2024",
+    },
+    { label: "Languages", value: "Arabic (native) · French · English" },
+  ],
+  skills: [
+    "Python", "TypeScript", "C#", "Go", "T-SQL",
+    "MCP / Claude agent skills", "REST APIs", "n8n",
+    "Docker", "Kubernetes", "Terraform", "AWS",
+  ],
 };
 
-export const sectionTitles = {
-  about:   "About Me",
-  work:    "Work Experience",
-  projects:"Projects",
-  contact: "Get in Touch",
-};
-
-
-// ─── WORK HISTORY ───────────────────────────────────────────────
-
-export type Experience = {
-  date: string;
+export type Highlight = {
   title: string;
-  company: string;
-  location: string;
-  bullets: string[];
+  text: string;
+  icon: "delivery" | "integration" | "agent";
 };
 
-export const experiences: Experience[] = [
+export const now = {
+  heading: "Work",
+  role: "Integration Consultant",
+  company: "Axe Finance",
+  dates: "Dec 2025 – Present",
+  location: "Tunis",
+  highlights: [
+    {
+      icon: "delivery",
+      title: "Delivery, end to end",
+      text: "Credit-platform changes for banks in Qatar and Saudi Arabia, from scoping through UAT to go-live and support, across two production releases.",
+    },
+    {
+      icon: "integration",
+      title: "Core-banking integration",
+      text: "REST services in C# that feed customers, limits and outstandings into credit workflows, plus SMS alerts secured with OAuth, API keys and IP whitelisting.",
+    },
+    {
+      icon: "agent",
+      title: "Agent tooling",
+      text: "Python MCP servers exposing 50 typed tools and 11 Claude skills, so an agent can explain a live deployment and cite its sources.",
+    },
+  ] as Highlight[],
+};
+
+export type Role = {
+  role: string;
+  company: string;
+  dates: string;
+  summary: string;
+};
+
+export const before: Role[] = [
   {
-    date: "May 2024 – August 2024",
-    title: "Cloud & DevSecOps Intern",
+    role: "Freelance Automation Engineer",
+    company: "Independent",
+    dates: "Sep 2024 – Nov 2025",
+    summary:
+      "Automation projects for 6+ clients with n8n and Make, an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions) and KYC document pipelines with LLM/OCR extraction.",
+  },
+  {
+    role: "Cloud & DevSecOps Intern",
     company: "Nuage Up",
-    location: "Paris",
-    bullets: [
-      "Provisioned production AWS infrastructure as code with Terraform and Lambda, delivering consistent and reproducible environments with no manual steps.",
-      "Built GitHub Actions pipelines with automated security gates (Trivy, OWASP ZAP, Docker Bench), integrating shift-left security into every deployment.",
-      "Orchestrated containerised workloads on Kubernetes with RBAC and network policies, enforcing a zero-trust posture across the cluster.",
-      "Enforced code quality standards with ESLint and Staticcheck, catching issues in CI before they reached review.",
-    ],
+    dates: "May – Aug 2024",
+    summary:
+      "AWS in Terraform, CI/CD with security scanning, Kubernetes deployments with network policies and RBAC.",
   },
   {
-    date: "May 2023 – August 2023",
-    title: "Web Development Intern",
+    role: "Full-Stack Web Development Intern",
     company: "WAY2CLOUD",
-    location: "Paris",
-    bullets: [
-      "Built a full-stack e-commerce platform (React, Node.js, MongoDB) from scratch, covering product management, cart, and checkout end-to-end.",
-      "Implemented JWT-based authentication and role management, keeping the platform secure from the first commit.",
-      "Automated database backups to AWS S3 with custom Node.js scripts, eliminating manual backup risk.",
-      "Improved frontend performance and wrote unit tests for critical paths, establishing a reliable testing baseline.",
-    ],
+    dates: "May – Aug 2023",
+    summary: "An e-commerce platform in React, Node.js and MongoDB, built solo.",
   },
   {
-    date: "June 2022 – July 2022",
-    title: "DevOps Intern",
+    role: "DevOps Intern",
     company: "WAY2CLOUD",
-    location: "Paris",
-    bullets: [
-      "Automated cluster provisioning with a Python REST API, replacing multi-step manual setup with a single API call.",
-      "Containerised services with Docker and deployed to Kubernetes via Helm charts, eliminating environment drift.",
-      "Set up CI/CD with GitHub Actions, giving the team a reliable pipeline to ship and test without friction.",
-    ],
+    dates: "Jun – Jul 2022",
+    summary:
+      "A Python REST API automating Kubernetes cluster operations, containerised and deployed with Helm.",
   },
 ];
 
-
-// ─── PROJECTS ───────────────────────────────────────────────────
-
+// A project's `flow` is drawn as an animated diagram: a highlight walks the
+// steps in order (static when the visitor prefers reduced motion).
 export type Project = {
   id: string;
   title: string;
-  description: string;
-  image: string;
+  kind: string;
+  summary: string;
+  points: string[];
+  flow: string[];
   tags: string[];
-  github: string;
-  detail: {
-    overview: string;
-    architectureImage?: string;
-    features: { title: string; description: string }[];
-    achievements: string[];
-    roadmap?: { area: string; items: string[] }[];
-  };
+  link?: { label: string; href: string; external?: boolean };
 };
 
 export const projects: Project[] = [
   {
-    id: "save-and-tailor",
-    title: "Save & Tailor",
-    description:
-      "One-click job capture and instant, tailored résumé & cover-letter generation.",
-    image: "/projects/1/workflow.png",
-    tags: ["Chrome Extension", "n8n Workflows", "Airtable", "Puppeteer"],
-    github: "https://github.com/Fares-Khanchouch/Saveandtailor-n8n",
-    detail: {
-      overview:
-        "Save & Tailor is a browser extension that captures job listings with a single click and automatically generates a tailored résumé and cover letter using n8n automation workflows, Airtable for storage, and Puppeteer for document rendering.",
-      features: [
-        {
-          title: "One-Click Job Capture",
-          description:
-            "Chrome extension detects job postings and extracts structured data with a single click.",
-        },
-        {
-          title: "Automated Tailoring",
-          description:
-            "n8n workflows analyse the job description and personalise the résumé and cover letter accordingly.",
-        },
-        {
-          title: "Airtable Storage",
-          description:
-            "All captured jobs and generated documents are stored and organised in Airtable.",
-        },
-        {
-          title: "PDF Generation",
-          description: "Puppeteer renders polished PDF documents ready to send.",
-        },
-      ],
-      achievements: [
-        "Reduced job application preparation time from hours to minutes.",
-        "Fully automated end-to-end pipeline with no manual steps after the initial click.",
-      ],
-    },
+    id: "job-platform",
+    title: "Job-market data platform & grounded LLM generation",
+    kind: "Personal project",
+    summary:
+      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, and writes résumés that can't make things up.",
+    points: [
+      "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
+      "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind reviewer panels score every run.",
+      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind reviewer résumé scores from 5.1 to 6.3/10.",
+    ],
+    flow: ["Job boards", "Normalise", "Fact vault", "LLM draft", "Guards", "PDF"],
+    tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
+    link: { label: "Read the write-up", href: "/writing/grounded-resume-generator" },
   },
   {
     id: "n8n-operator",
     title: "n8n Kubernetes Operator",
-    description:
-      "Automated deployment and management of n8n instances on Kubernetes with a single declarative YAML file.",
-    image: "/projects/2/Operator_diagram.jpg",
-    tags: ["Kubernetes", "Go", "Operator Pattern", "CRDs", "PostgreSQL"],
-    github: "https://github.com/Fares-Khanchouch/n8n-operator",
-    detail: {
-      overview:
-        "Deploying n8n typically requires manually creating and configuring over eight distinct Kubernetes resources. The n8n Kubernetes Operator abstracts away this complexity, enabling a complete production-ready n8n instance with a single declarative YAML file via a Custom Resource Definition (CRD).",
-      architectureImage: "/projects/2/Operator_diagram.jpg",
-      features: [
-        {
-          title: "Automated Resource Provisioning",
-          description:
-            "Creates and configures a complete isolated environment including PostgreSQL, n8n, secrets management, and networking.",
-        },
-        {
-          title: "Dynamic Configuration & Self-Healing",
-          description:
-            "Actively manages deployed resources throughout their lifecycle with self-healing capabilities and automatic configuration updates.",
-        },
-        {
-          title: "Health Monitoring & Status Reporting",
-          description:
-            "Provides real-time visibility into the health and status of each n8n instance.",
-        },
-        {
-          title: "Multi-Instance Isolation",
-          description:
-            "Manages multiple n8n instances within the same cluster, each isolated in its own namespace.",
-        },
-      ],
-      achievements: [
-        "Mastered the Operator Pattern: reconciliation loops, self-healing, and extending the Kubernetes API with CRDs.",
-        "Simplified a multi-component infrastructure setup into a single easy-to-use custom resource.",
-        "Implemented robust health checks and status reporting for multi-resource deployments.",
-        "End-to-end automation handling the complete n8n lifecycle from provisioning to updates.",
-      ],
-      roadmap: [
-        {
-          area: "Monitoring & Observability",
-          items: [
-            "Prometheus integration for custom metrics",
-            "Grafana dashboards",
-            "Alerting for failed workflows",
-          ],
-        },
-        {
-          area: "GitOps & CI/CD",
-          items: [
-            "ArgoCD integration",
-            "Helm chart distribution",
-            "Automated pipelines with GitHub Actions",
-          ],
-        },
-        {
-          area: "Advanced Features",
-          items: [
-            "Backup & restore capabilities",
-            "Auto-scaling based on workflow load",
-            "Multi-tenancy with enhanced isolation",
-          ],
-        },
-      ],
+    kind: "Open source",
+    summary:
+      "Runs a complete n8n instance on Kubernetes from one declarative YAML file instead of eight hand-made resources.",
+    points: [
+      "A custom resource provisions PostgreSQL, n8n, secrets and networking, isolated per namespace.",
+      "A reconciliation loop keeps each instance healthy and reports its status.",
+    ],
+    flow: ["YAML", "CRD", "Reconcile", "Postgres", "n8n"],
+    tags: ["Go", "Kubernetes", "Operators"],
+    link: {
+      label: "View on GitHub",
+      href: "https://github.com/Fares-Khanchouch/n8n-operator",
+      external: true,
     },
   },
-];
-
-
-// ─── SKILLS / TECH STACK ────────────────────────────────────────
-
-export type SkillGroup = {
-  category: string;
-  items: string[];
-};
-
-export const skills: SkillGroup[] = [
   {
-    category: "Cloud & Infrastructure",
-    items: ["AWS", "GCP", "Terraform", "Ansible", "Kubernetes", "Docker", "Helm"],
-  },
-  {
-    category: "CI/CD & Automation",
-    items: ["GitHub Actions", "Jenkins", "n8n", "Zapier", "Make"],
-  },
-  {
-    category: "Languages",
-    items: ["Go", "Python", "JavaScript", "TypeScript", "C", "C++", "Java"],
-  },
-  {
-    category: "Web & Frameworks",
-    items: ["Next.js", "React", "Node.js", "Tailwind CSS"],
-  },
-  {
-    category: "Observability & Security",
-    items: ["Prometheus", "Grafana", "Trivy", "OWASP ZAP", "Docker Bench"],
+    id: "agent-tooling",
+    title: "Agent tooling for an enterprise platform",
+    kind: "At work",
+    summary:
+      "Typed MCP tools and Claude skills that let an AI agent answer questions about a live deployment and cite where each answer comes from.",
+    points: [
+      "A queryable knowledge base parsed from the deployment, and a dependency graph with provenance on every edge.",
+      "Tool-call telemetry, so adoption is measured rather than assumed.",
+    ],
+    flow: ["Agent", "MCP tools", "Knowledge base", "Dependency graph", "Cited answer"],
+    tags: ["Python", "MCP", "Claude skills"],
   },
 ];
 
-
-// ─── SOCIAL & CONTACT ───────────────────────────────────────────
-
-export const social = {
-  github:   "https://github.com/Fares-Khanchouch",
-  linkedin: "https://www.linkedin.com/in/fares-khanchouch/",
-  email:    "fares.khanchouch@gmail.com",
-  resume:   "/resume.pdf",
+export const contact = {
+  heading: "Say hello",
+  text: "Email is the quickest way to reach me. The form works too.",
 };
 
-export const emailjs = {
-  serviceId:  "service_1jmn1ld",
-  templateId: "template_ty6k1xs",
-  publicKey:  "A1yyyeM4xJuzcDdAA",
+export const writeup = {
+  slug: "grounded-resume-generator",
+  title: "A résumé generator that can't make things up",
+  description:
+    "How I built LLM document generation where every claim traces to a fact store, and an agent-in-the-loop harness to prove it works.",
+  date: "2026-09-29",
 };

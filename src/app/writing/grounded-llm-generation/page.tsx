@@ -216,8 +216,8 @@ export default function Writeup() {
                 &ldquo;this looks better&rdquo; into numbers I could compare across rounds.
               </li>
               <li>
-                Most quality gains came from better inputs (a rebuilt fact vault) and clearer
-                instructions to the model.
+                Most of the fixes were better inputs (a rebuilt fact vault) and clearer instructions
+                to the model.
               </li>
             </ul>
             <p>

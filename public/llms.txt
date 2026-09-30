@@ -2,9 +2,9 @@
 
 > Integration Consultant in Tunis, Tunisia, doing forward-deployed work: credit-platform delivery and core-banking integrations for banks, and grounded LLM tooling.
 
-- Integration Consultant at Axe Finance (Dec 2025 – Present): credit-platform delivery for banks in Qatar and Saudi Arabia, core-banking integration over REST (C#), and internal agent tooling built alongside.
+- Integration Consultant at Axe Finance (Dec 2025 – Present): credit-platform delivery for banks in Qatar and Saudi Arabia, and core-banking integration over REST (C#).
 - Previously a freelance automation engineer (n8n, Make, LLM pipelines) and cloud/DevOps intern.
-- Engineering degree in Computer Science, ISTY, Université Paris-Saclay (2021 – 2024).
+- Engineering Degree in Computer Science, ISTY, Université Paris-Saclay (2021 – 2024).
 - Languages: Arabic (native), French, English.
 
 ## Pages

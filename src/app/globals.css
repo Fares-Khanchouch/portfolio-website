@@ -227,3 +227,14 @@ section[id] {
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   [data-spotlight]:hover::before { opacity: 1; }
 }
+
+/* Architecture diagrams (components/diagrams). */
+.dg .dg-flow { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .dg.is-live .dg-flow {
+    opacity: 0.8;
+    stroke-dasharray: 3 11;
+    animation: dg-dash 1.4s linear infinite;
+  }
+}
+@keyframes dg-dash { to { stroke-dashoffset: -28; } }

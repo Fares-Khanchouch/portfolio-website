@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { projects } from "@/data";
-import FlowDiagram from "./FlowDiagram";
+import GroundedDiagram from "./diagrams/GroundedDiagram";
+import OperatorDiagram from "./diagrams/OperatorDiagram";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -19,8 +20,8 @@ export default function Projects() {
                 <h3 className="text-xl font-semibold tracking-tight text-fg md:text-2xl">{p.title}</h3>
                 <p className="mt-3 max-w-3xl leading-relaxed text-fg-muted">{p.summary}</p>
 
-                <div className="my-6 rounded-xl border border-line bg-bg/40 p-4 md:p-5">
-                  <FlowDiagram steps={p.flow} label={`${p.title}: how it works`} />
+                <div className="my-6 rounded-xl border border-line bg-bg/40 p-4 md:p-6">
+                  {p.id === "n8n-operator" ? <OperatorDiagram /> : <GroundedDiagram />}
                 </div>
 
                 <ul className="space-y-2">

@@ -55,10 +55,10 @@ export const hero = {
   photoAlt: "Portrait of Fares Khanchouch",
   // Proof strip under the hero buttons (all from the fact vault).
   proof: [
-    { value: "2", label: "bank production releases" },
-    { value: "6+", label: "automation clients" },
-    { value: "1.1M+", label: "job postings indexed" },
-    { value: "1,200+", label: "automated tests" },
+    { value: "3", label: "banks in Qatar & Saudi Arabia" },
+    { value: "2", label: "production go-lives" },
+    { value: "6+", label: "freelance clients, solo" },
+    { value: "1.1M+", label: "records in a data platform I built" },
   ],
 };
 
@@ -67,7 +67,7 @@ export const about = {
   // Shown large above the paragraphs.
   lede: { text: "I work with client teams from the first scoping conversation", accent: "to go-live support." },
   paragraphs: [
-    "Hi, I’m Fares. The client teams are usually bank IT, credit and business people. I’ve also run a paid n8n training that took a client from zero to building their own workflows.",
+    "I work directly with banks’ IT, credit and business teams, alongside the on-site delivery team. As a freelancer I did the same for smaller clients, including an n8n training that took one from zero to building their own workflows.",
     "Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
@@ -81,9 +81,9 @@ export const about = {
   ],
   // Grouped the way the fact vault groups them (skills.*).
   skillGroups: [
-    { name: "AI & agents", items: ["MCP servers", "Claude agent skills", "LLM APIs", "LLM evals"] },
-    { name: "Integration", items: ["REST APIs", "Webhooks", "OAuth / API keys", "n8n", "Make"] },
-    { name: "Languages", items: ["Python", "TypeScript", "C#", "Go", "T-SQL"] },
+    { name: "AI & agents", items: ["MCP servers", "LLM APIs", "LLM evals", "LLM output guardrails"] },
+    { name: "Integration", items: ["REST APIs", "Webhooks", "OAuth / API keys", "n8n", "Make (automation)"] },
+    { name: "Programming", items: ["Python", "TypeScript", "C#", "Go", "T-SQL / SQL Server"] },
     { name: "Platform", items: ["Docker", "Kubernetes", "Terraform", "AWS", "PostgreSQL"] },
   ],
   get skills() {
@@ -118,7 +118,7 @@ export const now = {
     {
       icon: "agent",
       title: "Agent tooling, alongside delivery",
-      text: "Internal Python tooling (MCP servers and Claude skills) so an agent can explain a live deployment and cite its sources.",
+      text: "Internal Python tooling (MCP servers and Claude skills) that explains the credit platform’s configuration and cites its sources.",
     },
   ] as Highlight[],
 };
@@ -155,7 +155,7 @@ export const before: Role[] = [
     company: "Independent",
     dates: "Sep 2024 – Nov 2025",
     summary:
-      "Automation projects for 6+ clients, mostly in n8n and Make: an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions), KYC document pipelines with LLM/OCR extraction, and a 100,000+ row Excel-to-Airtable migration via API scripts.",
+      "Automation projects for 6+ clients as a solo engineer, mostly in n8n and Make: KYC document pipelines with LLM/OCR extraction for an ISO-compliance consultancy, a 100,000+ row Excel-to-Airtable migration via API scripts, and an AI content pipeline publishing ~50 posts a week.",
     tags: ["n8n", "Make", "Airtable", "LLM APIs"],
   },
   {
@@ -205,15 +205,15 @@ export const projects: Project[] = [
     title: "Grounded LLM generation & a 1.1M-posting data platform",
     kind: "Personal project",
     summary:
-      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, plus an LLM document generator whose every claim must come from a versioned fact store.",
+      "A Python MCP server that crawls 63,000+ company job boards through 24 source adapters for applicant-tracking and HR systems (Workday, SuccessFactors, Greenhouse and others) into 1.1M+ records, plus an LLM document generator whose every claim must come from a versioned fact store.",
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
     ],
     metrics: [
-      { label: "Runs covering every hard requirement", before: "54%", after: "100%", scale: 100 },
+      { label: "Documents covering every must-have in the posting", before: "54%", after: "100%", scale: 100 },
       { label: "Bullets judged overclaimed", before: "6%", after: "0%", scale: 100 },
-      { label: "Blind LLM-reviewer score", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
+      { label: "Blind reviewer score (5 = typical, 7 = shortlisted)", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "Embeddings", "LLM evals"],
@@ -227,10 +227,9 @@ export const projects: Project[] = [
       "Runs a complete n8n instance on Kubernetes from one declarative YAML file instead of 8+ hand-written manifests.",
     points: [
       "A custom resource provisions PostgreSQL, n8n, secrets and networking, with isolated multi-instance setups.",
-      "A reconciliation loop keeps each instance healthy and reports its status.",
+      "Self-healing: deleted resources are recreated, and each instance reports its health and access URL.",
     ],
     metrics: [{ label: "To run n8n with PostgreSQL", before: "8+ manifests", after: "1 resource" }],
-    conditions: ["Ready", "N8nReady", "PostgresReady"],
     flow: ["YAML", "CRD", "Reconcile", "Postgres", "n8n"],
     tags: ["Go", "Kubernetes", "Operators", "n8n", "PostgreSQL"],
     link: {

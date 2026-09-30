@@ -3,7 +3,7 @@ import { before, now, type Highlight } from "@/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import CareerLine from "./work/CareerLine";
-import { AgentTooling, DeliveryRail, IntegrationFlow } from "./work/Drawings";
+import { DeliveryRail, IntegrationFlow } from "./work/Drawings";
 
 const ICONS: Record<Highlight["icon"], typeof Bot> = {
   delivery: Route,
@@ -11,28 +11,18 @@ const ICONS: Record<Highlight["icon"], typeof Bot> = {
   agent: Bot,
 };
 
-const DRAWINGS: Record<Highlight["icon"], () => React.JSX.Element> = {
+const DRAWINGS: Record<"delivery" | "integration", () => React.JSX.Element> = {
   delivery: DeliveryRail,
   integration: IntegrationFlow,
-  agent: AgentTooling,
 };
 
-function HighlightCard({
-  h,
-  strip = false,
-}: {
-  h: Highlight;
-  strip?: boolean;
-}) {
+function HighlightCard({ h }: { h: Highlight & { icon: "delivery" | "integration" } }) {
   const Icon = ICONS[h.icon];
   const Drawing = DRAWINGS[h.icon];
   return (
     <div
       className={
-        "flex h-full flex-col rounded-2xl border border-line bg-surface p-5 shadow-card md:p-6 " +
-        (strip
-          ? "lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-10"
-          : "")
+        "flex h-full flex-col rounded-2xl border border-line bg-surface p-5 shadow-card md:p-6"
       }
     >
       <div>
@@ -63,7 +53,7 @@ function HighlightCard({
       <div
         className={
           "dot-field -mx-2 mt-6 flex items-center justify-center rounded-xl border border-line bg-bg/40 p-2 sm:mx-0 sm:p-4 " +
-          (strip ? "lg:mt-0" : "lg:mt-auto")
+          "lg:mt-auto"
         }
       >
         <Drawing />
@@ -96,19 +86,24 @@ export default function Work() {
           </div>
         </Reveal>
 
-        {/* The job first: delivery and integration side by side, then the
-            tooling built alongside as a shorter strip. */}
+        {/* The job: delivery and integration. The tooling built alongside
+            gets one plain line below, no drawing and no counts. */}
         <ul className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-2">
           <Reveal as="li">
-            <HighlightCard h={byIcon.delivery} />
+            <HighlightCard h={byIcon.delivery as Highlight & { icon: "delivery" }} />
           </Reveal>
           <Reveal as="li" delay={80}>
-            <HighlightCard h={byIcon.integration} />
-          </Reveal>
-          <Reveal as="li" className="lg:col-span-2" delay={160}>
-            <HighlightCard h={byIcon.agent} strip />
+            <HighlightCard h={byIcon.integration as Highlight & { icon: "integration" }} />
           </Reveal>
         </ul>
+        <Reveal delay={160}>
+          <p className="mt-5 flex items-start gap-3 text-sm leading-relaxed text-fg-muted">
+            <Bot size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-accent" />
+            <span>
+              <span className="font-medium text-fg">Alongside delivery:</span> {byIcon.agent.text}
+            </span>
+          </p>
+        </Reveal>
 
         <Reveal className="mt-16">
           <h3 className="mb-4 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.2em] text-fg-subtle">

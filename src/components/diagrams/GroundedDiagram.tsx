@@ -39,7 +39,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
     <Diagram
       layout={layout}
       title="Architecture: job-market data platform and grounded LLM generation"
-      description="Ingest: a crawler reads 63,000+ company job boards through 24 applicant-tracking-system adapters, with rate limiting, ETag caching and resumable runs, into a normalized SQLite store of 1.1M+ postings. Generate: a brief (the posting's key terms and requirements plus a menu of facts) goes to the LLM, which picks and rewords facts from a versioned fact vault. Guards check every claim against the vault for invented numbers, invented technologies and cross-document consistency; refused text goes back for a rewrite. Accepted output is rendered to a one-page PDF. An evaluation harness runs AI agents through the real pipeline on 12 benchmark postings and scores the output with blind LLM reviewer panels."
+      description="Ingest: a crawler reads 63,000+ company job boards through 24 applicant-tracking-system adapters, with rate limiting and resumable runs, into a normalized SQLite store of 1.1M+ postings. Generate: a brief (the posting's key terms and requirements plus a menu of facts) goes to the LLM, which picks and rewords facts from a versioned fact vault. Guards check every claim against the vault for invented numbers, invented technologies and cross-document consistency; refused text goes back for a rewrite. Accepted output is rendered to a one-page PDF. An evaluation harness runs AI agents through the real pipeline on 12 benchmark postings and scores the output with blind LLM reviewer panels."
       wide={{
         viewBox: "-8 0 976 400",
         children: (
@@ -68,7 +68,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
             <Pill x={0} y={134} w={118} label="SuccessFactors" />
             <Caption x={59} y={184} anchor="middle">+ 21 more</Caption>
 
-            <Box x={150} y={76} w={128} h={88} title="Crawler" lines={["63k+ boards", "rate limiting", "ETag caching"]} />
+            <Box x={150} y={76} w={128} h={88} title="Crawler" lines={["63k+ boards", "rate limiting", "caching"]} />
             <Store x={308} y={72} w={100} h={96} title="SQLite" lines={["1.1M+ postings", "normalized"]} />
             <Box x={440} y={76} w={108} h={88} title="Brief" lines={["key terms", "requirements", "fact menu"]} />
             <Store x={440} y={226} w={108} h={84} title="Fact vault" lines={["versioned", "EN · FR"]} />
@@ -118,7 +118,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
             <Pill x={248} y={26} w={112} label="SuccessFactors" />
             <Caption x={252} y={88}>+ 21 more</Caption>
 
-            <Box x={40} y={96} w={280} h={64} title="Crawler" lines={["63k+ boards · rate limits · ETags"]} />
+            <Box x={40} y={96} w={280} h={64} title="Crawler" lines={["63k+ boards · rate limits · caching"]} />
             <Store x={90} y={192} w={180} h={78} title="SQLite" lines={["1.1M+ postings", "normalized"]} />
 
             <Caption x={0} y={306}>Generate</Caption>

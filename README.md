@@ -57,6 +57,10 @@ template receives `name`, `email`, `subject`, `message`.
 
 ## Security and SEO checklist
 
+Owner actions for launch (key revocation, Search Console, Bing, profile
+links): `docs/LAUNCH_CHECKLIST.md`.
+
+
 - Security headers: `next.config.ts` (CSP allows only this origin plus
   `api.emailjs.com`; framing denied).
 - No secrets in the repo; `.gitignore` blocks keys (`gitkey*`, `id_*`, `*.key`).

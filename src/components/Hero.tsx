@@ -1,10 +1,16 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { ArrowRight, FileText, Github, Linkedin } from "lucide-react";
 import { hero, social } from "@/data";
 
 const enter = (ms: number) => ({ "--enter-delay": `${ms}ms` }) as React.CSSProperties;
 
 export default function Hero() {
+  const common = { alt: hero.photoAlt, priority: true } as const;
+  const {
+    props: { srcSet: _d, ...desktopRest },
+  } = getImageProps({ ...common, src: hero.photo, width: 960, height: 1280, sizes: "(min-width: 1024px) 320px, 256px" });
+  const desktop = { srcSet: _d, sizes: desktopRest.sizes };
+  const { props: mobile } = getImageProps({ ...common, src: hero.avatar, width: 512, height: 512, sizes: "96px" });
   return (
     <section id="top" className="relative overflow-hidden pt-24 pb-12 md:pt-40 md:pb-16">
       {/* Background: slow-drifting dotted grid and one soft glow. */}
@@ -20,7 +26,7 @@ export default function Hero() {
             {hero.eyebrow}
           </p>
 
-          <h1 className="enter text-[2.75rem] font-semibold leading-[1.02] tracking-tight text-fg sm:text-6xl lg:text-7xl" style={enter(80)}>
+          <h1 className="rise text-[2.75rem] font-semibold leading-[1.02] tracking-tight text-fg sm:text-6xl lg:text-7xl" style={enter(80)}>
             {hero.firstName}
             <br />
             {hero.lastName}
@@ -73,31 +79,18 @@ export default function Hero() {
         </div>
 
         <div className="enter order-1 md:order-2" style={enter(120)}>
-          {/* Phones: a tight head-and-shoulders crop, left-aligned with the text,
-              so the name and buttons stay above the fold. */}
-          <div className="relative w-24 overflow-hidden rounded-2xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)] md:hidden">
-            <Image
-              src={hero.avatar}
-              alt={hero.photoAlt}
-              width={512}
-              height={512}
-              priority
-              sizes="96px"
-              className="h-auto w-full"
-            />
-            <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-[var(--photo-ring)]" />
-          </div>
-          {/* Tablet and up: 3:4 portrait, about as tall as the text block. */}
-          <div className="relative hidden overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55)] md:block md:w-64 lg:w-80">
-            <Image
-              src={hero.photo}
-              alt={hero.photoAlt}
-              width={960}
-              height={1280}
-              priority
-              sizes="(min-width: 1024px) 320px, 256px"
-              className="aspect-[3/4] h-auto w-full object-cover object-top"
-            />
+          {/* Art direction: phones load only the tight head-and-shoulders crop
+              (left-aligned with the text, so the name and buttons stay above
+              the fold); tablets and up load only the 3:4 portrait. */}
+          <div className="relative w-24 overflow-hidden rounded-2xl shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)] md:w-64 md:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55)] lg:w-80">
+            <picture>
+              <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
+              <img
+                {...mobile}
+                alt={hero.photoAlt}
+                className="aspect-square h-auto w-full object-cover object-top md:aspect-[3/4]"
+              />
+            </picture>
             <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-[var(--photo-ring)]" />
           </div>
         </div>

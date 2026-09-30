@@ -18,10 +18,11 @@ export default function Work() {
         <Reveal>
           <div className="mb-6 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
             <h3 className="text-lg font-semibold text-fg md:text-xl">
-              {now.role} <span className="text-fg-subtle">·</span>{" "}
-              <span className="text-accent">{now.company}</span>
+              {now.role}
+              {"\u00a0"}
+              <span className="text-fg-subtle">·</span> <span className="text-accent">{now.company}</span>
             </h3>
-            <p className="font-mono text-xs uppercase tracking-wider text-fg-subtle">
+            <p className="font-mono text-xs text-fg-subtle">
               {now.dates} · {now.location}
             </p>
           </div>
@@ -33,10 +34,12 @@ export default function Work() {
             return (
               <Reveal as="li" key={h.title} delay={i * 80}>
                 <div className="h-full rounded-xl border border-line bg-surface p-5 shadow-card md:p-6">
-                  <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-soft text-accent">
-                    <Icon size={20} aria-hidden="true" />
-                  </span>
-                  <h4 className="mb-2 font-medium text-fg">{h.title}</h4>
+                  <div className="mb-3 flex items-center gap-3 lg:mb-2 lg:block">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent lg:mb-4">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <h4 className="font-medium text-fg">{h.title}</h4>
+                  </div>
                   <p className="text-sm leading-relaxed text-fg-muted">{h.text}</p>
                 </div>
               </Reveal>
@@ -58,10 +61,9 @@ export default function Work() {
                 />
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <p className="font-medium text-fg">
-                    {r.role}{" "}
-                    <span className="whitespace-nowrap">
-                      <span className="text-fg-subtle">·</span> <span className="text-fg-muted">{r.company}</span>
-                    </span>
+                    {r.role}
+                    {"\u00a0"}
+                    <span className="text-fg-subtle">·</span> <span className="text-fg-muted">{r.company}</span>
                   </p>
                   <p className="shrink-0 font-mono text-xs text-fg-subtle">{r.dates}</p>
                 </div>

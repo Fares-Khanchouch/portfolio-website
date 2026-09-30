@@ -29,10 +29,14 @@ export default function Contact() {
   const sending = useRef(false); // synchronous double-submit guard
   const lastSent = useRef(0); // only successful sends start the cooldown
   const sentRef = useRef<HTMLParagraphElement | null>(null);
+  const errorRef = useRef<HTMLParagraphElement | null>(null);
 
   // Move focus to the confirmation so keyboard and screen-reader users hear it.
   useEffect(() => {
     if (status === "sent") sentRef.current?.focus();
+    // The submit button is disabled while sending, so focus would fall to
+    // <body> when a send fails; keep it on the error message instead.
+    if (status === "error") errorRef.current?.focus();
   }, [status]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -173,7 +177,7 @@ export default function Contact() {
                   </div>
 
                   {error && (
-                    <p role="alert" className="text-sm text-[var(--danger)]">
+                    <p ref={errorRef} tabIndex={-1} role="alert" className="text-sm text-[var(--danger)] focus:outline-none">
                       {error}
                     </p>
                   )}

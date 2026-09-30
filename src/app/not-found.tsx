@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false },
   alternates: { canonical: null },
   openGraph: null,
+  twitter: null,
 };
 
 export default function NotFound() {

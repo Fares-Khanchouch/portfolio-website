@@ -141,7 +141,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
             const next = e.relatedTarget as Node | null;
             if (next && !e.currentTarget.closest("header")?.contains(next)) setOpen(false);
           }}
-          className="min-h-[calc(100dvh-4rem)] border-t border-line px-4 pb-4 md:hidden">
+          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-line px-4 pb-4 md:hidden">
           <ul className="flex flex-col">
             {nav.map((l) => (
               <li key={l.id}>

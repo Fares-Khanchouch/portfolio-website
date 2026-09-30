@@ -47,7 +47,7 @@ const articleJsonLd = {
 
 const RESULTS: [string, string, string][] = [
   ["Postings' hard requirements addressed", "54% of runs", "100% of runs"],
-  ["Document score, blind LLM reviewer panel", "5.1 / 10", "6.3 / 10"],
+  ["Résumé score, blind LLM reviewer panel", "5.1 / 10", "6.3 / 10"],
   ["Bullets judged overclaimed", "6%", "0%"],
 ];
 
@@ -74,9 +74,13 @@ export default function Writeup() {
 
           <header className="mb-10">
             <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Write-up · <time dateTime={writeup.date}>{date}</time>
+              Write-up ·{" "}
+              <Link href="/" rel="author" className="underline-offset-4 hover:underline">
+                {site.name}
+              </Link>{" "}
+              · <time dateTime={writeup.date}>{date}</time>
             </p>
-            <h1 className="text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">{writeup.title}</h1>
+            <h1 className="break-words text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">{writeup.title}</h1>
             <p className="mt-4 text-lg leading-relaxed text-fg-muted">{writeup.description}</p>
           </header>
 
@@ -108,7 +112,7 @@ export default function Writeup() {
           <div className="my-8 rounded-xl border border-line bg-surface p-4 md:p-5">
             <FlowDiagram
               label="Generation pipeline"
-              steps={["Posting", "Brief", "Fact vault", "LLM payload", "Guards", "Fit to page", "PDF"]}
+              steps={["Posting", "Brief", "Vault", "Payload", "Guards", "Fit", "PDF"]}
             />
           </div>
 
@@ -162,7 +166,11 @@ export default function Writeup() {
             </p>
           </div>
 
-          <div className="my-8 overflow-x-auto rounded-xl border border-line bg-surface shadow-card">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="Results before and after"
+            className="my-8 overflow-x-auto rounded-xl border border-line bg-surface shadow-card">
             <table className="w-full text-left text-sm tabular-nums">
               <caption className="sr-only">Results before and after, same benchmark and reviewer briefs</caption>
               <thead className="border-b border-line font-mono text-xs uppercase tracking-wider text-fg-subtle">
@@ -183,7 +191,7 @@ export default function Writeup() {
               </tbody>
             </table>
           </div>
-          <p className="-mt-5 mb-8 text-xs text-fg-subtle">Panel scores: 12 postings per version.</p>
+          <p className="-mt-5 mb-8 text-xs text-fg-subtle">Panel scores: 11–12 postings per version.</p>
 
           <div className="prose-body">
             <p>

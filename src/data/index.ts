@@ -165,7 +165,7 @@ export const projects: Project[] = [
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer document scores from 5.1 to 6.3/10.",
+      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer résumé scores from 5.1 to 6.3/10.",
     ],
     flow: ["Job boards", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],

@@ -19,9 +19,9 @@ export default function Hero() {
         <div className="absolute -top-56 right-[5%] h-[460px] w-[460px] rounded-full bg-[var(--glow)] opacity-40 blur-[120px]" />
       </div>
 
-      <div className="relative mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)] items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10 lg:gap-16">
+      <div className="relative mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)] items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-stretch md:gap-10 lg:gap-16">
         <div className="order-2 md:order-1">
-          <p className="enter mb-5 flex items-baseline gap-3 font-mono text-xs uppercase tracking-[0.16em] text-balance text-accent sm:tracking-[0.2em]">
+          <p className="enter mb-5 flex items-baseline leading-none gap-3 font-mono text-xs uppercase tracking-[0.16em] text-balance text-accent sm:tracking-[0.2em]">
             <span aria-hidden="true" className="h-px w-8 shrink-0 -translate-y-[0.3em] bg-accent" />
             {hero.eyebrow}
           </p>
@@ -78,17 +78,17 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="enter-soft order-1 md:order-2" style={enter(120)}>
+        <div className="enter-soft order-1 md:order-2 md:flex" style={enter(120)}>
           {/* Art direction: phones load only the tight head-and-shoulders crop
               (left-aligned with the text, so the name and buttons stay above
               the fold); tablets and up load only the 3:4 portrait. */}
-          <div className="relative w-24 overflow-hidden rounded-xl shadow-[var(--photo-shadow-sm)] md:w-[288px] md:rounded-2xl md:shadow-[var(--photo-shadow)] lg:w-[320px]">
+          <div className="relative w-24 overflow-hidden rounded-xl shadow-[var(--photo-shadow-sm)] md:h-full md:w-[288px] md:rounded-2xl md:shadow-[var(--photo-shadow)] lg:w-[320px]">
             <picture>
               <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
               <img
                 {...mobile}
                 alt={hero.photoAlt}
-                className="aspect-square h-auto w-full object-cover object-top md:aspect-[3/4]"
+                className="aspect-square h-auto w-full object-cover object-top md:absolute md:inset-0 md:aspect-auto md:h-full"
               />
             </picture>
             <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-[var(--photo-ring)]" />

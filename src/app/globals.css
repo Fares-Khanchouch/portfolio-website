@@ -21,7 +21,7 @@
   --grid-dot: rgba(255, 255, 255, 0.07);
   --danger: #f0a3a3;
   --input-border: #5f6b82;
-  --accent-solid-hover: #2f5f84;
+  --accent-solid-hover: #46779b; /* lighter on dark; white text 4.8:1 */
   --card-shadow: none;
   --photo-ring: rgba(255, 255, 255, 0.1);
   --photo-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55);
@@ -49,6 +49,7 @@
     --input-border: #8792a4;
     --card-shadow: 0 1px 2px rgba(11, 18, 32, 0.06);
     --photo-ring: rgba(11, 18, 32, 0.1);
+    --accent-solid-hover: #2f5f84; /* darker on light; white text 6.4:1 */
     --photo-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.3);
     --photo-shadow-sm: 0 14px 28px -18px rgba(15, 23, 42, 0.3);
     color-scheme: light;
@@ -103,7 +104,6 @@ section[id] {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* Dotted grid behind the hero, faded out towards the edges. */
@@ -134,6 +134,12 @@ section[id] {
   .enter {
     animation: enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: var(--enter-delay, 0ms);
+  }
+
+  /* The section right below the hero is often above the fold; let it
+     arrive after the hero instead of before it. */
+  #work > div > :is(:nth-child(1), :nth-child(2)) {
+    animation: enter 700ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
   }
 
   .enter-soft {

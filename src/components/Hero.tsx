@@ -88,7 +88,7 @@ export default function Hero() {
           </dl>
         </div>
 
-        <div className="enter-soft relative order-1 flex items-center gap-4 md:order-2 md:items-stretch md:gap-0" style={enter(120)}>
+        <div className="enter-soft relative order-1 flex flex-wrap items-center gap-4 md:order-2 md:flex-nowrap md:items-stretch md:gap-0" style={enter(120)}>
           {/* Art direction: phones load only the tight head-and-shoulders crop
               (left-aligned with the text, so the name and buttons stay above
               the fold); tablets and up load only the 3:4 portrait. */}
@@ -105,7 +105,7 @@ export default function Hero() {
           </div>
 
           {/* Phones: the current role sits beside the small photo. */}
-          <div className="min-w-0 md:hidden">
+          <div className="min-w-[8rem] flex-1 [overflow-wrap:anywhere] md:hidden">
             <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
               <span aria-hidden="true" className="live-dot" />
               Now

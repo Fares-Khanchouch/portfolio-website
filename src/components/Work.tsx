@@ -35,9 +35,9 @@ function HighlightCard({ h, large = false }: { h: Highlight; large?: boolean }) 
       </div>
       <p className={"leading-relaxed text-fg-muted " + (large ? "max-w-xl" : "text-sm")}>{h.text}</p>
       {h.details && (
-        <ul className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+        <ul className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-x-6 gap-y-3 sm:grid-cols-2">
           {h.details.map((d) => (
-            <li key={d} className="flex gap-2.5 text-sm leading-snug text-fg-muted">
+            <li key={d} className="flex min-w-0 gap-2.5 text-sm leading-snug [overflow-wrap:anywhere] text-fg-muted">
               <span aria-hidden="true" className="mt-[7px] h-1 w-3 shrink-0 rounded-full bg-accent" />
               {d}
             </li>

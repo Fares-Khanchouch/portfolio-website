@@ -18,7 +18,7 @@ export default function SectionHeading({
         </span>
         <span aria-hidden="true" className="h-px max-w-40 flex-1 bg-gradient-to-r from-accent/50 to-transparent" />
       </p>
-      <h2 className="text-3xl font-semibold tracking-tight text-fg md:text-4xl">{title}</h2>
+      <h2 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere] text-fg md:text-4xl">{title}</h2>
     </Reveal>
   );
 }

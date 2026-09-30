@@ -22,7 +22,7 @@ export default function GuardExample() {
       </figcaption>
       <div className="divide-y divide-line">
         {rows.map((r) => (
-          <div key={r.error} className="grid min-w-0 gap-2 px-4 py-4 text-sm [overflow-wrap:anywhere]">
+          <div key={r.error} className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 px-4 py-4 text-sm [overflow-wrap:anywhere]">
             <p>
               <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">Fact</span>
               <span className="text-fg-muted">{r.fact}</span>
@@ -31,7 +31,7 @@ export default function GuardExample() {
               <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">Rewrite</span>
               <span className="text-fg">{r.rewrite}</span>
             </p>
-            <p className="rounded-md border border-[var(--danger)]/40 bg-[var(--danger)]/10 px-3 py-2 font-mono text-xs leading-relaxed break-words text-[var(--danger)]">
+            <p className="rounded-md border border-[var(--danger)]/40 bg-[var(--danger)]/10 px-3 py-2 font-mono text-xs leading-relaxed [overflow-wrap:anywhere] text-[var(--danger)]">
               {r.error}
             </p>
           </div>

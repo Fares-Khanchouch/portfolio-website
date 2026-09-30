@@ -19,9 +19,9 @@ export default function CareerLine() {
       </figcaption>
       <div aria-hidden="true" className="relative">
         {rows.map((row) => (
-          <div key={row} className={"relative mb-3 flex items-center gap-3 " + (row === "work" ? "sm:mt-5" : "")}>
-            <span className="w-12 shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">{row}</span>
-            <div className="relative h-7 flex-1 rounded-md bg-bg/50">
+          <div key={row} className={"relative mb-3 flex items-center gap-[12px] " + (row === "work" ? "sm:mt-5" : "")}>
+            <span className="w-[48px] shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">{row}</span>
+            <div className="relative h-7 min-w-0 flex-1 rounded-md bg-bg/50">
               {timeline
                 .filter((s) => s.kind === row)
                 .map((s) => {

@@ -38,7 +38,7 @@ export default function Work() {
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent lg:mb-4">
                       <Icon size={20} aria-hidden="true" />
                     </span>
-                    <h4 className="font-medium text-fg">{h.title}</h4>
+                    <h4 className="min-w-0 font-medium break-words text-fg">{h.title}</h4>
                   </div>
                   <p className="text-sm leading-relaxed text-fg-muted">{h.text}</p>
                 </div>

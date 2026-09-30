@@ -202,7 +202,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "job-platform",
-    title: "Grounded LLM generation & a 1.1M+-posting data platform",
+    title: "Grounded LLM generation & a job-market data platform",
     kind: "Personal project",
     summary:
       "A Python MCP server that crawls 63,000+ company job boards through 24 source adapters for applicant-tracking and HR systems (Workday, SuccessFactors, Greenhouse and others) into 1.1M+ records, plus an LLM document generator whose every claim must come from a versioned fact store.",

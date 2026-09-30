@@ -35,7 +35,7 @@ export default function Projects() {
                 <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
                   <ul className="flex flex-wrap gap-2" aria-label="Technologies">
                     {p.tags.map((t) => (
-                      <li key={t} className="rounded-md border border-line px-2.5 py-1 font-mono text-xs text-fg-muted">
+                      <li key={t} className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-muted">
                         {t}
                       </li>
                     ))}

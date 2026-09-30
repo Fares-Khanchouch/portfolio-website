@@ -56,7 +56,8 @@ export const hero = {
 export const about = {
   heading: "About",
   paragraphs: [
-    "Hi, I'm Fares. I like the part of engineering where software meets a real organization's systems and the people using them. Outside work I build LLM tooling and a Kubernetes operator for n8n.",
+    "Hi, I'm Fares. Most of my work happens with client teams (bank IT, credit and business people), from the first scoping conversation to go-live support. I've also trained clients to build and run their own n8n workflows.",
+    "Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
     { label: "Based in", value: "Tunis, Tunisia" },
@@ -165,9 +166,9 @@ export const projects: Project[] = [
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer scores for generated documents from 5.1 to 6.3/10.",
+      "Measured end to end: coverage of postings' hard requirements rose from 54% to 100% of runs, and overclaimed bullets fell from 6% to 0%.",
     ],
-    flow: ["Postings", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
+    flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
     link: { label: "Read the write-up", href: "/writing/grounded-llm-generation" },
   },

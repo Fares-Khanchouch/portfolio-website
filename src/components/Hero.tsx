@@ -42,7 +42,7 @@ export default function Hero() {
 
           <div className="enter mt-9 flex flex-wrap items-center gap-3" style={enter(320)}>
             <a
-              href="#work"
+              href="#projects"
               className="group inline-flex h-11 items-center gap-2 rounded-md bg-accent-solid px-5 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
             >
               See my work

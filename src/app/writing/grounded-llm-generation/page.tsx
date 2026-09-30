@@ -5,7 +5,7 @@ import FlowDiagram from "@/components/FlowDiagram";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ReadingProgress from "@/components/ReadingProgress";
-import { site, writeup } from "@/data";
+import { projects, site, writeup } from "@/data";
 
 const path = `/writing/${writeup.slug}`;
 
@@ -112,7 +112,7 @@ export default function Writeup() {
           <div className="my-8 rounded-xl border border-line bg-surface p-4 md:p-5">
             <FlowDiagram
               label="Generation pipeline"
-              steps={["Posting", "Brief", "Vault", "Payload", "Guards", "Fit", "PDF"]}
+              steps={projects[0].flow}
             />
           </div>
 

@@ -35,7 +35,7 @@ export default function About() {
             {about.skills.map((s) => (
               <li
                 key={s}
-                className="rounded-md border border-line px-2.5 py-1 font-mono text-xs text-fg-muted"
+                className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-muted"
               >
                 {s}
               </li>

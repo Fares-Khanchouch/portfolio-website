@@ -52,17 +52,23 @@ export default function FlowDiagram({
     <ol
       ref={ref}
       aria-label={label}
-      className="@container flex w-full flex-col items-start md:grid md:items-stretch md:gap-x-4"
+      className={cn(
+        "flex w-full flex-col items-stretch md:grid md:items-stretch",
+        compact ? "md:gap-x-3" : "md:gap-x-4",
+      )}
       style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
     >
       {steps.map((s, i) => (
-        <li key={s} className="relative flex flex-col items-start md:block">
+        <li key={s} className="relative flex flex-col items-stretch md:block">
           {i > 0 && (
             // An arrow into this step: vertical above it on phones, horizontal
             // in the gap to its left from md up.
             <span
               aria-hidden="true"
-              className="relative ml-5 flex h-4 w-px flex-col items-center md:absolute md:top-1/2 md:-left-4 md:ml-0 md:h-px md:w-4 md:-translate-y-1/2 md:flex-row"
+              className={cn(
+                "relative ml-5 flex h-4 w-px flex-col items-center md:absolute md:top-1/2 md:ml-0 md:h-px md:-translate-y-1/2 md:flex-row",
+                compact ? "md:-left-3 md:w-3" : "md:-left-4 md:w-4",
+              )}
             >
               <span className="relative block h-full w-full overflow-hidden bg-line-strong">
                 <span
@@ -83,8 +89,8 @@ export default function FlowDiagram({
           )}
           <span
             className={cn(
-              "block min-w-[min(9rem,100cqw)] rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 md:flex md:h-full md:w-full md:min-w-0 md:items-center md:justify-center md:px-2 md:text-center",
-              compact && "md:px-1 md:text-[11px] md:whitespace-nowrap",
+              "block rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 md:flex md:h-full md:w-full md:items-center md:justify-center md:px-2 md:text-center",
+              compact && "md:px-1.5 md:text-[11px] md:whitespace-nowrap",
               "border-accent/50 bg-accent-soft text-fg",
               active === i && "border-accent shadow-[0_0_0_4px_var(--accent-soft)]",
             )}

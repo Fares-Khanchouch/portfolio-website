@@ -26,7 +26,7 @@ export default function Hero() {
             {hero.eyebrow}
           </p>
 
-          <h1 className="rise break-words text-[2.75rem] font-semibold leading-[1.02] tracking-tight text-fg sm:text-6xl lg:text-7xl" style={enter(80)}>
+          <h1 className="rise break-words text-[clamp(2rem,13vw,2.75rem)] font-semibold leading-[1.02] tracking-tight text-fg sm:text-6xl lg:text-7xl" style={enter(80)}>
             {hero.firstName}
             <br />
             {hero.lastName}

@@ -54,9 +54,13 @@ export default function Navbar({ home = true }: { home?: boolean }) {
       toggleRef.current?.focus();
     };
     const onResize = () => window.innerWidth >= 768 && setOpen(false);
+    // Keep the page underneath still while the menu is open.
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
+      document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
     };

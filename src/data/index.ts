@@ -48,7 +48,9 @@ export const hero = {
   headline: "Forward Deployed Engineer",
   tagline:
     "I take bank credit platforms from scoping to go-live, connect them to the systems banks already run, and build LLM tooling that sticks to the facts.",
-  photo: "/portrait.jpg",
+  // Background-removed portrait (hero); the square avatar feeds the share
+  // card and structured data.
+  cutout: "/portrait-cutout.webp",
   avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
   // Proof strip under the hero buttons (all from the fact vault).
@@ -58,8 +60,6 @@ export const hero = {
     { value: "1.1M+", label: "job postings indexed" },
     { value: "1,200+", label: "automated tests" },
   ],
-  // Floating card on the portrait (tablet and up).
-  badge: { title: "Scoping to go-live", detail: "Credit platforms for banks" },
 };
 
 export const about = {

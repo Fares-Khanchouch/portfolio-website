@@ -321,14 +321,6 @@ section[id] {
   mask-composite: exclude;
 }
 
-/* Dotted patch peeking out behind the hero portrait. */
-.hero-grid-plate {
-  background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
-  background-size: 14px 14px;
-  opacity: 0.35;
-  mask-image: radial-gradient(circle at 70% 70%, #000 30%, transparent 70%);
-}
-
 @media screen and (prefers-reduced-motion: no-preference) {
   .menu-backdrop { animation: fade-in 200ms ease both; }
   #mobile-menu { animation: enter-soft 220ms cubic-bezier(0.16, 1, 0.3, 1) both; }
@@ -354,3 +346,25 @@ section[id] {
   background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
   background-size: 16px 16px;
 }
+
+/* Hero: the portrait fades out at the bottom (alpha mask, works in both
+   themes); the surname carries a rule exactly as wide as the word. */
+.portrait-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+.name-rule::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.07em;
+  height: max(2px, 0.035em);
+  border-radius: 9999px;
+  background: var(--accent);
+  transform-origin: left;
+}
+@media screen and (prefers-reduced-motion: no-preference) {
+  .name-rule::after { animation: rule-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 500ms both; }
+}
+@keyframes rule-in { from { transform: scaleX(0); } }

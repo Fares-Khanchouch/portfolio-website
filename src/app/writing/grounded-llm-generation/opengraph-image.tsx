@@ -8,8 +8,8 @@ export const contentType = "image/png";
 // Share card for the write-up: its title and the three measured results.
 export default function OpengraphImage() {
   const results = [
-    { value: "54% → 100%", label: "runs covering every hard requirement" },
-    { value: "5.1 → 6.3", label: "blind LLM-reviewer score, /10" },
+    { value: "54% → 100%", label: "hard requirements addressed" },
+    { value: "5.1 → 6.3", label: "blind LLM-reviewer résumé score, /10" },
     { value: "6% → 0%", label: "bullets judged overclaimed" },
   ];
   return new ImageResponse(

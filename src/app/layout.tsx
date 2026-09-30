@@ -83,7 +83,7 @@ const jsonLd = {
       url: site.url,
       image: `${site.url}/avatar-512.jpg`,
       jobTitle: now.role,
-      hasOccupation: { "@type": "Occupation", name: hero.headline },
+      hasOccupation: { "@type": "Occupation", name: now.role },
       description: site.description,
       email: `mailto:${social.email}`,
       worksFor: { "@type": "Organization", name: now.company },

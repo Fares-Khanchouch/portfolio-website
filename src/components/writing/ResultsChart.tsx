@@ -3,8 +3,8 @@
 type Row = { label: string; before: number; after: number; max: number; unit: string; better: "up" | "down" };
 
 const rows: Row[] = [
-  { label: "Documents covering every must-have in the posting", before: 54, after: 100, max: 100, unit: "%", better: "up" },
-  { label: "Document score, blind LLM reviewer panel", before: 5.1, after: 6.3, max: 10, unit: "/10", better: "up" },
+  { label: "Posting hard requirements addressed", before: 54, after: 100, max: 100, unit: "%", better: "up" },
+  { label: "Résumé score, blind LLM reviewer panel", before: 5.1, after: 6.3, max: 10, unit: "/10", better: "up" },
   { label: "Bullets judged overclaimed", before: 6, after: 0, max: 20, unit: "%", better: "down" },
 ];
 

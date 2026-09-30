@@ -47,7 +47,7 @@ export const hero = {
   eyebrow: "Integrations & LLM agent tooling",
   headline: "Forward Deployed Engineer",
   tagline:
-    "I take bank credit platforms from scoping to go-live, connect them to the systems banks already run, and build LLM tooling that sticks to the facts.",
+    "I take changes to banks’ credit platforms from scoping to go-live, connect those platforms to the systems banks already run, and build LLM tooling that sticks to the facts.",
   // Background-removed portrait (hero); the square avatar feeds the share
   // card and structured data.
   cutout: "/portrait-cutout.webp",
@@ -55,8 +55,8 @@ export const hero = {
   photoAlt: "Portrait of Fares Khanchouch",
   // Proof strip under the hero buttons (all from the fact vault).
   proof: [
-    { value: "3", label: "banks in Qatar & Saudi Arabia" },
-    { value: "2", label: "production go-lives" },
+    { value: "3", label: "banks I work with in Qatar & Saudi Arabia" },
+    { value: "2", label: "production releases" },
     { value: "6+", label: "freelance clients, solo" },
     { value: "1.1M+", label: "records in a data platform I built" },
   ],
@@ -67,7 +67,7 @@ export const about = {
   // Shown large above the paragraphs.
   lede: { text: "I work with client teams from the first scoping conversation", accent: "to go-live support." },
   paragraphs: [
-    "I work directly with banks’ IT, credit and business teams, alongside the on-site delivery team. As a freelancer I did the same for smaller clients, including an n8n training that took one from zero to building their own workflows.",
+    "I work directly with banks’ IT, credit and business teams, alongside the on-site delivery team. As a freelancer I did the same for smaller clients, including a paid n8n training that took one client from zero to building their own workflows.",
     "Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
@@ -75,7 +75,7 @@ export const about = {
     {
       label: "Education",
       value:
-        "Engineering degree in Computer Science · ISTY, Université Paris-Saclay · 2021 – 2024",
+        "Engineering Degree in Computer Science · ISTY, Université Paris-Saclay · 2021 – 2024",
     },
     { label: "Languages", value: "Arabic (native) · French (C1) · English (C1, TOEIC 985/990)" },
   ],
@@ -108,7 +108,7 @@ export const now = {
     {
       icon: "delivery",
       title: "Delivery, end to end",
-      text: "Credit-platform changes for banks in Qatar and Saudi Arabia, from scoping through UAT to go-live and support, including two production releases.",
+      text: "Credit-platform changes for banks in Qatar and Saudi Arabia, from scoping through UAT to go-live and support, including 2 production releases.",
     },
     {
       icon: "integration",
@@ -133,7 +133,7 @@ export type Span = {
 };
 
 export const timeline: Span[] = [
-  { label: "ISTY, Université Paris-Saclay", detail: "Engineering degree", start: [2021, 9], end: [2024, 8], kind: "study" },
+  { label: "ISTY, Université Paris-Saclay", detail: "Engineering Degree", start: [2021, 9], end: [2024, 8], kind: "study" },
   { label: "WAY2CLOUD", detail: "DevOps Intern", start: [2022, 6], end: [2022, 7], kind: "work" },
   { label: "WAY2CLOUD", detail: "Full-Stack Intern", start: [2023, 5], end: [2023, 8], kind: "work" },
   { label: "Nuage Up", detail: "Cloud & DevSecOps Intern", start: [2024, 5], end: [2024, 8], kind: "work" },
@@ -155,7 +155,7 @@ export const before: Role[] = [
     company: "Independent",
     dates: "Sep 2024 – Nov 2025",
     summary:
-      "Automation projects for 6+ clients as a solo engineer, mostly in n8n and Make: KYC document pipelines with LLM/OCR extraction for an ISO-compliance consultancy, a 100,000+ row Excel-to-Airtable migration via API scripts, and an AI content pipeline publishing ~50 posts a week.",
+      "Automation projects for 6+ clients as a solo engineer, mostly in n8n and Make: KYC document pipelines with LLM/OCR extraction for an ISO-compliance consultancy, a 100,000+ record Excel-to-Airtable migration via API scripts, and an AI content pipeline publishing ~50 posts a week.",
     tags: ["n8n", "Make", "Airtable", "LLM APIs"],
   },
   {
@@ -202,7 +202,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "job-platform",
-    title: "Grounded LLM generation & a 1.1M-posting data platform",
+    title: "Grounded LLM generation & a job-market data platform",
     kind: "Personal project",
     summary:
       "A Python MCP server that crawls 63,000+ company job boards through 24 source adapters for applicant-tracking and HR systems (Workday, SuccessFactors, Greenhouse and others) into 1.1M+ records, plus an LLM document generator whose every claim must come from a versioned fact store.",
@@ -211,9 +211,9 @@ export const projects: Project[] = [
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
     ],
     metrics: [
-      { label: "Documents covering every must-have in the posting", before: "54%", after: "100%", scale: 100 },
+      { label: "Posting hard requirements addressed", before: "54%", after: "100%", scale: 100 },
       { label: "Bullets judged overclaimed", before: "6%", after: "0%", scale: 100 },
-      { label: "Blind reviewer score (5 = typical, 7 = shortlisted)", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
+      { label: "Blind LLM-reviewer résumé score (1–10 rubric)", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "Embeddings", "LLM evals"],

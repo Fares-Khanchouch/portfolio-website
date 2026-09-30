@@ -6,7 +6,16 @@ import { cn } from "@/lib/utils";
 // A project's pipeline as a row of steps, always fully readable. The first
 // time it scrolls into view a signal passes through the steps once (skipped
 // under reduced motion). The list itself is plain, readable HTML.
-export default function FlowDiagram({ steps, label }: { steps: string[]; label: string }) {
+export default function FlowDiagram({
+  steps,
+  label,
+  compact = false,
+}: {
+  steps: string[];
+  label: string;
+  /** Narrow columns (the article): smaller, non-wrapping labels. */
+  compact?: boolean;
+}) {
   const ref = useRef<HTMLOListElement | null>(null);
   const [active, setActive] = useState(-1); // step the signal is on; -1 = none
 
@@ -43,7 +52,7 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
     <ol
       ref={ref}
       aria-label={label}
-      className="flex flex-col items-start md:grid md:items-stretch md:gap-x-4"
+      className="@container flex w-full flex-col items-start md:grid md:items-stretch md:gap-x-4"
       style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
     >
       {steps.map((s, i) => (
@@ -74,7 +83,8 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
           )}
           <span
             className={cn(
-              "block rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 md:flex md:h-full md:w-full md:items-center md:justify-center md:px-2 md:text-center",
+              "block min-w-[min(9rem,100cqw)] rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 md:flex md:h-full md:w-full md:min-w-0 md:items-center md:justify-center md:px-2 md:text-center",
+              compact && "md:px-1 md:text-[11px] md:whitespace-nowrap",
               "border-accent/50 bg-accent-soft text-fg",
               active === i && "border-accent shadow-[0_0_0_4px_var(--accent-soft)]",
             )}

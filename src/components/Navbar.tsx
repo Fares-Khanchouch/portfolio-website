@@ -96,7 +96,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
                 href={href(l.id)}
                 aria-current={active === l.id ? "true" : undefined}
                 className={cn(
-                  "relative py-1 transition-colors duration-200 hover:text-fg",
+                  "relative -mx-1.5 px-1.5 py-1 transition-colors duration-200 hover:text-fg",
                   active === l.id && "text-fg",
                 )}
               >
@@ -104,7 +104,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-x-0 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300 ease-out",
+                    "absolute inset-x-1.5 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300 ease-out",
                     active === l.id ? "scale-x-100" : "scale-x-0",
                   )}
                 />

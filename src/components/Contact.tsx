@@ -151,7 +151,7 @@ export default function Contact() {
                   <p ref={sentRef} tabIndex={-1} role="status" className="text-lg font-medium text-fg focus:outline-none">
                     Message sent.
                   </p>
-                  <p className="text-sm text-fg-muted">Thanks, I&apos;ll reply by email.</p>
+                  <p className="text-sm text-fg-muted">Thanks, I&rsquo;ll reply by email.</p>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} noValidate className="space-y-5">

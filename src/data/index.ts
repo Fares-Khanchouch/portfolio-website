@@ -35,7 +35,7 @@ export const emailjs = {
 };
 
 export const nav = [
-  { name: "Work", id: "work" },
+  { name: "Experience", id: "work" },
   { name: "Projects", id: "projects" },
   { name: "About", id: "about" },
   { name: "Contact", id: "contact" },
@@ -56,7 +56,7 @@ export const hero = {
 export const about = {
   heading: "About",
   paragraphs: [
-    "Hi, I'm Fares. Most of my work happens with client teams (bank IT, credit and business people), from the first scoping conversation to go-live support. I've also trained clients to build and run their own n8n workflows.",
+    "Hi, I’m Fares. Most of my work happens with client teams (bank IT, credit and business people), from the first scoping conversation to go-live support. I’ve also trained clients to build and run their own n8n workflows.",
     "Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
@@ -166,7 +166,7 @@ export const projects: Project[] = [
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Measured end to end: coverage of postings' hard requirements rose from 54% to 100% of runs, and overclaimed bullets fell from 6% to 0%.",
+      "Measured end to end: coverage of postings’ hard requirements rose from 54% to 100% of runs, and overclaimed bullets fell from 6% to 0%.",
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],

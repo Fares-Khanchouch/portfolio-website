@@ -46,7 +46,7 @@ const articleJsonLd = {
 };
 
 const RESULTS: [string, string, string][] = [
-  ["Postings' hard requirements addressed", "54% of runs", "100% of runs"],
+  ["Postings’ hard requirements addressed", "54% of runs", "100% of runs"],
   ["Generated-document score, blind LLM panel", "5.1 / 10", "6.3 / 10"],
   ["Bullets judged overclaimed", "6%", "0%"],
 ];
@@ -73,12 +73,17 @@ export default function Writeup() {
           </Link>
 
           <header className="mb-10">
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Write-up ·{" "}
-              <Link href="/" rel="author" className="underline-offset-4 hover:underline">
-                {site.name}
-              </Link>{" "}
-              · <time dateTime={writeup.date}>{date}</time>
+            <p className="mb-4 flex flex-wrap gap-x-2 gap-y-1 font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              {/* Each separator stays at the end of its segment, so a wrapped
+                  line never starts with one. */}
+              <span>Write-up ·</span>
+              <span>
+                <Link href="/" rel="author" className="underline-offset-4 hover:underline">
+                  {site.name}
+                </Link>{" "}
+                ·
+              </span>
+              <time dateTime={writeup.date}>{date}</time>
             </p>
             <h1 className="break-words text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">{writeup.title}</h1>
             <p className="mt-4 text-lg leading-relaxed text-fg-muted">{writeup.description}</p>
@@ -94,7 +99,7 @@ export default function Writeup() {
               catches one stops trusting the rest.
             </p>
             <p>
-              I wanted generation that is tailored per posting but <strong>can only draw on what&apos;s on
+              I wanted generation that is tailored per posting but <strong>can only draw on what&rsquo;s on
               file</strong>, with the checkable parts enforced in code, and a way to measure whether the output is actually good,
               not just whether it looks good to the person who built it.
             </p>
@@ -104,7 +109,7 @@ export default function Writeup() {
               Everything the documents may say lives in a <strong>versioned fact vault</strong>: every
               role, bullet, project and skill, in English and French, with a full snapshot kept on
               every change. The model never writes a document from scratch. It reads a short brief
-              (the posting&apos;s key terms and a menu of vault items) and returns a payload: which
+              (the posting&rsquo;s key terms and a menu of vault items) and returns a payload: which
               items to use, in what order, and optional rewrites of their wording.
             </p>
           </div>
@@ -113,6 +118,7 @@ export default function Writeup() {
             <FlowDiagram
               label="Generation pipeline"
               steps={projects[0].flow}
+              compact
             />
           </div>
 
@@ -120,8 +126,8 @@ export default function Writeup() {
             <p>Deterministic code then checks the payload and renders it:</p>
             <ul>
               <li>
-                <strong>Numbers:</strong> a rewrite may not contain a number that isn&apos;t in the
-                original fact, so &ldquo;cut costs by 30%&rdquo; can&apos;t appear from nowhere.
+                <strong>Numbers:</strong> a rewrite may not contain a number that isn&rsquo;t in the
+                original fact, so &ldquo;cut costs by 30%&rdquo; can&rsquo;t appear from nowhere.
               </li>
               <li>
                 <strong>Technologies:</strong> a rewrite may not name a tool or technology that
@@ -152,14 +158,14 @@ export default function Writeup() {
 
             <h2>Measuring it: agents in the loop</h2>
             <p>
-              Unit tests can prove a guard works. They can&apos;t tell you whether a reader finds the output convincing. So the evaluation harness runs the real pipeline end to end: AI agents act as the
+              Unit tests can prove a guard works. They can&rsquo;t tell you whether a reader finds the output convincing. So the evaluation harness runs the real pipeline end to end: AI agents act as the
               user on a fixed benchmark of 12 real postings, calling the same tools a person would,
               24 runs per round. Blind LLM reviewer panels, briefed as a recruiter, a hiring manager
               and (for the six FDE postings) a senior forward deployed engineer, then score the
               documents against a written rubric, without knowing which version they are reading.
             </p>
             <p>
-              Each round&apos;s findings became fixes: a clearer brief for the model, stricter guards,
+              Each round&rsquo;s findings became fixes: a clearer brief for the model, stricter guards,
               a better page order. Then the same 12 postings ran again, compared with the documents
               produced before the work started (panel scores) and the pre-fix pipeline
               (requirements coverage).
@@ -196,7 +202,7 @@ export default function Writeup() {
           <div className="prose-body">
             <p>
               The panels score strictly: on their scale 5 is typical and 7 is strong. The remaining gap is mostly not wording. Reviewers asked for outcomes the
-              fact vault doesn&apos;t hold yet, which is exactly the point: the system won&apos;t
+              fact vault doesn&rsquo;t hold yet, which is exactly the point: the system won&rsquo;t
               invent them.
             </p>
 
@@ -207,7 +213,7 @@ export default function Writeup() {
                 everything checkable in code.
               </li>
               <li>
-                A guard you can&apos;t measure is a guess. The agent-in-the-loop harness turned
+                A guard you can&rsquo;t measure is a guess. The agent-in-the-loop harness turned
                 &ldquo;this looks better&rdquo; into numbers I could compare across rounds.
               </li>
               <li>
@@ -217,7 +223,7 @@ export default function Writeup() {
             </ul>
             <p>
               Stack: Python, MCP, SQLite, an ONNX embedding model, HTML-to-PDF rendering, and 1,200+
-              automated tests. The code is private; I&apos;m happy to walk through it. <Link href="/#contact">Get in touch</Link>.
+              automated tests. The code is private; I&rsquo;m happy to walk through it. <Link href="/#contact">Get in touch</Link>.
             </p>
           </div>
         </article>

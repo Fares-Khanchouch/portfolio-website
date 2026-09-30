@@ -26,13 +26,13 @@ export default function Footer({ backToTop = true }: { backToTop?: boolean }) {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-x-1 gap-y-2 text-sm text-fg-subtle">
-            <ul className="-ml-3 flex flex-wrap sm:ml-0">
+            <ul className="-ml-3 grid grid-cols-[repeat(2,minmax(0,1fr))] sm:ml-0 sm:flex sm:flex-wrap">
               {links.map((l) => (
                 <li key={l.label}>
                   <a
                     href={l.href}
                     {...(l.href.startsWith("http") ? { target: "_blank", rel: "me noopener noreferrer" } : {})}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 transition-colors duration-200 hover:bg-surface-hover hover:text-fg"
+                    className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-full px-3 [overflow-wrap:anywhere] transition-colors duration-200 hover:bg-surface-hover hover:text-fg"
                   >
                     <l.icon size={15} aria-hidden="true" />
                     {l.label}

@@ -29,11 +29,11 @@ const inProjects = (tool: string) =>
 
 export default function About() {
   return (
-    <section id="about" className="py-14 md:py-20">
+    <section id="about" className="pt-14 pb-4 md:pt-20 md:pb-8">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="03" label="About" title="The short version" />
 
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-[3fr_2fr] md:gap-14">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[3fr_2fr] lg:gap-14">
           <Reveal>
             <p className="text-2xl leading-snug font-medium tracking-tight text-balance [overflow-wrap:anywhere] text-fg md:text-3xl">
               {about.lede.text}{" "}

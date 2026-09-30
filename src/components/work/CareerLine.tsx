@@ -117,7 +117,7 @@ export default function CareerLine() {
         </div>
 
         {/* phones: the bars are too narrow for names, so list them */}
-        <ul className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-y-2 border-t border-line pt-4 font-mono text-[11px] text-fg-muted sm:hidden">
+        <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-line pt-4 font-mono text-[11px] text-fg-muted sm:hidden">
           {[...timeline].reverse().map((s) => (
             <li key={s.detail} className="flex items-start gap-2.5">
               <span
@@ -131,11 +131,10 @@ export default function CareerLine() {
                 }
               />
               <span className="min-w-0">
-                <span className="block text-fg">{s.label}</span>
-                <span className="block text-fg-subtle">{s.detail}</span>
-              </span>
-              <span className="ml-auto shrink-0 text-fg-subtle">
-                {range(s)}
+                <span className="block truncate text-fg">
+                  {s.label.split(",")[0]}
+                </span>
+                <span className="block text-fg-subtle">{range(s)}</span>
               </span>
             </li>
           ))}

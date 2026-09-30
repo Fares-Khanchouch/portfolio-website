@@ -13,7 +13,7 @@ export const site = {
   name: "Fares Khanchouch",
   title: "Fares Khanchouch · Forward Deployed Engineer",
   description:
-    "Fares Khanchouch, Integration Consultant in Tunis doing forward-deployed work: core-banking integrations and delivery for banks, MCP servers, Claude skills and LLM agent tooling.",
+    "Fares Khanchouch, Integration Consultant in Tunis doing forward-deployed work: credit-platform delivery and core-banking integrations for banks, and grounded LLM tooling.",
   locale: "en_US",
   // Bump when the content changes (sitemap lastmod, structured data).
   updated: "2026-09-30",
@@ -47,7 +47,7 @@ export const hero = {
   eyebrow: "Integrations & LLM agent tooling",
   headline: "Forward Deployed Engineer",
   tagline:
-    "I connect bank credit platforms to core banking and SaaS APIs, and build MCP tooling that lets an agent explain a live deployment and cite its sources.",
+    "I take bank credit platforms from scoping to go-live, connect them to the systems banks already run, and build LLM tooling that sticks to the facts.",
   photo: "/portrait.jpg",
   avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
@@ -58,7 +58,8 @@ export const hero = {
     { value: "1.1M+", label: "job postings indexed" },
     { value: "1,200+", label: "automated tests" },
   ],
-  toolingBadge: { value: "50", label: "typed MCP tools", detail: "11 Claude skills" },
+  // Floating card on the portrait (tablet and up).
+  badge: { title: "Scoping to go-live", detail: "Credit platforms for banks" },
 };
 
 export const about = {
@@ -98,7 +99,7 @@ export type Highlight = {
 };
 
 export const now = {
-  heading: "Delivery, integrations and agent tooling",
+  heading: "Delivery and integration for banks",
   role: "Integration Consultant",
   company: "Axe Finance",
   dates: "Dec 2025 – Present",
@@ -116,14 +117,8 @@ export const now = {
     },
     {
       icon: "agent",
-      title: "Agent tooling",
-      details: [
-        "A queryable knowledge base parsed from a live deployment",
-        "A dependency graph with provenance on every edge",
-        "Skills that turn a BRD into screens, fields and stored procedures",
-        "Telemetry on every tool call, plus a time-saved log",
-      ],
-      text: "Python MCP servers exposing 50 typed tools and 11 Claude skills, so an agent can explain a live deployment and cite its sources.",
+      title: "Agent tooling, alongside delivery",
+      text: "Internal Python tooling (MCP servers and Claude skills) so an agent can explain a live deployment and cite its sources.",
     },
   ] as Highlight[],
 };

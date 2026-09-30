@@ -1,5 +1,5 @@
 import { getImageProps } from "next/image";
-import { ArrowRight, Bot, FileText, Github, Linkedin } from "lucide-react";
+import { ArrowRight, FileText, Github, Linkedin, Route } from "lucide-react";
 import { hero, now, social } from "@/data";
 
 const enter = (ms: number) => ({ "--enter-delay": `${ms}ms` }) as React.CSSProperties;
@@ -132,13 +132,13 @@ export default function Hero() {
           </div>
           <div aria-hidden="true" className="float-b absolute top-8 right-2 hidden xl:-right-6 items-center gap-3 rounded-2xl border border-line-strong bg-bg/85 py-2.5 pr-4 pl-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md md:flex">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <Bot size={18} />
+              <Route size={18} />
             </span>
             <span>
               <span className="block text-sm font-medium whitespace-nowrap text-fg">
-                {hero.toolingBadge.value} {hero.toolingBadge.label}
+                {hero.badge.title}
               </span>
-              <span className="block text-xs whitespace-nowrap text-fg-muted">{hero.toolingBadge.detail}</span>
+              <span className="block text-xs whitespace-nowrap text-fg-muted">{hero.badge.detail}</span>
             </span>
           </div>
         </div>

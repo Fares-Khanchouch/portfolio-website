@@ -118,14 +118,14 @@ function AgentToolingWide() {
         />
       ))}
       <text x={118} y={176} fontSize={12} fill="var(--accent)" style={mono}>
-        50 typed tools
+        typed tools
       </text>
       {/* skills */}
       {skills.map((s) => (
         <rect key={s} x={118 + s * 19.4} y={190} width={14} height={14} rx={4} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
       ))}
       <text x={336} y={201.5} fontSize={12} fill="var(--accent)" style={mono}>
-        11 Claude skills
+        Claude skills
       </text>
       {/* MCP -> knowledge base + dependency graph */}
       <path {...edge} d="M330 58 C352 58 352 44 372 44" />
@@ -182,7 +182,7 @@ function AgentToolingTall() {
         MCP servers
       </text>
       <text x={264} y={118} textAnchor="end" fontSize={12} fill="var(--accent)" style={mono}>
-        50 typed tools
+        typed tools
       </text>
       {tools.map((t) => (
         <rect
@@ -217,7 +217,7 @@ function AgentToolingTall() {
         with provenance
       </text>
       <text x={20} y={338} fontSize={12} fill="var(--accent)" style={mono}>
-        11 Claude skills
+        Claude skills
       </text>
       {skills.map((s) => (
         <rect key={s} x={20 + s * 19.6} y={346} width={14} height={14} rx={4} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />

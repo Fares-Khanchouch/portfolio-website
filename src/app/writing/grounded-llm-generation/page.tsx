@@ -136,7 +136,7 @@ export default function Writeup() {
           </div>
 
           {/* Breaks out of the text column from lg up to show the wide layout. */}
-          <figure data-toc-avoid className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6 lg:-mx-44 lg:p-0 lg:py-4">
+          <figure data-toc-avoid className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6 lg:-mx-44 lg:px-6">
             <GroundedDiagram />
             <figcaption className="mt-4 px-4 text-center text-xs text-balance text-fg-subtle">
               The whole system: ingest, grounded generation, and the evaluation harness that measures it.

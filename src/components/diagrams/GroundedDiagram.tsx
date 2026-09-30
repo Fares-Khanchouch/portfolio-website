@@ -119,7 +119,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
             <Caption x={252} y={88}>+ 21 more</Caption>
 
             <Box x={40} y={96} w={280} h={64} title="Crawler" lines={["63k+ boards · rate limits · ETags"]} />
-            <Store x={90} y={192} w={180} h={78} title="SQLite" lines={["1.1M+ postings, normalized"]} />
+            <Store x={90} y={192} w={180} h={78} title="SQLite" lines={["1.1M+ postings", "normalized"]} />
 
             <Caption x={0} y={306}>Generate</Caption>
             <Box x={24} y={320} w={150} h={78} title="Brief" lines={["key terms", "requirements"]} />

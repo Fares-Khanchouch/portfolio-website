@@ -51,6 +51,14 @@ export const hero = {
   photo: "/portrait.jpg",
   avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
+  // Proof strip under the hero buttons (all from the fact vault).
+  proof: [
+    { value: "2", label: "production releases for banks" },
+    { value: "6+", label: "automation clients" },
+    { value: "1.1M+", label: "job postings indexed" },
+    { value: "1,200+", label: "automated tests" },
+  ],
+  toolingBadge: { value: "50", label: "typed MCP tools", detail: "11 Claude skills" },
 };
 
 export const about = {

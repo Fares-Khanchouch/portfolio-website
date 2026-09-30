@@ -1,21 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FileText, Menu, X } from "lucide-react";
 import { nav, social } from "@/data";
 import { cn } from "@/lib/utils";
 
-// On the home page links are in-page anchors; on other pages they point
-// back to the home page's sections.
+// Floating pill navigation. On the home page links are in-page anchors and
+// a highlight slides to the section in view; on other pages they point back
+// to the home page's sections.
 export default function Navbar({ home = true }: { home?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(null);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
-  // Highlight the nav link of the section currently in the middle band of
-  // the viewport (home page only).
+  // Which section is in the middle band of the viewport (home page only).
   useEffect(() => {
     if (!home) return;
     const els = nav
@@ -38,6 +40,17 @@ export default function Navbar({ home = true }: { home?: boolean }) {
       window.removeEventListener("scroll", onTop);
     };
   }, [home]);
+
+  // Move the sliding highlight under the active link.
+  const placePill = useCallback(() => {
+    const el = active ? linkRefs.current[active] : null;
+    setPill(el ? { left: el.offsetLeft, width: el.offsetWidth } : null);
+  }, [active]);
+  useLayoutEffect(placePill, [placePill]);
+  useEffect(() => {
+    window.addEventListener("resize", placePill);
+    return () => window.removeEventListener("resize", placePill);
+  }, [placePill]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -69,19 +82,15 @@ export default function Navbar({ home = true }: { home?: boolean }) {
   const href = (id: string) => (home ? `#${id}` : `/#${id}`);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200",
-        open
-          ? "border-b border-line bg-bg shadow-[0_12px_24px_-12px_rgba(0,0,0,0.35)]"
-          : scrolled
-            ? "border-b border-line bg-bg/85 backdrop-blur-md"
-            : "border-b border-transparent",
-      )}
-    >
+    <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-4">
       <nav
         aria-label="Main"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6"
+        className={cn(
+          "mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full border pr-2 pl-5 transition-[background-color,border-color,box-shadow] duration-300",
+          scrolled || open
+            ? "border-line-strong bg-bg/80 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+            : "border-line bg-bg/40 backdrop-blur-md",
+        )}
       >
         <Link
           href="/"
@@ -93,49 +102,54 @@ export default function Navbar({ home = true }: { home?: boolean }) {
           <span className="sr-only">Fares Khanchouch, home</span>
         </Link>
 
-        <ul className="hidden items-center gap-7 text-sm text-fg-muted md:flex">
+        <ul className="relative hidden items-center text-sm text-fg-muted md:flex">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute top-1/2 h-8 -translate-y-1/2 rounded-full border border-line bg-surface-hover transition-[left,width,opacity] duration-300 ease-out",
+              pill ? "opacity-100" : "opacity-0",
+            )}
+            style={pill ? { left: pill.left, width: pill.width } : undefined}
+          />
           {nav.map((l) => (
             <li key={l.id}>
               <a
+                ref={(el) => {
+                  linkRefs.current[l.id] = el;
+                }}
                 href={href(l.id)}
                 aria-current={active === l.id ? "true" : undefined}
                 className={cn(
-                  "relative -mx-1.5 px-1.5 py-1 transition-colors duration-200 hover:text-fg",
+                  "block rounded-full px-3.5 py-1.5 transition-colors duration-200 hover:text-fg",
                   active === l.id && "text-fg",
                 )}
               >
                 {l.name}
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "absolute inset-x-1.5 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300 ease-out",
-                    active === l.id ? "scale-x-100" : "scale-x-0",
-                  )}
-                />
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={social.resume}
-              className="py-1 transition-colors duration-200 hover:text-fg"
-            >
-              Résumé
-            </a>
-          </li>
         </ul>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-fg md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <a
+            href={social.resume}
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-accent-solid px-4 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
+          >
+            <FileText size={15} aria-hidden="true" />
+            Résumé
+          </a>
+          <button
+            ref={toggleRef}
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-fg transition-colors hover:bg-surface-hover md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
+        </div>
       </nav>
 
       {open && (
@@ -145,24 +159,27 @@ export default function Navbar({ home = true }: { home?: boolean }) {
             const next = e.relatedTarget as Node | null;
             if (next && !e.currentTarget.closest("header")?.contains(next)) setOpen(false);
           }}
-          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-line px-4 pb-4 md:hidden">
+          className="mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-5xl overflow-y-auto overscroll-contain rounded-3xl border border-line-strong bg-bg p-2 shadow-[0_20px_40px_-16px_rgba(0,0,0,0.5)] md:hidden"
+        >
           <ul className="flex flex-col">
-            {nav.map((l) => (
+            {nav.map((l, i) => (
               <li key={l.id}>
                 <a
                   href={href(l.id)}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-base text-fg-muted transition-colors hover:text-fg"
+                  aria-current={active === l.id ? "true" : undefined}
+                  className={cn(
+                    "flex items-center justify-between rounded-2xl px-4 py-3.5 text-base text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg",
+                    active === l.id && "bg-surface-hover text-fg",
+                  )}
                 >
                   {l.name}
+                  <span aria-hidden="true" className="font-mono text-xs text-fg-subtle">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </a>
               </li>
             ))}
-            <li>
-              <a href={social.resume} className="block py-3 text-base text-accent">
-                Résumé (PDF)
-              </a>
-            </li>
           </ul>
         </div>
       )}

@@ -97,9 +97,11 @@ export default function Hero() {
           <div className="relative -mx-4 h-[clamp(260px,36svh,320px)] sm:-mx-6 md:h-[420px] lg:mx-0 lg:h-[min(640px,calc(100svh-200px))]">
             <div
               aria-hidden="true"
-              className="absolute top-[4%] right-[6%] aspect-square w-[50%] rounded-full border border-accent/20 bg-accent-soft md:w-[40%] lg:top-[3%] lg:right-auto lg:left-1/2 lg:w-[80%] lg:-translate-x-1/2"
+              className="absolute top-[4%] right-[6%] aspect-square w-[50%] rounded-full border border-accent/20 bg-accent-soft md:w-[40%] lg:hidden"
             />
             <div aria-hidden="true" className="absolute inset-x-[15%] top-[35%] bottom-[5%] rounded-full bg-[var(--glow)] opacity-60 blur-[80px]" />
+            {/* desktop: a soft, edgeless light behind the head instead of the disc */}
+            <div aria-hidden="true" className="absolute top-[2%] left-1/2 hidden aspect-square w-[70%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-soft),transparent)] opacity-90 lg:block" />
             <div className="portrait-fade absolute inset-y-0 right-0 w-[64%] sm:right-6 sm:w-[50%] md:w-[46%] lg:inset-x-0 lg:w-full">
               <Image
                 src={hero.cutout}

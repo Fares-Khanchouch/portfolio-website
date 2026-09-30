@@ -178,8 +178,8 @@ export default function Writeup() {
               The same system is a Python MCP server that crawls 63,000+ company job boards through 24
               applicant-tracking-system adapters into a local database of 1.1M+ postings, normalized
               into one record shape. Matching and ranking are deterministic keyword scoring plus a
-              small local embedding model; the model supplies judgment, the server supplies memory and
-              hands.
+              small local embedding model. The model makes the judgment calls; the code does everything
+              that can be checked.
             </p>
 
             <H2 id="measuring">Measuring it: agents in the loop</H2>
@@ -187,7 +187,7 @@ export default function Writeup() {
               Unit tests can prove a guard works. They can&rsquo;t tell you whether a reader finds the output convincing. So the evaluation harness runs the real pipeline end to end: AI agents act as the
               user on a fixed benchmark of 12 real postings, calling the same tools a person would,
               24 runs per round. Blind LLM reviewer panels, briefed as a recruiter, a hiring manager
-              and (for the six FDE postings) a senior forward deployed engineer, then score the
+              and, for some postings, a senior engineer from the role&rsquo;s own field, then score the
               documents against a written rubric, without knowing which version they are reading.
             </p>
             <p>
@@ -202,9 +202,7 @@ export default function Writeup() {
 
           <div className="prose-body">
             <p>
-              The panels score strictly: on their scale 5 is typical and 7 is strong. The remaining gap is mostly not wording. Reviewers asked for outcomes the
-              fact vault doesn&rsquo;t hold yet, which is exactly the point: the system won&rsquo;t
-              invent them.
+              The panels score strictly: on their scale 5 is typical and 7 is shortlisted. The remaining gap is mostly not wording: reviewers asked for outcomes that aren&rsquo;t on file, and the system won&rsquo;t invent them.
             </p>
 
             <H2 id="takeaways">What I took from it</H2>
@@ -223,7 +221,7 @@ export default function Writeup() {
               </li>
             </ul>
             <p>
-              Stack: Python, MCP, SQLite, an ONNX embedding model, HTML-to-PDF rendering, and 1,200+
+              Stack: Python, MCP, SQLite, a small local embedding model, HTML-to-PDF rendering, and 1,200+
               automated tests. The code is private; I&rsquo;m happy to walk through it. <Link href="/#contact">Get in touch</Link>.
             </p>
           </div>

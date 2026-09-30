@@ -2,14 +2,14 @@
 // The wording of the rewrites is an illustration; the messages are real.
 const rows = [
   {
-    fact: "Built an agent interface … MCP servers exposing 50 typed tools plus an 11-skill Claude pack …",
-    rewrite: "Built MCP servers exposing 60 typed tools …",
-    error: "experience: rewrite of 'exp.axe.b24' invents number(s) not in the original: 60",
+    fact: "Built a Kubernetes operator in Go that deploys n8n with PostgreSQL from a single custom resource, replacing 8+ hand-written manifests …",
+    rewrite: "… replacing 20+ hand-written manifests.",
+    error: "projects: rewrite of 'proj.n8nop.b1' invents number(s) not in the original: 20, 20+",
   },
   {
-    fact: "Scored postings against a candidate profile with a locally run ONNX embedding model …",
-    rewrite: "Built a RAG pipeline that scores postings …",
-    error: "projects: rewrite of 'proj.jobpipe.b8' names RAG, which appear(s) nowhere in the vault",
+    fact: "Migrated a client's financial records (100,000+ rows on clients and assets) from Excel to Airtable via API scripts …",
+    rewrite: "Migrated a client's financial records (100,000+ rows) from Excel to Snowflake via API scripts …",
+    error: "experience: rewrite of 'exp.free.b6' names snowflake, which appear(s) nowhere in the vault",
   },
 ];
 

@@ -58,15 +58,15 @@ export default function Contact() {
   }
 
   const field =
-    "w-full rounded-md border border-line bg-bg/40 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color] duration-200 focus:border-accent focus:outline-none focus-visible:outline-none sm:text-sm";
+    "w-full rounded-md border border-input-border bg-bg/40 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color] duration-200 focus:border-accent focus:outline-none focus-visible:outline-none sm:text-sm";
   const labelCls = "mb-1.5 block text-sm font-medium text-fg";
 
   return (
-    <section id="contact" className="py-16 md:py-24">
+    <section id="contact" className="py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="04" label="Contact" title={contact.heading} />
 
-        <div className="grid gap-10 md:grid-cols-[2fr_3fr] md:gap-14">
+        <div className="grid gap-10 md:grid-cols-2 md:items-start md:gap-14">
           <Reveal className="space-y-6">
             <p className="text-lg leading-relaxed text-fg-muted">{contact.text}</p>
             <a
@@ -85,7 +85,7 @@ export default function Contact() {
                   <a
                     href={href}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="me noopener noreferrer"
                     className="group inline-flex h-11 items-center gap-2 rounded-md border border-line px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-line-strong hover:text-fg"
                   >
                     <Icon size={16} aria-hidden="true" />
@@ -98,7 +98,7 @@ export default function Contact() {
           </Reveal>
 
           <Reveal delay={80}>
-            <div className="rounded-2xl border border-line bg-surface p-6 md:p-8">
+            <div className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
               {status === "sent" ? (
                 <div role="status" className="flex flex-col items-center gap-3 py-10 text-center">
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
@@ -119,7 +119,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <label htmlFor="message" className={labelCls}>Message</label>
-                    <textarea id="message" name="message" rows={5} required minLength={10} maxLength={LIMITS.message} className={`${field} resize-y`} />
+                    <textarea id="message" name="message" rows={4} required minLength={10} maxLength={LIMITS.message} className={`${field} resize-y`} />
                   </div>
                   {/* Honeypot, hidden from people and assistive tech. */}
                   <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
@@ -136,7 +136,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-accent-solid px-6 text-sm font-medium text-white transition-[background-color] duration-200 hover:bg-[#35668a] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-accent-solid px-6 text-sm font-medium text-white transition-[background-color] duration-200 hover:bg-accent-solid-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                   >
                     <Send size={15} aria-hidden="true" />
                     {status === "sending" ? "Sending…" : "Send message"}

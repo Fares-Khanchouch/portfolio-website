@@ -15,6 +15,8 @@ export const site = {
   description:
     "Forward deployed engineer building integrations and LLM agent tooling for enterprise systems: credit-platform delivery for banks, MCP servers and Claude skills, and automation.",
   locale: "en_US",
+  // Bump when the content changes (sitemap lastmod, structured data).
+  updated: "2026-09-29",
 };
 
 export const social = {
@@ -45,16 +47,16 @@ export const hero = {
   eyebrow: "Integrations & LLM agent tooling",
   headline: "Forward Deployed Engineer",
   tagline:
-    "I build the software between a company's systems and the people, and now the AI agents, that use them.",
+    "I ship the integrations and AI-agent tooling that connect enterprise systems to the people who run them.",
   photo: "/portrait.jpg",
+  avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
 };
 
 export const about = {
   heading: "About",
   paragraphs: [
-    "Hi, I'm Fares. Today I deliver credit-platform changes for banks in Qatar and Saudi Arabia, from scoping to go-live, and build agent tooling that lets an AI explain a live deployment and cite its sources.",
-    "Before that I automated workflows for clients as a freelancer. On my own time I build things like a job-market data platform and a Kubernetes operator for n8n.",
+    "Hi, I'm Fares. I like the part of engineering where software meets a real organization's systems and the people using them. Outside work I build things like a job-market data platform and a Kubernetes operator for n8n.",
   ],
   facts: [
     { label: "Based in", value: "Tunis, Tunisia" },
@@ -79,16 +81,16 @@ export type Highlight = {
 };
 
 export const now = {
-  heading: "Work",
+  heading: "Where I work",
   role: "Integration Consultant",
   company: "Axe Finance",
   dates: "Dec 2025 – Present",
-  location: "Tunis",
+  location: "Tunis, Tunisia",
   highlights: [
     {
       icon: "delivery",
       title: "Delivery, end to end",
-      text: "Credit-platform changes for banks in Qatar and Saudi Arabia, from scoping through UAT to go-live and support, across two production releases.",
+      text: "Credit-platform changes for banks in Qatar and Saudi Arabia, from scoping through UAT to go-live and support, including two production releases.",
     },
     {
       icon: "integration",
@@ -136,7 +138,7 @@ export const before: Role[] = [
     company: "WAY2CLOUD",
     dates: "Jun – Jul 2022",
     summary:
-      "A Python REST API automating Kubernetes cluster operations, containerised and deployed with Helm.",
+      "A Python REST API automating Kubernetes cluster operations, containerized and deployed with Helm.",
   },
 ];
 
@@ -159,24 +161,24 @@ export const projects: Project[] = [
     title: "Job-market data platform & grounded LLM generation",
     kind: "Personal project",
     summary:
-      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, and writes résumés that can't make things up.",
+      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, plus an LLM document generator that can only say what's in a versioned fact store.",
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
-      "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind reviewer panels score every run.",
-      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind reviewer résumé scores from 5.1 to 6.3/10.",
+      "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
+      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer scores from 5.1 to 6.3/10.",
     ],
-    flow: ["Job boards", "Normalise", "Fact vault", "LLM draft", "Guards", "PDF"],
+    flow: ["Job boards", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
-    link: { label: "Read the write-up", href: "/writing/grounded-resume-generator" },
+    link: { label: "Read the write-up", href: "/writing/grounded-llm-generation" },
   },
   {
     id: "n8n-operator",
     title: "n8n Kubernetes Operator",
     kind: "Open source",
     summary:
-      "Runs a complete n8n instance on Kubernetes from one declarative YAML file instead of eight hand-made resources.",
+      "Runs a complete n8n instance on Kubernetes from one declarative YAML file instead of 8+ hand-written manifests.",
     points: [
-      "A custom resource provisions PostgreSQL, n8n, secrets and networking, isolated per namespace.",
+      "A custom resource provisions PostgreSQL, n8n, secrets and networking, with isolated multi-instance setups.",
       "A reconciliation loop keeps each instance healthy and reports its status.",
     ],
     flow: ["YAML", "CRD", "Reconcile", "Postgres", "n8n"],
@@ -187,19 +189,6 @@ export const projects: Project[] = [
       external: true,
     },
   },
-  {
-    id: "agent-tooling",
-    title: "Agent tooling for an enterprise platform",
-    kind: "At work",
-    summary:
-      "Typed MCP tools and Claude skills that let an AI agent answer questions about a live deployment and cite where each answer comes from.",
-    points: [
-      "A queryable knowledge base parsed from the deployment, and a dependency graph with provenance on every edge.",
-      "Tool-call telemetry, so adoption is measured rather than assumed.",
-    ],
-    flow: ["Agent", "MCP tools", "Knowledge base", "Dependency graph", "Cited answer"],
-    tags: ["Python", "MCP", "Claude skills"],
-  },
 ];
 
 export const contact = {
@@ -208,9 +197,9 @@ export const contact = {
 };
 
 export const writeup = {
-  slug: "grounded-resume-generator",
-  title: "A résumé generator that can't make things up",
+  slug: "grounded-llm-generation",
+  title: "Grounded LLM generation: output that can't make things up",
   description:
-    "How I built LLM document generation where every claim traces to a fact store, and an agent-in-the-loop harness to prove it works.",
+    "Building LLM generation where every claim traces to a fact store, tested on résumés, and an agent-in-the-loop harness to measure it.",
   date: "2026-09-29",
 };

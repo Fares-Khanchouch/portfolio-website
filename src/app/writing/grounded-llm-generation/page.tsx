@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import FlowDiagram from "@/components/FlowDiagram";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import ReadingProgress from "@/components/ReadingProgress";
 import { site, writeup } from "@/data";
 
 const path = `/writing/${writeup.slug}`;
@@ -35,20 +36,22 @@ const articleJsonLd = {
   headline: writeup.title,
   description: writeup.description,
   datePublished: writeup.date,
-  author: { "@type": "Person", name: site.name, url: site.url },
+  author: { "@type": "Person", "@id": `${site.url}/#person`, name: site.name, url: site.url },
+  image: `${site.url}/opengraph-image`,
+  inLanguage: "en",
+  isPartOf: { "@id": `${site.url}/#website` },
   mainEntityOfPage: `${site.url}${path}`,
 };
 
 const RESULTS: [string, string, string][] = [
   ["Postings' hard requirements addressed", "54% of runs", "100% of runs"],
-  ["Résumé score, recruiter + hiring-manager panel", "5.1 / 10", "6.3 / 10"],
+  ["Résumé score, LLM recruiter + hiring-manager panel", "5.1 / 10", "6.3 / 10"],
   ["Cover-letter score, same panel", "4.6 / 10", "6.7 / 10"],
   ["Bullets judged overclaimed", "6%", "0%"],
-  ["Senior-FDE panel: “yes” to an interview loop", "33%", "100%"],
 ];
 
 export default function Writeup() {
-  const date = new Date(writeup.date).toLocaleDateString("en-GB", {
+  const date = new Date(writeup.date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -56,6 +59,7 @@ export default function Writeup() {
   return (
     <>
       <Navbar home={false} />
+      <ReadingProgress />
       <main id="main" className="pt-28 pb-24 md:pt-36">
         <article className="mx-auto max-w-2xl px-4 sm:px-6">
           <Link
@@ -77,7 +81,8 @@ export default function Writeup() {
           <div className="prose-body">
             <h2>The problem</h2>
             <p>
-              Ask a language model to tailor a résumé to a job posting and it will happily do it. It
+              Ask a language model to tailor a document to a specific reader (I used résumés against
+              real job postings, because the facts are easy to check) and it will happily do it. It
               will also, sooner or later, round a number up, add a tool the posting asks for, or claim
               a result nobody measured. Each of those reads well and is false, and a reviewer who
               catches one stops trusting the rest.
@@ -127,14 +132,13 @@ export default function Writeup() {
             </ul>
             <p>
               A document is a pure function of the template version, the vault version and the
-              payload, so any document can be re-rendered byte-for-byte later, which is how I know
-              what was actually sent.
+              payload, so any document can be rebuilt later and checked against a stored hash.
             </p>
 
             <h2>Where the postings come from</h2>
             <p>
               The same system is a Python MCP server that crawls 63,000+ company job boards through 24
-              applicant-tracking-system adapters into a local database of 1.1M+ postings, normalised
+              applicant-tracking-system adapters into a local database of 1.1M+ postings, normalized
               into one record shape. Matching and ranking are deterministic keyword scoring plus a
               small local embedding model; the model supplies judgment, the server supplies memory and
               hands.
@@ -145,21 +149,22 @@ export default function Writeup() {
               Unit tests can prove a guard works. They can&apos;t tell you whether a recruiter would
               call. So the evaluation harness runs the real pipeline end to end: AI agents act as the
               user on a fixed benchmark of 12 real postings, calling the same tools a person would,
-              24 runs per round. Blind reviewer panels (recruiter and hiring manager, plus a
-              senior forward-deployed-engineer panel for the six FDE postings) then score every
-              document against a written brief, without knowing which version they are reading.
+              24 runs per round. Blind LLM reviewer panels, briefed as a recruiter, a hiring manager
+              and (for the six FDE postings) a senior forward deployed engineer, then score the
+              documents against a written rubric, without knowing which version they are reading.
             </p>
             <p>
               Each round&apos;s findings became fixes: a clearer brief for the model, stricter guards,
-              a better page order. Then the same benchmark ran again against the documents produced
-              before the work started.
+              a better page order. Then the same 12 postings ran again, compared with the documents
+              produced before the work started (panel scores) and the pre-fix pipeline
+              (requirements coverage).
             </p>
           </div>
 
           <div className="my-8 overflow-x-auto rounded-xl border border-line">
-            <table className="w-full min-w-[480px] text-left text-sm">
+            <table className="w-full min-w-[480px] text-left text-sm tabular-nums">
               <caption className="sr-only">Results before and after, same benchmark and reviewer briefs</caption>
-              <thead className="bg-surface font-mono text-[11px] uppercase tracking-wider text-fg-subtle">
+              <thead className="bg-surface font-mono text-xs uppercase tracking-wider text-fg-subtle">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-medium">Measure</th>
                   <th scope="col" className="px-4 py-3 font-medium">Before</th>
@@ -177,6 +182,7 @@ export default function Writeup() {
               </tbody>
             </table>
           </div>
+          <p className="-mt-5 mb-8 text-xs text-fg-subtle">Panel scores: 12 postings per version.</p>
 
           <div className="prose-body">
             <p>
@@ -189,7 +195,7 @@ export default function Writeup() {
             <h2>What I took from it</h2>
             <ul>
               <li>
-                Put the model where judgment is needed (what to emphasise, how to phrase it) and keep
+                Put the model where judgment is needed (what to emphasize, how to phrase it) and keep
                 everything checkable in code.
               </li>
               <li>
@@ -197,8 +203,8 @@ export default function Writeup() {
                 &ldquo;this looks better&rdquo; into numbers I could compare across rounds.
               </li>
               <li>
-                Most quality gains came from better inputs and clearer instructions, not a bigger
-                model.
+                Most quality gains came from better inputs (a rebuilt fact vault) and clearer
+                instructions to the model.
               </li>
             </ul>
             <p>

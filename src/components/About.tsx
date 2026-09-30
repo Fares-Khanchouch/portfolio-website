@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 
 export default function About() {
   return (
-    <section id="about" className="py-16 md:py-24">
+    <section id="about" className="py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="03" label="About" title="A bit about me" />
 
@@ -18,7 +18,7 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={80}>
-            <dl className="divide-y divide-line rounded-xl border border-line bg-surface">
+            <dl className="divide-y divide-line rounded-xl border border-line bg-surface shadow-card">
               {about.facts.map((f) => (
                 <div key={f.label} className="px-5 py-4">
                   <dt className="mb-1 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle">{f.label}</dt>
@@ -35,7 +35,7 @@ export default function About() {
             {about.skills.map((s) => (
               <li
                 key={s}
-                className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-fg-muted transition-colors duration-200 hover:border-line-strong hover:text-fg"
+                className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-fg-muted shadow-card"
               >
                 {s}
               </li>

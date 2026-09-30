@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
+import Spotlight from "@/components/Spotlight";
 import Work from "@/components/Work";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <Spotlight />
     </>
   );
 }

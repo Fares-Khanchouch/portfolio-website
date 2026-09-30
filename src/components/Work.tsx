@@ -11,7 +11,7 @@ const ICONS: Record<Highlight["icon"], typeof Bot> = {
 
 export default function Work() {
   return (
-    <section id="work" className="py-16 md:py-24">
+    <section id="work" className="py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="01" label="Experience" title={now.heading} />
 
@@ -27,12 +27,12 @@ export default function Work() {
           </div>
         </Reveal>
 
-        <ul className="grid gap-4 md:grid-cols-3">
+        <ul className="grid gap-4 lg:grid-cols-3">
           {now.highlights.map((h, i) => {
             const Icon = ICONS[h.icon];
             return (
               <Reveal as="li" key={h.title} delay={i * 80}>
-                <div className="group h-full rounded-xl border border-line bg-surface p-5 transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface-hover md:p-6">
+                <div data-spotlight className="h-full rounded-xl border border-line bg-surface p-5 shadow-card md:p-6">
                   <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-soft text-accent">
                     <Icon size={20} aria-hidden="true" />
                   </span>
@@ -55,8 +55,10 @@ export default function Work() {
                 />
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <p className="font-medium text-fg">
-                    {r.role} <span className="text-fg-subtle">·</span>{" "}
-                    <span className="text-fg-muted">{r.company}</span>
+                    {r.role}{" "}
+                    <span className="whitespace-nowrap">
+                      <span className="text-fg-subtle">·</span> <span className="text-fg-muted">{r.company}</span>
+                    </span>
                   </p>
                   <p className="shrink-0 font-mono text-xs text-fg-subtle">{r.dates}</p>
                 </div>

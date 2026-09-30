@@ -48,23 +48,27 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
     <ol
       ref={ref}
       aria-label={label}
-      className="flex flex-wrap items-center gap-y-2.5"
+      className="flex flex-col items-start sm:grid sm:items-center"
+      style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
     >
       {steps.map((s, i) => (
-        <li key={s} className="flex items-center">
+        <li key={s} className="flex flex-col items-start sm:flex-row sm:items-center">
           {i > 0 && (
-            <span aria-hidden="true" className="relative block h-px w-4 overflow-hidden bg-line-strong sm:w-6">
+            <span
+              aria-hidden="true"
+              className="relative ml-5 block h-3 w-px overflow-hidden bg-line-strong sm:ml-0 sm:h-px sm:w-3 sm:shrink-0"
+            >
               <span
                 className={cn(
-                  "absolute inset-0 origin-left bg-accent transition-transform duration-500 ease-out",
-                  lit(i) ? "scale-x-100" : "scale-x-0",
+                  "absolute inset-0 origin-top bg-accent transition-transform duration-500 ease-out sm:origin-left",
+                  lit(i) ? "scale-100" : "scale-y-0 sm:scale-x-0 sm:scale-y-100",
                 )}
               />
             </span>
           )}
           <span
             className={cn(
-              "rounded-md border px-3 py-1.5 font-mono text-xs whitespace-nowrap transition-[color,background-color,border-color,box-shadow] duration-300",
+              "rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 sm:w-full sm:px-2 sm:text-center",
               lit(i)
                 ? "border-accent/50 bg-accent-soft text-fg"
                 : "border-line bg-transparent text-fg-subtle",

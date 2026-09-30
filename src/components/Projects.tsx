@@ -7,14 +7,14 @@ import SectionHeading from "./SectionHeading";
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-16 md:py-24">
+    <section id="projects" className="py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="02" label="Projects" title="Selected work" />
 
         <div className="flex flex-col gap-6">
           {projects.map((p, i) => (
             <Reveal as="article" key={p.id} delay={i * 60}>
-              <div className="rounded-2xl border border-line bg-surface p-6 transition-[border-color,background-color] duration-200 hover:border-line-strong hover:bg-surface-hover md:p-8">
+              <div data-spotlight className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
                 <p className="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-accent">{p.kind}</p>
                 <h3 className="text-xl font-semibold tracking-tight text-fg md:text-2xl">{p.title}</h3>
                 <p className="mt-3 max-w-3xl leading-relaxed text-fg-muted">{p.summary}</p>
@@ -35,7 +35,7 @@ export default function Projects() {
                 <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
                   <ul className="flex flex-wrap gap-2" aria-label="Technologies">
                     {p.tags.map((t) => (
-                      <li key={t} className="rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-fg-subtle">
+                      <li key={t} className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-subtle">
                         {t}
                       </li>
                     ))}

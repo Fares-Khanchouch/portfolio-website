@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <>
+    <div className="flex min-h-dvh flex-col">
       <Navbar home={false} />
-      <main id="main" className="relative flex min-h-[80vh] items-center overflow-hidden">
+      <main id="main" className="relative flex flex-1 items-center overflow-hidden">
         <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
         <div className="relative mx-auto w-full max-w-5xl px-4 py-32 sm:px-6">
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-accent">Error 404</p>
@@ -23,7 +23,7 @@ export default function NotFound() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/"
-              className="inline-flex h-11 items-center rounded-md bg-accent-solid px-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#35668a]"
+              className="inline-flex h-11 items-center rounded-md bg-accent-solid px-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-accent-solid-hover"
             >
               Back to the home page
             </Link>
@@ -37,6 +37,6 @@ export default function NotFound() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

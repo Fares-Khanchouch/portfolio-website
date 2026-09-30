@@ -10,7 +10,7 @@ export default function SectionHeading({
   title: string;
 }) {
   return (
-    <Reveal className="mb-10 md:mb-14">
+    <Reveal className="mb-8 md:mb-10">
       <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-accent">
         <span aria-hidden="true">{index} / </span>
         {label}

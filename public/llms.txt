@@ -1,0 +1,19 @@
+# Fares Khanchouch
+
+> Forward Deployed Engineer based in Tunis, Tunisia, working on integrations and LLM agent tooling for enterprise systems.
+
+- Integration Consultant at Axe Finance (Dec 2025 – present): credit-platform delivery for banks in Qatar and Saudi Arabia, core-banking integration over REST (C#), and Python MCP servers with 50 typed tools and 11 Claude skills.
+- Previously a freelance automation engineer (n8n, Make, LLM pipelines) and cloud/DevOps intern.
+- Engineering degree in Computer Science, ISTY, Université Paris-Saclay (2021 – 2024).
+- Languages: Arabic (native), French, English.
+
+## Pages
+
+- [Home](https://fareskhanchouch.com/): experience, projects, contact
+- [Grounded LLM generation: output that can't make things up](https://fareskhanchouch.com/writing/grounded-llm-generation): write-up on grounded LLM document generation and agent-in-the-loop evaluation
+- [Résumé (PDF)](https://fareskhanchouch.com/resume.pdf)
+
+## Elsewhere
+
+- [GitHub](https://github.com/Fares-Khanchouch)
+- [LinkedIn](https://www.linkedin.com/in/fares-khanchouch/)

@@ -11,6 +11,29 @@ import { cn } from "@/lib/utils";
 export default function Navbar({ home = true }: { home?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+
+  // Highlight the nav link of the section currently in the middle band of
+  // the viewport (home page only).
+  useEffect(() => {
+    if (!home) return;
+    const els = nav
+      .map((l) => document.getElementById(l.id))
+      .filter((el): el is HTMLElement => el !== null);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    const onTop = () => window.scrollY < 200 && setActive(null);
+    window.addEventListener("scroll", onTop, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onTop);
+    };
+  }, [home]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -49,23 +72,39 @@ export default function Navbar({ home = true }: { home?: boolean }) {
         <Link
           href="/"
           className="font-mono text-sm font-semibold tracking-wider text-fg transition-colors duration-200 hover:text-accent"
-          aria-label="Fares Khanchouch, home"
         >
-          fk<span className="text-accent">.</span>
+          <span aria-hidden="true">
+            fk<span className="text-accent">.</span>
+          </span>
+          <span className="sr-only">Fares Khanchouch, home</span>
         </Link>
 
         <ul className="hidden items-center gap-7 text-sm text-fg-muted md:flex">
           {nav.map((l) => (
             <li key={l.id}>
-              <a href={href(l.id)} className="transition-colors duration-200 hover:text-fg">
+              <a
+                href={href(l.id)}
+                aria-current={active === l.id ? "true" : undefined}
+                className={cn(
+                  "relative py-1 transition-colors duration-200 hover:text-fg",
+                  active === l.id && "text-fg",
+                )}
+              >
                 {l.name}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "absolute inset-x-0 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300 ease-out",
+                    active === l.id ? "scale-x-100" : "scale-x-0",
+                  )}
+                />
               </a>
             </li>
           ))}
           <li>
             <a
               href={social.resume}
-              className="rounded-md border border-line-strong px-3 py-1.5 text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
+              className="py-1 transition-colors duration-200 hover:text-fg"
             >
               Résumé
             </a>

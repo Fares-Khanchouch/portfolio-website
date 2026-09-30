@@ -15,7 +15,7 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
           <button
             type="button"
             onClick={reset}
-            className="inline-flex h-11 items-center rounded-md bg-accent-solid px-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#35668a]"
+            className="inline-flex h-11 items-center rounded-md bg-accent-solid px-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-accent-solid-hover"
           >
             Try again
           </button>

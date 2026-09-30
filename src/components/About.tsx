@@ -1,227 +1,158 @@
-"use client";
-
-import React from "react";
-import { motion } from "framer-motion";
-import { useSectionBackground } from "./BackgroundLayout";
-import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import { about, sectionTitles, skills } from "@/data";
-import { BlurFade } from "@/components/ui/blur-fade";
 import {
-  SiAmazonwebservices, SiGooglecloud, SiTerraform, SiAnsible,
-  SiKubernetes, SiDocker, SiGithubactions, SiJenkins,
-  SiGo, SiPython, SiJavascript, SiTypescript,
-  SiNextdotjs, SiReact, SiNodedotjs, SiTailwindcss,
-  SiPrometheus, SiGrafana, SiZapier,
-} from "react-icons/si";
+  Bot,
+  Code2,
+  GraduationCap,
+  Languages,
+  MapPin,
+  Plug,
+  Server,
+} from "lucide-react";
+import { about, projects } from "@/data";
+import Reveal from "./Reveal";
+import SectionHeading from "./SectionHeading";
 
-type IconComponent = React.ComponentType<{ className?: string; size?: number }>;
+const FACT_ICONS = {
+  "Based in": MapPin,
+  Education: GraduationCap,
+  Languages,
+} as const;
+const GROUP_ICONS = [Bot, Plug, Code2, Server];
 
-const SKILL_ICONS: Record<string, IconComponent> = {
-  "AWS": SiAmazonwebservices,
-  "GCP": SiGooglecloud,
-  "Terraform": SiTerraform,
-  "Ansible": SiAnsible,
-  "Kubernetes": SiKubernetes,
-  "Docker": SiDocker,
-  "GitHub Actions": SiGithubactions,
-  "Jenkins": SiJenkins,
-  "Go": SiGo,
-  "Python": SiPython,
-  "JavaScript": SiJavascript,
-  "TypeScript": SiTypescript,
-  "Next.js": SiNextdotjs,
-  "React": SiReact,
-  "Node.js": SiNodedotjs,
-  "Tailwind CSS": SiTailwindcss,
-  "Prometheus": SiPrometheus,
-  "Grafana": SiGrafana,
-  "Zapier": SiZapier,
-};
-
-const STATS = [
-  { value: "3+", label: "Years Experience" },
-  { value: "10+", label: "Tech Stacks" },
-  { value: "3", label: "Cloud Platforms" },
-];
+// A tool counts as "shown in a project" when a project tag names it.
+const projectTags = projects.flatMap((p) => p.tags.map((t) => t.toLowerCase()));
+const inProjects = (tool: string) =>
+  projectTags.some((t) =>
+    new RegExp(
+      `(^|[\\s(])${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[\\s)])`,
+    ).test(tool.toLowerCase()),
+  );
 
 export default function About() {
-  const { setSection } = useSectionBackground();
-  const { ref, inView } = useSectionInView("About", 0.25);
-
-  React.useEffect(() => {
-    if (inView) setSection("about");
-  }, [inView, setSection]);
-
   return (
-    <section id="about" ref={ref} className="py-28 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="pt-14 pb-4 md:pt-20 md:pb-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <SectionHeading index="03" label="About" title="The short version" />
 
-        {/* Section heading */}
-        <BlurFade inView delay={0.05}>
-          <div className="mb-16 text-center">
-            <p className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5] mb-3">
-              01 / About
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[3fr_2fr] lg:gap-14">
+          <Reveal>
+            <p className="text-2xl leading-snug font-medium tracking-tight text-balance [overflow-wrap:anywhere] text-fg md:text-3xl">
+              {about.lede.text}{" "}
+              <span className="text-accent">{about.lede.accent}</span>
             </p>
-            <h2 className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#f8fafc] md:text-5xl">
-              {sectionTitles.about}
-            </h2>
-          </div>
-        </BlurFade>
-
-        {/* Bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-
-          {/* Bio — 2 cols, glass card */}
-          <BlurFade inView delay={0.1} className="md:col-span-2">
-            <div className="h-full rounded-xl border border-white/[0.07] bg-white/[0.025] p-8 backdrop-blur-sm">
-              <h3 className="font-[family-name:var(--font-geist)] text-xl font-bold text-[#f8fafc] mb-4">
-                Hi, I&apos;m Fares
-              </h3>
-              <p className="text-[#b8c7d8] leading-[1.9] text-sm font-normal">
-                {about.bio}
-              </p>
-            </div>
-          </BlurFade>
-
-          {/* Location */}
-          <BlurFade inView delay={0.15}>
-            <div className="relative h-full min-h-[220px] rounded-xl border border-white/[0.07] bg-white/[0.025] overflow-hidden backdrop-blur-sm">
-              {/* Full regional PNG map as card background */}
-              <div
-                className="absolute inset-0 pointer-events-none select-none"
-                aria-hidden="true"
-              >
-                {/* PNG — full Mediterranean region, Tunisia highlighted */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/tn-region.png"
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{
-                    filter: "brightness(0.22) saturate(0.85)",
-                    objectPosition: "55% 45%",
-                  }}
-                />
-                {/* Gradient fades — blend edges into dark card */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/85 via-[#0a0f1e]/20 to-[#0a0f1e]/40" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/65 via-transparent to-transparent" />
-              </div>
-
-              {/* Card content */}
-              <div className="relative z-10 p-7">
-                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
-                  Location
+            <div className="mt-6 space-y-4 border-l-2 border-accent/40 pl-5">
+              {about.paragraphs.map((p) => (
+                <p
+                  key={p}
+                  className="text-base leading-relaxed text-fg-muted md:text-lg"
+                >
+                  {p}
                 </p>
-                <div className="flex items-center gap-2.5 mb-2">
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4a7fa5] opacity-60" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4a7fa5]" />
-                  </span>
-                  <h3 className="font-[family-name:var(--font-geist)] text-lg font-bold text-[#f8fafc]">
-                    {about.location.city}
-                  </h3>
-                </div>
-                <p className="text-[#94a3b8] text-sm leading-relaxed max-w-[160px]">
-                  {about.location.description}
-                </p>
-              </div>
+              ))}
             </div>
-          </BlurFade>
+          </Reveal>
 
-          {/* Stats row */}
-          {STATS.map((stat, i) => (
-            <BlurFade inView delay={0.2 + i * 0.05} key={stat.label}>
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-6 text-center backdrop-blur-sm">
-                <p className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#4a7fa5] mb-1">
-                  {stat.value}
-                </p>
-                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.15em] text-[#64748b]">
-                  {stat.label}
-                </p>
-              </div>
-            </BlurFade>
-          ))}
-
-          {/* Languages */}
-          <BlurFade inView delay={0.35} className="md:col-span-3">
-            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-5">
-                Languages
-              </p>
-              <div className="flex flex-wrap gap-4">
-                {about.languages.items.map((lang) => (
-                  <div key={lang.name} className="flex items-center gap-2.5">
-                    <span className="font-[family-name:var(--font-geist)] text-sm font-semibold text-[#f8fafc]">
-                      {lang.name}
-                    </span>
-                    <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-[#4a7fa5] border border-[#4a7fa5]/30 rounded px-2 py-0.5 bg-[#4a7fa5]/5">
-                      {lang.level}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </BlurFade>
-
-          {/* Education */}
-          <BlurFade inView delay={0.38} className="md:col-span-3">
-            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-4">
-                {about.education.heading}
-              </p>
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <h3 className="font-[family-name:var(--font-geist)] text-base font-bold text-[#f8fafc]">
-                    {about.education.degree}
-                  </h3>
-                  <p className="text-sm text-[#94a3b8]">{about.education.school}</p>
-                </div>
-                <span className="font-[family-name:var(--font-geist-mono)] text-[11px] uppercase tracking-widest text-[#4a7fa5] shrink-0">
-                  {about.education.years}
-                </span>
-              </div>
-            </div>
-          </BlurFade>
-
-          {/* Tech stack — full width */}
-          <BlurFade inView delay={0.4} className="md:col-span-3">
-            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 backdrop-blur-sm">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-6">
-                Tech Stack
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {skills.map((group, gi) => (
-                  <motion.div
-                    key={group.category}
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: gi * 0.07 }}
+          <Reveal delay={80}>
+            <dl className="divide-y divide-line rounded-xl border border-line bg-surface shadow-card">
+              {about.facts.map((f) => {
+                const Icon =
+                  FACT_ICONS[f.label as keyof typeof FACT_ICONS] ?? MapPin;
+                const langs =
+                  f.label === "Languages" ? f.value.split(" · ") : null;
+                return (
+                  <div
+                    key={f.label}
+                    className="relative py-4 pr-5 pl-[68px]"
                   >
-                    <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.18em] text-[#4a7fa5]/70 mb-3">
-                      {group.category}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {group.items.map((item) => {
-                        const Icon = SKILL_ICONS[item];
-                        return (
+                    <dt className="mb-1 font-mono text-[11px] tracking-[0.18em] text-fg-subtle uppercase">
+                      <span className="absolute top-[18px] left-5 flex h-8 w-8 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                        <Icon size={16} aria-hidden="true" />
+                      </span>
+                      {f.label}
+                    </dt>
+                    {langs ? (
+                      <dd className="flex flex-wrap gap-1.5">
+                        {langs.map((l) => (
                           <span
-                            key={item}
-                            className="inline-flex items-center gap-1.5 text-xs text-[#94a3b8] border border-white/[0.08] rounded px-2.5 py-1.5 bg-white/[0.02] transition-all duration-200 hover:border-[#4a7fa5]/40 hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5 cursor-default"
+                            key={l}
+                            className="rounded-lg border border-line bg-bg/40 px-2.5 py-0.5 text-[13px] text-fg"
                           >
-                            {Icon && <Icon size={11} className="opacity-70 shrink-0" />}
-                            {item}
+                            {l}
                           </span>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </BlurFade>
-
+                        ))}
+                      </dd>
+                    ) : (
+                      <dd className="text-sm leading-relaxed [overflow-wrap:anywhere] text-fg">
+                        {f.value}
+                      </dd>
+                    )}
+                  </div>
+                );
+              })}
+            </dl>
+          </Reveal>
         </div>
+
+        <Reveal className="mt-14">
+          <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
+            <h3>Tools I work with</h3>
+            <span aria-hidden="true" className="h-px min-w-8 flex-1 bg-line" />
+            <span className="flex items-center gap-2 text-[11px] tracking-[0.1em] normal-case">
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 rounded-full bg-accent"
+              />
+              used in the projects above
+            </span>
+          </div>
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {about.skillGroups.map((g, i) => {
+              const Icon = GROUP_ICONS[i % GROUP_ICONS.length];
+              return (
+                <div
+                  key={g.name}
+                  className="rounded-xl border border-line bg-surface p-4 shadow-card transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
+                >
+                  <h4 className="mb-3 flex items-center gap-2.5 text-sm font-medium text-fg">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                      <Icon size={15} aria-hidden="true" />
+                    </span>
+                    {g.name}
+                  </h4>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {g.items.map((s) => {
+                      const used = inProjects(s);
+                      return (
+                        <li
+                          key={s}
+                          className={
+                            "inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-xs [overflow-wrap:anywhere] " +
+                            (used
+                              ? "border-accent/40 bg-accent-soft text-fg"
+                              : "border-line bg-bg/40 text-fg-muted")
+                          }
+                        >
+                          {used && (
+                            <span
+                              aria-hidden="true"
+                              className="h-1.5 w-1.5 rounded-full bg-accent"
+                            />
+                          )}
+                          {s}
+                          {used && (
+                            <span className="sr-only">
+                              {" "}
+                              (used in a project above)
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

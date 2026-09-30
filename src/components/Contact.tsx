@@ -1,212 +1,235 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useSectionBackground } from "./BackgroundLayout";
-import React, { useState } from "react";
-import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import emailjs from "@emailjs/browser";
-import { ArrowUpRight, Send, CheckCircle2 } from "lucide-react";
-import { BlurFade } from "@/components/ui/blur-fade";
-import { sectionTitles, social, emailjs as ejsConfig } from "@/data";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Check, Clock, Github, Linkedin, Mail, Send } from "lucide-react";
+import { contact, emailjs as ejs, social } from "@/data";
+import Reveal from "./Reveal";
+import SectionHeading from "./SectionHeading";
+import CopyEmail from "./CopyEmail";
 
-const FIELDS = [
-  { id: "name",    label: "Full Name",     type: "text",  autocomplete: "name" },
-  { id: "email",   label: "Email Address", type: "email", autocomplete: "email" },
-  { id: "subject", label: "Subject",       type: "text",  autocomplete: "off" },
-] as const;
+const LIMITS = { name: 100, email: 200, message: 4000 };
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const COOLDOWN_MS = 30_000;
 
-type FieldId = typeof FIELDS[number]["id"] | "message";
+type Status = "idle" | "sending" | "sent" | "error";
+type Field = "name" | "email" | "message";
+type FieldErrors = Partial<Record<Field, string>>;
+
+function validate(name: string, email: string, message: string): FieldErrors {
+  const errors: FieldErrors = {};
+  if (!name) errors.name = "Please add your name.";
+  if (!EMAIL_RE.test(email)) errors.email = "Please add a valid email address.";
+  if (message.length < 10) errors.message = "Please write at least 10 characters.";
+  return errors;
+}
+
+// The visitor's clock is not the owner's; show the time in Tunis.
+function TunisTime() {
+  const [now, setNow] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Tunis" });
+    const tick = () => setNow(fmt.format(new Date()));
+    tick();
+    const t = window.setInterval(tick, 30_000);
+    return () => window.clearInterval(t);
+  }, []);
+  return (
+    <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs text-fg-subtle">
+      <Clock size={14} aria-hidden="true" className="text-accent" />
+      Tunis, Tunisia
+      <span aria-hidden="true">·</span>
+      {now && <span className="tabular-nums text-fg-muted">{now}</span>}
+      <span>{now ? "local time (UTC+1)" : "UTC+1"}</span>
+    </p>
+  );
+}
 
 export default function Contact() {
-  const { setSection } = useSectionBackground();
-  const { ref, inView } = useSectionInView("Contact", 0.3);
-  const [formData, setFormData] = useState<Record<FieldId, string>>({
-    name: "", email: "", subject: "", message: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const sending = useRef(false); // synchronous double-submit guard
+  const lastSent = useRef(0); // only successful sends start the cooldown
+  const sentRef = useRef<HTMLParagraphElement | null>(null);
+  const errorRef = useRef<HTMLParagraphElement | null>(null);
 
-  React.useEffect(() => {
-    if (inView) setSection("contact");
-  }, [inView, setSection]);
+  // Move focus to the confirmation so keyboard and screen-reader users hear it.
+  useEffect(() => {
+    if (status === "sent") sentRef.current?.focus();
+    // The submit button is disabled while sending, so focus would fall to
+    // <body> when a send fails; keep it on the error message instead.
+    if (status === "error") errorRef.current?.focus();
+  }, [status]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const result = await emailjs.send(
-        ejsConfig.serviceId,
-        ejsConfig.templateId,
-        { name: formData.name, email: formData.email, subject: formData.subject, message: formData.message },
-        ejsConfig.publicKey
-      );
-      if (result.status === 200) {
-        setIsSubmitted(true);
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        setTimeout(() => setIsSubmitted(false), 5000);
-      }
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      setError("Failed to send. Please try again or email me directly.");
-    } finally {
-      setIsSubmitting(false);
+    if (sending.current) return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    // Honeypot: real visitors never see or fill this field.
+    if (String(data.get("website") ?? "") !== "") {
+      setStatus("sent");
+      return;
     }
-  };
+    const errors = validate(name, email, message);
+    setFieldErrors(errors);
+    const firstInvalid = (["name", "email", "message"] as const).find((f) => errors[f]);
+    if (firstInvalid) {
+      setError(null);
+      form.querySelector<HTMLElement>(`#${firstInvalid}`)?.focus();
+      return;
+    }
+    if (Date.now() - lastSent.current < COOLDOWN_MS) {
+      setError("Thanks, your last message was just sent. Please wait a few seconds before sending another.");
+      return;
+    }
+
+    sending.current = true;
+    setError(null);
+    setStatus("sending");
+    try {
+      const { default: emailjs } = await import("@emailjs/browser");
+      await emailjs.send(
+        ejs.serviceId,
+        ejs.templateId,
+        {
+          name: name.slice(0, LIMITS.name),
+          email: email.slice(0, LIMITS.email),
+          subject: `Website message from ${name.slice(0, LIMITS.name)}`,
+          message: message.slice(0, LIMITS.message),
+        },
+        { publicKey: ejs.publicKey },
+      );
+      lastSent.current = Date.now();
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+      setError(`That didn't go through. Please try again, or email me at ${social.email}.`);
+    } finally {
+      sending.current = false;
+    }
+  }
+
+  const describedBy = (f: Field) => (fieldErrors[f] ? `${f}-error` : undefined);
+  const fieldError = (f: Field) =>
+    fieldErrors[f] ? (
+      <p id={`${f}-error`} className="mt-1.5 text-sm text-[var(--danger)]">
+        {fieldErrors[f]}
+      </p>
+    ) : null;
+
+  const field =
+    "min-h-11 w-full rounded-lg border border-input-border bg-bg/60 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 focus:border-accent focus:ring-4 focus:ring-accent/15 focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-[var(--danger)] sm:text-sm";
+  const labelCls = "mb-1.5 block text-sm font-medium text-fg";
 
   return (
-    <section ref={ref} id="contact" className="py-28 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="contact" className="py-14 md:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <SectionHeading index="04" label="Contact" title={contact.heading} />
 
-        {/* Heading */}
-        <BlurFade inView delay={0.05}>
-          <div className="mb-16 text-center">
-            <p className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5] mb-3">
-              04 / Contact
-            </p>
-            <h2 className="font-[family-name:var(--font-geist)] text-4xl font-extrabold text-[#f8fafc] md:text-5xl">
-              {sectionTitles.contact}
-            </h2>
-          </div>
-        </BlurFade>
-
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10">
-
-          {/* Left: info */}
-          <BlurFade inView delay={0.1}>
-            <div className="flex flex-col gap-8">
-              <div>
-                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
-                  Say hello
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-2 md:items-stretch md:gap-14">
+          <Reveal className="flex flex-col gap-6">
+            <p className="text-lg leading-relaxed text-pretty text-fg-muted">{contact.text}</p>
+            <div data-spotlight className="group/email rounded-2xl border border-line bg-surface p-5 shadow-card transition-colors duration-200 hover:border-accent/50 md:p-6">
+              <div className="mb-1 flex items-center justify-between gap-3">
+                <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
+                  <Mail size={14} aria-hidden="true" className="text-accent" />
+                  Email
                 </p>
-                <p className="text-sm text-[#94a3b8] leading-relaxed">
-                  Have a project in mind, a question, or just want to connect? I&apos;m always open to interesting conversations.
-                </p>
+                <CopyEmail email={social.email} />
               </div>
-
-              {/* Direct email */}
               <div>
-                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
-                  Direct email
-                </p>
                 <a
                   href={`mailto:${social.email}`}
-                  className="flex items-center gap-2 text-sm text-[#f8fafc] hover:text-[#4a7fa5] transition-colors group"
+                  className="link-underline inline-block py-2 text-lg font-medium [overflow-wrap:anywhere] text-fg transition-colors duration-200 hover:text-accent lg:text-2xl"
                 >
-                  {social.email}
-                  <ArrowUpRight className="h-3.5 w-3.5 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" />
+                  {social.email.split("@")[0]}
+                  <wbr />@{social.email.split("@")[1]}
                 </a>
               </div>
-
-              {/* Links */}
-              <div>
-                <p className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5] mb-3">
-                  Elsewhere
-                </p>
-                <div className="flex flex-col gap-2">
-                  {[
-                    { label: "GitHub", href: social.github },
-                    { label: "LinkedIn", href: social.linkedin },
-                  ].map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-[#64748b] hover:text-[#f8fafc] transition-colors group w-fit"
-                    >
-                      {link.label}
-                      <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-0.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" />
-                    </a>
-                  ))}
-                </div>
-              </div>
             </div>
-          </BlurFade>
+            <ul className="flex flex-wrap gap-2">
+              {[
+                { label: "GitHub", href: social.github, Icon: Github },
+                { label: "LinkedIn", href: social.linkedin, Icon: Linkedin },
+              ].map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    className="group inline-flex h-11 items-center gap-2 rounded-full border border-input-border px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-accent hover:text-fg"
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                    {label}
+                    <ArrowUpRight size={14} aria-hidden="true" className="opacity-60" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto border-t border-line pt-5">
+              <TunisTime />
+            </div>
+          </Reveal>
 
-          {/* Right: form */}
-          <BlurFade inView delay={0.15}>
-            <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-7 md:p-8 backdrop-blur-sm">
-              {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center text-center py-12 gap-4"
-                >
-                  <CheckCircle2 className="h-10 w-10 text-[#4a7fa5]" />
-                  <h3 className="font-[family-name:var(--font-geist)] text-xl font-bold text-[#f8fafc]">
+          <Reveal delay={80} className="h-full">
+            <div className="h-full rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
+              {status === "sent" ? (
+                <div className="flex flex-col items-center gap-3 py-10 text-center">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
+                    <Check size={22} aria-hidden="true" />
+                  </span>
+                  <p ref={sentRef} tabIndex={-1} role="status" className="text-lg font-medium text-fg focus:outline-none">
                     Message sent.
-                  </h3>
-                  <p className="text-sm text-[#64748b]">I&apos;ll get back to you shortly.</p>
-                </motion.div>
+                  </p>
+                  <p className="text-sm text-fg-muted">Thanks, I&rsquo;ll reply by email.</p>
+                </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  {FIELDS.map((field) => (
-                    <div key={field.id} className="group flex flex-col gap-1.5">
-                      <label
-                        htmlFor={field.id}
-                        className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.18em] text-[#64748b] transition-colors group-focus-within:text-[#4a7fa5]"
-                      >
-                        {field.label}
-                      </label>
-                      <input
-                        type={field.type}
-                        id={field.id}
-                        name={field.id}
-                        value={formData[field.id]}
-                        onChange={handleChange}
-                        required
-                        autoComplete={field.autocomplete}
-                        className="w-full bg-transparent border-b border-white/10 py-2.5 text-sm text-[#f8fafc] placeholder-[#4a5568] outline-none transition-all duration-200 focus:border-[#4a7fa5]"
-                        placeholder={`Your ${field.label.toLowerCase()}`}
-                      />
-                    </div>
-                  ))}
-
-                  {/* Message */}
-                  <div className="group flex flex-col gap-1.5">
-                    <label
-                      htmlFor="message"
-                      className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.18em] text-[#64748b] transition-colors group-focus-within:text-[#4a7fa5]"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      required
-                      className="w-full bg-transparent border-b border-white/10 py-2.5 text-sm text-[#f8fafc] placeholder-[#4a5568] outline-none resize-none transition-all duration-200 focus:border-[#4a7fa5]"
-                      placeholder="Tell me about your project or question..."
-                    />
+                <form onSubmit={onSubmit} noValidate className="space-y-5">
+                  <div>
+                    <label htmlFor="name" className={labelCls}>Name</label>
+                    <input id="name" name="name" type="text" autoComplete="name" required maxLength={LIMITS.name} aria-invalid={!!fieldErrors.name} aria-describedby={describedBy("name")} className={field} />
+                    {fieldError("name")}
+                  </div>
+                  <div>
+                    <label htmlFor="email" className={labelCls}>Email</label>
+                    <input id="email" name="email" type="email" autoComplete="email" inputMode="email" required maxLength={LIMITS.email} aria-invalid={!!fieldErrors.email} aria-describedby={describedBy("email")} className={field} />
+                    {fieldError("email")}
+                  </div>
+                  <div>
+                    <label htmlFor="message" className={labelCls}>Message</label>
+                    <textarea id="message" name="message" rows={4} required minLength={10} maxLength={LIMITS.message} aria-invalid={!!fieldErrors.message} aria-describedby={describedBy("message")} className={`${field} resize-y`} />
+                    {fieldError("message")}
+                  </div>
+                  {/* Honeypot, hidden from people and assistive tech. */}
+                  <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                    <label htmlFor="website">Leave this empty</label>
+                    <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
                   </div>
 
-                  {/* Submit */}
                   {error && (
-                    <p className="text-xs text-red-400/80 mt-1">{error}</p>
+                    <p ref={errorRef} tabIndex={-1} role="alert" className="text-sm text-[var(--danger)] focus:outline-none">
+                      {error}
+                    </p>
                   )}
-                  <div className="mt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="group relative flex items-center justify-center gap-2.5 overflow-hidden rounded bg-[#4a7fa5] px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#5a8fb5] disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
-                    >
-                      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
-                      <Send className="h-3.5 w-3.5" />
-                      {isSubmitting ? "Sending..." : "Send Message"}
-                    </button>
-                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-solid px-6 text-sm font-medium text-white shadow-accent transition-[background-color] duration-200 hover:bg-accent-solid-hover disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <Send size={15} aria-hidden="true" />
+                    {status === "sending" ? "Sending…" : "Send message"}
+                  </button>
                 </form>
               )}
             </div>
-          </BlurFade>
+          </Reveal>
         </div>
       </div>
     </section>

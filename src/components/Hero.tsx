@@ -1,196 +1,134 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { Download, ArrowDown } from "lucide-react";
-import { useSectionInView } from "@/lib/hooks/useSectionInView";
-import { useSectionBackground } from "./BackgroundLayout";
-import { hero } from "@/data";
-import React from "react";
+import { ArrowRight, FileText, Github, Linkedin } from "lucide-react";
+import { hero, now, social } from "@/data";
 
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
-};
+const enter = (ms: number) => ({ "--enter-delay": `${ms}ms` }) as React.CSSProperties;
 
 export default function Hero() {
-  const { ref, inView } = useSectionInView("Home", 0.5);
-  const { setSection } = useSectionBackground();
-
-  React.useEffect(() => {
-    if (inView) setSection("hero");
-  }, [inView, setSection]);
-
   return (
     <section
-      ref={ref}
-      id="home"
-      className="relative flex min-h-screen w-full items-center overflow-hidden"
+      id="top"
+      data-spotlight
+      data-spotlight-size="lg"
+      className="relative overflow-x-clip pt-20 pb-14 sm:pt-24 lg:flex lg:min-h-[min(100svh,960px)] lg:items-center lg:pt-28 lg:pb-16"
     >
-      {/* ── Background atmosphere ── */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* Right-side glow — behind the figure */}
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#4a7fa5] opacity-[0.07] blur-[130px]" />
-        {/* Secondary soft glow top-right */}
-        <div className="absolute -top-20 right-1/4 w-[400px] h-[400px] rounded-full bg-[#2a5f85] opacity-[0.05] blur-[100px]" />
-        {/* Bottom-left counter glow */}
-        <div className="absolute bottom-0 -left-20 w-[350px] h-[350px] rounded-full bg-[#1a3f65] opacity-[0.04] blur-[90px]" />
-        {/* Grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.018]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            backgroundSize: "200px 200px",
-          }}
-        />
-        {/* Mobile: cutout photo as faded background — lives here so it's always behind text */}
-        <div className="md:hidden absolute inset-0" style={{ overflow: "hidden" }}>
-          <Image
-            src="/fares-cutout.png"
-            alt=""
-            fill
-            sizes="100vw"
-            quality={90}
-            className="object-cover object-top"
-            style={{ mixBlendMode: "lighten", opacity: 0.18 }}
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-[#0a0f1e]/40 to-[#0a0f1e]/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1e]/70 via-transparent to-[#0a0f1e]/70" />
-        </div>
+      {/* Background: slow-drifting dotted grid and one soft glow. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="hero-grid grid-drift absolute inset-0" />
+        <div className="absolute top-10 right-[2%] h-[480px] w-[480px] rounded-full bg-[var(--glow)] opacity-60 blur-[120px] max-lg:opacity-40" />
       </div>
 
-      {/* ── Main content grid ── */}
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center min-h-screen">
+      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-[minmax(0,1fr)] gap-y-4 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-x-12 lg:px-8">
+        {/* Text first in the DOM, so reading order is right. */}
+        <div className="order-2 lg:order-1 lg:col-span-7">
+          <p className="enter mb-5 flex items-baseline gap-3 font-mono text-xs leading-none tracking-[0.16em] text-balance text-accent uppercase [overflow-wrap:anywhere] max-[380px]:tracking-[0.12em] sm:tracking-[0.2em] lg:mb-6">
+            <span aria-hidden="true" className="h-px w-8 shrink-0 -translate-y-[0.3em] bg-accent" />
+            {hero.eyebrow}
+          </p>
 
-          {/* ── Left: Text ── */}
-          <motion.div
-            className="flex flex-col gap-6 text-center md:text-left py-32 md:py-0"
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
+          <h1
+            className="rise text-[clamp(2.5rem,13.5vw,3.5rem)] leading-[0.95] font-extrabold tracking-tight break-words sm:text-[4.5rem] lg:text-[5rem] xl:text-[6rem]"
+            style={enter(80)}
           >
-            {/* Eyebrow */}
-            <motion.div variants={fadeUp} className="flex items-center gap-3 justify-center md:justify-start">
-              <span className="h-px w-8 bg-[#4a7fa5] shrink-0" />
-              <span className="font-[family-name:var(--font-geist-mono)] text-xs uppercase tracking-[0.22em] text-[#4a7fa5]">
-                {hero.eyebrow}
-              </span>
-            </motion.div>
+            <span className="block text-fg">{hero.firstName}</span>
+            <span className="name-rule relative inline-block max-w-full text-accent [overflow-wrap:anywhere]">{hero.lastName}</span>
+          </h1>
 
-            {/* Name — two-line stacked */}
-            <motion.h1
-              variants={fadeUp}
-              className="font-[family-name:var(--font-geist)] font-extrabold leading-[1.0] tracking-tight text-[#f8fafc]"
+          <p className="enter mt-6 text-xl font-medium text-fg/90 md:text-2xl" style={enter(160)}>
+            {hero.headline}
+          </p>
+
+          <p className="enter mt-3 max-w-[34rem] text-base leading-relaxed text-pretty text-fg-muted md:text-lg" style={enter(240)}>
+            {hero.tagline}
+          </p>
+
+          <div className="enter mt-8 flex flex-wrap items-center gap-3" style={enter(320)}>
+            <a
+              href="#projects"
+              className="group inline-flex h-11 items-center gap-2 rounded-full bg-accent-solid px-5 text-sm font-medium text-white shadow-accent transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
             >
-              <span className="block text-[3rem] sm:text-[4.5rem] lg:text-[5.5rem]">Fares</span>
-              <span className="block text-[3rem] sm:text-[4.5rem] lg:text-[5.5rem] relative">
-                <span className="text-[#4a7fa5]">Khanchouch</span>
-                <motion.span
-                  className="absolute -bottom-1 left-0 h-[2px] bg-[#4a7fa5] origin-left"
-                  style={{ width: "100%" }}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-                />
-              </span>
-            </motion.h1>
-
-            {/* Divider */}
-            <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
-              <div className="h-px w-12 bg-gradient-to-r from-[#4a7fa5] to-transparent" />
-            </motion.div>
-
-            {/* Tagline */}
-            <motion.p
-              variants={fadeUp}
-              className="max-w-sm text-base text-[#64748b] leading-relaxed mx-auto md:mx-0"
+              See my work
+              <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href={social.resume}
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-input-border px-5 text-sm font-medium text-fg transition-[border-color,color,transform] duration-200 hover:-translate-y-px hover:border-accent hover:text-accent"
             >
-              {hero.tagline}
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col gap-3 sm:flex-row justify-center md:justify-start pt-2"
-            >
+              <FileText size={16} aria-hidden="true" />
+              Résumé
+            </a>
+            <div className="flex items-center gap-1 max-sm:mt-1 max-sm:-ml-3 max-sm:basis-full">
               <a
-                href={hero.cta.primary.href}
-                className="group relative flex items-center justify-center overflow-hidden rounded bg-[#4a7fa5] px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#5a8fb5]"
-              >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
-                {hero.cta.primary.label}
-              </a>
-              <a
-                href={hero.cta.secondary.href}
+                href={social.github}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded border border-[#4a7fa5]/30 px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-[#94a3b8] transition-all duration-300 hover:border-[#4a7fa5] hover:text-[#f8fafc] hover:bg-[#4a7fa5]/5"
+                rel="me noopener noreferrer"
+                aria-label="GitHub profile"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-fg-muted transition-colors duration-200 hover:bg-surface-hover hover:text-fg"
               >
-                {hero.cta.secondary.label}
-                <Download className="h-3.5 w-3.5" />
+                <Github size={19} aria-hidden="true" />
               </a>
-            </motion.div>
-          </motion.div>
-
-          {/* ── Right: Floating cutout figure — desktop ── */}
-          <motion.div
-            className="hidden md:flex items-center justify-end self-center"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-          >
-            <div className="relative">
-              {/* Glow behind figure */}
-              <div className="absolute inset-0 -z-10 scale-75 translate-y-8 rounded-full bg-[#4a7fa5] opacity-[0.12] blur-[60px]" />
-              {/* Cutout photo — black bg disappears via mix-blend-mode */}
-              <div
-                className="relative"
-                style={{ width: "400px", height: "640px" }}
+              <a
+                href={social.linkedin}
+                target="_blank"
+                rel="me noopener noreferrer"
+                aria-label="LinkedIn profile"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-fg-muted transition-colors duration-200 hover:bg-surface-hover hover:text-fg"
               >
-                <Image
-                  src="/fares-cutout.png"
-                  alt={`${hero.name} portrait`}
-                  fill
-                  sizes="(max-width: 1280px) 420px, 500px"
-                  quality={95}
-                  className="object-cover object-top"
-                  style={{ mixBlendMode: "lighten" }}
-                  priority
-                />
-                {/* Fade to floor */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0f1e] to-transparent" />
-              </div>
+                <Linkedin size={19} aria-hidden="true" />
+              </a>
             </div>
-          </motion.div>
+          </div>
 
+          <dl className="enter mt-10 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 lg:max-w-2xl" style={enter(400)}>
+            {hero.proof.map((p) => (
+              <div
+                key={p.label}
+                className="relative flex flex-col-reverse justify-end border-t border-line pt-4 before:absolute before:-top-px before:left-0 before:h-0.5 before:w-6 before:rounded-full before:bg-accent"
+              >
+                <dt className="mt-1 text-[13px] leading-snug text-balance text-fg-muted [overflow-wrap:anywhere]">{p.label}</dt>
+                <dd className="text-3xl font-bold tracking-tight text-fg tabular-nums [overflow-wrap:anywhere]">{p.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
+        {/* Portrait: the background-removed figure, fading out at the bottom. */}
+        <div className="enter-soft order-1 lg:order-2 lg:col-span-5" style={enter(120)}>
+          <div className="relative -mx-4 h-[clamp(260px,36svh,320px)] sm:-mx-6 md:h-[420px] lg:mx-0 lg:h-[min(640px,calc(100svh-200px))]">
+            <div
+              aria-hidden="true"
+              className="absolute top-[4%] right-[6%] aspect-square w-[50%] rounded-full border border-accent/20 bg-accent-soft md:w-[40%] lg:hidden"
+            />
+            <div aria-hidden="true" className="absolute inset-x-[15%] top-[35%] bottom-[5%] rounded-full bg-[var(--glow)] opacity-60 blur-[80px]" />
+            {/* desktop: a soft, edgeless light behind the head instead of the disc */}
+            <div aria-hidden="true" className="absolute top-[2%] left-1/2 hidden aspect-square w-[70%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-soft),transparent)] opacity-90 lg:block" />
+            <div className="portrait-fade absolute inset-y-0 right-0 w-[64%] sm:right-6 sm:w-[50%] md:w-[46%] lg:inset-x-0 lg:w-full">
+              <Image
+                src={hero.cutout}
+                alt={hero.photoAlt}
+                fill
+                priority
+                fetchPriority="high"
+                quality={80}
+                sizes="(min-width: 1280px) 440px, (min-width: 1024px) 38vw, (min-width: 768px) 46vw, 64vw"
+                className="object-cover object-top lg:object-contain lg:object-bottom"
+              />
+            </div>
+
+            <div className="absolute bottom-5 left-4 z-10 max-w-[46%] rounded-2xl border border-line-strong bg-bg/85 px-3.5 py-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md sm:left-6 lg:bottom-[16%] lg:-left-10 lg:max-w-none lg:px-4 lg:py-3 lg:[animation:float_7s_ease-in-out_infinite] motion-reduce:lg:animate-none">
+              <p className="flex items-center gap-2 font-mono text-[11px] tracking-[0.16em] text-fg-subtle uppercase">
+                <span aria-hidden="true" className="live-dot" />
+                Now
+              </p>
+              <p className="mt-1 text-sm font-medium text-fg">{now.role}</p>
+              <p className="text-xs text-fg-muted">
+                {now.company}
+                <span className="hidden lg:inline"> · {now.location}</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-      >
-        <span className="font-[family-name:var(--font-geist-mono)] text-[10px] uppercase tracking-[0.2em] text-[#4a7fa5]/40">
-          scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-        >
-          <ArrowDown className="h-4 w-4 text-[#4a7fa5]/35" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

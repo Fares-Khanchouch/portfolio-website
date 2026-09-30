@@ -81,7 +81,7 @@ export const about = {
   ],
   // Grouped the way the fact vault groups them (skills.*).
   skillGroups: [
-    { name: "AI & agents", items: ["MCP servers", "Claude agent skills", "LLM APIs", "Local embeddings (ONNX)"] },
+    { name: "AI & agents", items: ["MCP servers", "Claude agent skills", "LLM APIs", "LLM evals"] },
     { name: "Integration", items: ["REST APIs", "Webhooks", "OAuth / API keys", "n8n", "Make"] },
     { name: "Languages", items: ["Python", "TypeScript", "C#", "Go", "T-SQL"] },
     { name: "Platform", items: ["Docker", "Kubernetes", "Terraform", "AWS", "PostgreSQL"] },
@@ -216,7 +216,7 @@ export const projects: Project[] = [
       { label: "Blind LLM-reviewer score", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
-    tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
+    tags: ["Python", "MCP", "SQLite", "Embeddings", "LLM evals"],
     link: { label: "Read the write-up", href: "/writing/grounded-llm-generation" },
   },
   {

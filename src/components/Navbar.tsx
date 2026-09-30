@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { nav, social } from "@/data";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   // Highlight the nav link of the section currently in the middle band of
   // the viewport (home page only).
@@ -22,7 +23,10 @@ export default function Navbar({ home = true }: { home?: boolean }) {
       .filter((el): el is HTMLElement => el !== null);
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+        for (const e of entries) {
+          const id = e.target.id;
+          setActive((a) => (e.isIntersecting ? id : a === id ? null : a));
+        }
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
@@ -44,7 +48,11 @@ export default function Navbar({ home = true }: { home?: boolean }) {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    };
     const onResize = () => window.innerWidth >= 768 && setOpen(false);
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
@@ -60,9 +68,11 @@ export default function Navbar({ home = true }: { home?: boolean }) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200",
-        scrolled || open
-          ? "border-b border-line bg-bg/85 backdrop-blur-md"
-          : "border-b border-transparent",
+        open
+          ? "border-b border-line bg-bg shadow-[0_12px_24px_-12px_rgba(0,0,0,0.35)]"
+          : scrolled
+            ? "border-b border-line bg-bg/85 backdrop-blur-md"
+            : "border-b border-transparent",
       )}
     >
       <nav
@@ -112,6 +122,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
         </ul>
 
         <button
+          ref={toggleRef}
           type="button"
           className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-fg md:hidden"
           aria-expanded={open}
@@ -124,7 +135,13 @@ export default function Navbar({ home = true }: { home?: boolean }) {
       </nav>
 
       {open && (
-        <div id="mobile-menu" className="border-t border-line px-4 pb-4 md:hidden">
+        <div
+          id="mobile-menu"
+          onBlur={(e) => {
+            const next = e.relatedTarget as Node | null;
+            if (next && !e.currentTarget.closest("header")?.contains(next)) setOpen(false);
+          }}
+          className="min-h-[calc(100dvh-4rem)] border-t border-line px-4 pb-4 md:hidden">
           <ul className="flex flex-col">
             {nav.map((l) => (
               <li key={l.id}>

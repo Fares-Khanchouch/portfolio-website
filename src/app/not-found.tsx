@@ -6,6 +6,8 @@ import Navbar from "@/components/Navbar";
 export const metadata: Metadata = {
   title: "Page not found",
   robots: { index: false },
+  alternates: { canonical: null },
+  openGraph: null,
 };
 
 export default function NotFound() {
@@ -17,7 +19,7 @@ export default function NotFound() {
         <div className="relative mx-auto w-full max-w-5xl px-4 py-32 sm:px-6">
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-accent">Error 404</p>
           <h1 className="text-4xl font-semibold tracking-tight text-fg md:text-5xl">This page doesn&apos;t exist.</h1>
-          <p className="mt-4 max-w-md text-lg text-fg-muted">
+          <p className="mt-4 max-w-md text-lg text-pretty text-fg-muted">
             The link may be old, or the address has a typo.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -29,7 +31,7 @@ export default function NotFound() {
             </Link>
             <Link
               href="/#contact"
-              className="inline-flex h-11 items-center rounded-md border border-line-strong px-5 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
+              className="inline-flex h-11 items-center rounded-md border border-input-border px-5 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
             >
               Contact me
             </Link>

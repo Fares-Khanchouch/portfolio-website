@@ -21,7 +21,7 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
           </button>
           <Link
             href="/"
-            className="inline-flex h-11 items-center rounded-md border border-line-strong px-5 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
+            className="inline-flex h-11 items-center rounded-md border border-input-border px-5 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
           >
             Home page
           </Link>

@@ -8,7 +8,7 @@ export default function About() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="03" label="About" title="A bit about me" />
 
-        <div className="grid gap-10 md:grid-cols-[3fr_2fr] md:gap-14">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-[3fr_2fr] md:gap-14">
           <Reveal className="space-y-5">
             {about.paragraphs.map((p) => (
               <p key={p} className="text-lg leading-relaxed text-fg-muted">
@@ -35,7 +35,7 @@ export default function About() {
             {about.skills.map((s) => (
               <li
                 key={s}
-                className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-fg-muted shadow-card"
+                className="rounded-md border border-line px-2.5 py-1 font-mono text-xs text-fg-muted"
               >
                 {s}
               </li>

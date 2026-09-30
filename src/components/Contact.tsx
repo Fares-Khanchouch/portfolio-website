@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, Github, Linkedin, Mail, Send } from "lucide-react";
 import { contact, emailjs as ejs, social } from "@/data";
 import Reveal from "./Reveal";
@@ -8,16 +8,36 @@ import SectionHeading from "./SectionHeading";
 
 const LIMITS = { name: 100, email: 200, message: 4000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const COOLDOWN_MS = 30_000;
 
 type Status = "idle" | "sending" | "sent" | "error";
+type Field = "name" | "email" | "message";
+type FieldErrors = Partial<Record<Field, string>>;
+
+function validate(name: string, email: string, message: string): FieldErrors {
+  const errors: FieldErrors = {};
+  if (!name) errors.name = "Please add your name.";
+  if (!EMAIL_RE.test(email)) errors.email = "Please add a valid email address.";
+  if (message.length < 10) errors.message = "Please write at least 10 characters.";
+  return errors;
+}
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const sending = useRef(false); // synchronous double-submit guard
+  const lastSent = useRef(0); // only successful sends start the cooldown
+  const sentRef = useRef<HTMLParagraphElement | null>(null);
+
+  // Move focus to the confirmation so keyboard and screen-reader users hear it.
+  useEffect(() => {
+    if (status === "sent") sentRef.current?.focus();
+  }, [status]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (status === "sending") return;
+    if (sending.current) return;
     const form = e.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
@@ -29,11 +49,20 @@ export default function Contact() {
       setStatus("sent");
       return;
     }
-    if (!name || !EMAIL_RE.test(email) || message.length < 10) {
-      setError("Please add your name, a valid email and a message of at least 10 characters.");
+    const errors = validate(name, email, message);
+    setFieldErrors(errors);
+    const firstInvalid = (["name", "email", "message"] as const).find((f) => errors[f]);
+    if (firstInvalid) {
+      setError(null);
+      form.querySelector<HTMLElement>(`#${firstInvalid}`)?.focus();
+      return;
+    }
+    if (Date.now() - lastSent.current < COOLDOWN_MS) {
+      setError("Thanks, your last message was just sent. Please wait a few seconds before sending another.");
       return;
     }
 
+    sending.current = true;
     setError(null);
     setStatus("sending");
     try {
@@ -47,18 +76,29 @@ export default function Contact() {
           subject: `Website message from ${name.slice(0, LIMITS.name)}`,
           message: message.slice(0, LIMITS.message),
         },
-        { publicKey: ejs.publicKey, limitRate: { id: "contact", throttle: 30000 } },
+        { publicKey: ejs.publicKey },
       );
+      lastSent.current = Date.now();
       form.reset();
       setStatus("sent");
     } catch {
       setStatus("error");
-      setError(`That didn't go through. Email me directly at ${social.email}.`);
+      setError(`That didn't go through. Please try again, or email me at ${social.email}.`);
+    } finally {
+      sending.current = false;
     }
   }
 
+  const describedBy = (f: Field) => (fieldErrors[f] ? `${f}-error` : undefined);
+  const fieldError = (f: Field) =>
+    fieldErrors[f] ? (
+      <p id={`${f}-error`} className="mt-1.5 text-sm text-[var(--danger)]">
+        {fieldErrors[f]}
+      </p>
+    ) : null;
+
   const field =
-    "w-full rounded-md border border-input-border bg-bg/40 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color] duration-200 focus:border-accent focus:outline-none focus-visible:outline-none sm:text-sm";
+    "w-full rounded-md border border-input-border bg-bg/40 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color] duration-200 focus:border-accent focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-[var(--danger)] sm:text-sm";
   const labelCls = "mb-1.5 block text-sm font-medium text-fg";
 
   return (
@@ -66,9 +106,9 @@ export default function Contact() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="04" label="Contact" title={contact.heading} />
 
-        <div className="grid gap-10 md:grid-cols-2 md:items-start md:gap-14">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-2 md:items-start md:gap-14">
           <Reveal className="space-y-6">
-            <p className="text-lg leading-relaxed text-fg-muted">{contact.text}</p>
+            <p className="text-lg leading-relaxed text-pretty text-fg-muted">{contact.text}</p>
             <a
               href={`mailto:${social.email}`}
               className="group inline-flex items-center gap-2 break-all text-fg transition-colors duration-200 hover:text-accent"
@@ -76,7 +116,7 @@ export default function Contact() {
               <Mail size={18} aria-hidden="true" className="shrink-0 text-accent" />
               {social.email}
             </a>
-            <ul className="flex gap-2">
+            <ul className="flex flex-wrap gap-2">
               {[
                 { label: "GitHub", href: social.github, Icon: Github },
                 { label: "LinkedIn", href: social.linkedin, Icon: Linkedin },
@@ -86,7 +126,7 @@ export default function Contact() {
                     href={href}
                     target="_blank"
                     rel="me noopener noreferrer"
-                    className="group inline-flex h-11 items-center gap-2 rounded-md border border-line px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-line-strong hover:text-fg"
+                    className="group inline-flex h-11 items-center gap-2 rounded-md border border-input-border px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-accent hover:text-fg"
                   >
                     <Icon size={16} aria-hidden="true" />
                     {label}
@@ -100,26 +140,31 @@ export default function Contact() {
           <Reveal delay={80}>
             <div className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
               {status === "sent" ? (
-                <div role="status" className="flex flex-col items-center gap-3 py-10 text-center">
+                <div className="flex flex-col items-center gap-3 py-10 text-center">
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
                     <Check size={22} aria-hidden="true" />
                   </span>
-                  <p className="text-lg font-medium text-fg">Message sent.</p>
+                  <p ref={sentRef} tabIndex={-1} role="status" className="text-lg font-medium text-fg focus:outline-none">
+                    Message sent.
+                  </p>
                   <p className="text-sm text-fg-muted">Thanks, I&apos;ll reply by email.</p>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} noValidate className="space-y-5">
                   <div>
                     <label htmlFor="name" className={labelCls}>Name</label>
-                    <input id="name" name="name" type="text" autoComplete="name" required maxLength={LIMITS.name} className={field} />
+                    <input id="name" name="name" type="text" autoComplete="name" required maxLength={LIMITS.name} aria-invalid={!!fieldErrors.name} aria-describedby={describedBy("name")} className={field} />
+                    {fieldError("name")}
                   </div>
                   <div>
                     <label htmlFor="email" className={labelCls}>Email</label>
-                    <input id="email" name="email" type="email" autoComplete="email" inputMode="email" required maxLength={LIMITS.email} className={field} />
+                    <input id="email" name="email" type="email" autoComplete="email" inputMode="email" required maxLength={LIMITS.email} aria-invalid={!!fieldErrors.email} aria-describedby={describedBy("email")} className={field} />
+                    {fieldError("email")}
                   </div>
                   <div>
                     <label htmlFor="message" className={labelCls}>Message</label>
-                    <textarea id="message" name="message" rows={4} required minLength={10} maxLength={LIMITS.message} className={`${field} resize-y`} />
+                    <textarea id="message" name="message" rows={4} required minLength={10} maxLength={LIMITS.message} aria-invalid={!!fieldErrors.message} aria-describedby={describedBy("message")} className={`${field} resize-y`} />
+                    {fieldError("message")}
                   </div>
                   {/* Honeypot, hidden from people and assistive tech. */}
                   <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">

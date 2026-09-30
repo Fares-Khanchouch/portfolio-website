@@ -13,7 +13,7 @@ export const site = {
   name: "Fares Khanchouch",
   title: "Fares Khanchouch · Forward Deployed Engineer",
   description:
-    "Forward deployed engineer building integrations and LLM agent tooling for enterprise systems: credit-platform delivery for banks, MCP servers and Claude skills, and automation.",
+    "Fares Khanchouch, Forward Deployed Engineer in Tunis. Enterprise integrations for banks, MCP servers, Claude skills and LLM agent tooling.",
   locale: "en_US",
   // Bump when the content changes (sitemap lastmod, structured data).
   updated: "2026-09-29",
@@ -56,7 +56,7 @@ export const hero = {
 export const about = {
   heading: "About",
   paragraphs: [
-    "Hi, I'm Fares. I like the part of engineering where software meets a real organization's systems and the people using them. Outside work I build things like a job-market data platform and a Kubernetes operator for n8n.",
+    "Hi, I'm Fares. I like the part of engineering where software meets a real organization's systems and the people using them. Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
     { label: "Based in", value: "Tunis, Tunisia" },
@@ -161,11 +161,11 @@ export const projects: Project[] = [
     title: "Job-market data platform & grounded LLM generation",
     kind: "Personal project",
     summary:
-      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, plus an LLM document generator that can only say what's in a versioned fact store.",
+      "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, plus an LLM document generator whose every claim must come from a versioned fact store.",
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer scores from 5.1 to 6.3/10.",
+      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer document scores from 5.1 to 6.3/10.",
     ],
     flow: ["Job boards", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
@@ -198,8 +198,8 @@ export const contact = {
 
 export const writeup = {
   slug: "grounded-llm-generation",
-  title: "Grounded LLM generation: output that can't make things up",
+  title: "Grounded LLM generation: keeping the model to the facts",
   description:
-    "Building LLM generation where every claim traces to a fact store, tested on résumés, and an agent-in-the-loop harness to measure it.",
+    "How I built LLM generation where every claim traces to a versioned fact store, and an agent-in-the-loop harness with blind LLM reviewers to measure it.",
   date: "2026-09-29",
 };

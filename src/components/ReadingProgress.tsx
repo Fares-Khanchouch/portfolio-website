@@ -27,8 +27,8 @@ export default function ReadingProgress() {
     };
   }, []);
   return (
-    <div aria-hidden="true" className="fixed inset-x-0 top-16 z-40 h-0.5">
-      <div ref={bar} className="h-full origin-left scale-x-0 bg-accent" />
+    <div aria-hidden="true" className="fixed inset-x-0 top-[63px] z-[51] h-0.5">
+      <div ref={bar} className="h-full origin-left bg-accent" style={{ transform: "scaleX(0)" }} />
     </div>
   );
 }

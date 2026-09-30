@@ -48,27 +48,29 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
     <ol
       ref={ref}
       aria-label={label}
-      className="flex flex-col items-start sm:grid sm:items-center"
+      className="flex flex-col items-start md:grid md:items-stretch md:gap-x-3"
       style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
     >
       {steps.map((s, i) => (
-        <li key={s} className="flex flex-col items-start sm:flex-row sm:items-center">
+        <li key={s} className="relative flex flex-col items-start md:block">
           {i > 0 && (
+            // Phones: vertical connector above the step. md+: horizontal
+            // connector in the gap to the left of the step.
             <span
               aria-hidden="true"
-              className="relative ml-5 block h-3 w-px overflow-hidden bg-line-strong sm:ml-0 sm:h-px sm:w-3 sm:shrink-0"
+              className="relative ml-5 block h-3 w-px overflow-hidden bg-line-strong md:absolute md:top-1/2 md:-left-3 md:ml-0 md:h-px md:w-3"
             >
               <span
                 className={cn(
-                  "absolute inset-0 origin-top bg-accent transition-transform duration-500 ease-out sm:origin-left",
-                  lit(i) ? "scale-100" : "scale-y-0 sm:scale-x-0 sm:scale-y-100",
+                  "absolute inset-0 origin-top bg-accent transition-transform duration-500 ease-out md:origin-left",
+                  lit(i) ? "scale-100" : "scale-y-0 md:scale-x-0 md:scale-y-100",
                 )}
               />
             </span>
           )}
           <span
             className={cn(
-              "rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 sm:w-full sm:px-2 sm:text-center",
+              "block rounded-md border px-3 py-1.5 font-mono text-xs leading-snug transition-[color,background-color,border-color,box-shadow] duration-300 md:flex md:h-full md:w-full md:items-center md:justify-center md:px-2 md:text-center",
               lit(i)
                 ? "border-accent/50 bg-accent-soft text-fg"
                 : "border-line bg-transparent text-fg-subtle",

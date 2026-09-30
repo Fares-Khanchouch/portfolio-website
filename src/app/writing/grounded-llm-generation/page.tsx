@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: path },
   openGraph: {
     type: "article",
+    siteName: site.name,
+    locale: site.locale,
     url: `${site.url}${path}`,
     title: writeup.title,
     description: writeup.description,
@@ -45,13 +47,13 @@ const articleJsonLd = {
 
 const RESULTS: [string, string, string][] = [
   ["Postings' hard requirements addressed", "54% of runs", "100% of runs"],
-  ["Résumé score, LLM recruiter + hiring-manager panel", "5.1 / 10", "6.3 / 10"],
-  ["Cover-letter score, same panel", "4.6 / 10", "6.7 / 10"],
+  ["Document score, blind LLM reviewer panel", "5.1 / 10", "6.3 / 10"],
   ["Bullets judged overclaimed", "6%", "0%"],
 ];
 
 export default function Writeup() {
   const date = new Date(writeup.date).toLocaleDateString("en-US", {
+    timeZone: "UTC",
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -88,8 +90,8 @@ export default function Writeup() {
               catches one stops trusting the rest.
             </p>
             <p>
-              I wanted generation that is tailored per posting but <strong>cannot state anything that
-              isn&apos;t on file</strong>, and a way to measure whether the output is actually good,
+              I wanted generation that is tailored per posting but <strong>can only draw on what&apos;s on
+              file</strong>, with the checkable parts enforced in code, and a way to measure whether the output is actually good,
               not just whether it looks good to the person who built it.
             </p>
 
@@ -146,8 +148,7 @@ export default function Writeup() {
 
             <h2>Measuring it: agents in the loop</h2>
             <p>
-              Unit tests can prove a guard works. They can&apos;t tell you whether a recruiter would
-              call. So the evaluation harness runs the real pipeline end to end: AI agents act as the
+              Unit tests can prove a guard works. They can&apos;t tell you whether a reader finds the output convincing. So the evaluation harness runs the real pipeline end to end: AI agents act as the
               user on a fixed benchmark of 12 real postings, calling the same tools a person would,
               24 runs per round. Blind LLM reviewer panels, briefed as a recruiter, a hiring manager
               and (for the six FDE postings) a senior forward deployed engineer, then score the
@@ -161,10 +162,10 @@ export default function Writeup() {
             </p>
           </div>
 
-          <div className="my-8 overflow-x-auto rounded-xl border border-line">
-            <table className="w-full min-w-[480px] text-left text-sm tabular-nums">
+          <div className="my-8 overflow-x-auto rounded-xl border border-line bg-surface shadow-card">
+            <table className="w-full text-left text-sm tabular-nums">
               <caption className="sr-only">Results before and after, same benchmark and reviewer briefs</caption>
-              <thead className="bg-surface font-mono text-xs uppercase tracking-wider text-fg-subtle">
+              <thead className="border-b border-line font-mono text-xs uppercase tracking-wider text-fg-subtle">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-medium">Measure</th>
                   <th scope="col" className="px-4 py-3 font-medium">Before</th>
@@ -208,8 +209,8 @@ export default function Writeup() {
               </li>
             </ul>
             <p>
-              Stack: Python, MCP, SQLite, an ONNX embedding model, HTML-to-PDF rendering, and a lot of
-              tests. The code is private; I&apos;m happy to walk through it. <Link href="/#contact">Get in touch</Link>.
+              Stack: Python, MCP, SQLite, an ONNX embedding model, HTML-to-PDF rendering, and 1,200+
+              automated tests. The code is private; I&apos;m happy to walk through it. <Link href="/#contact">Get in touch</Link>.
             </p>
           </div>
         </article>

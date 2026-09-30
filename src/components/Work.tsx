@@ -27,12 +27,12 @@ export default function Work() {
           </div>
         </Reveal>
 
-        <ul className="grid gap-4 lg:grid-cols-3">
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-3">
           {now.highlights.map((h, i) => {
             const Icon = ICONS[h.icon];
             return (
               <Reveal as="li" key={h.title} delay={i * 80}>
-                <div data-spotlight className="h-full rounded-xl border border-line bg-surface p-5 shadow-card md:p-6">
+                <div className="h-full rounded-xl border border-line bg-surface p-5 shadow-card md:p-6">
                   <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-soft text-accent">
                     <Icon size={20} aria-hidden="true" />
                   </span>
@@ -46,12 +46,15 @@ export default function Work() {
 
         <Reveal className="mt-16">
           <h3 className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-fg-subtle">Before</h3>
-          <ol className="relative border-l border-line">
+          <ol className="relative">
             {before.map((r) => (
-              <li key={r.role + r.dates} className="relative pb-8 pl-6 last:pb-0">
+              <li
+                key={r.role + r.dates}
+                className="relative pb-8 pl-6 before:absolute before:top-3 before:bottom-0 before:left-0 before:w-px before:bg-line last:pb-0 last:before:hidden"
+              >
                 <span
                   aria-hidden="true"
-                  className="absolute top-2 -left-[4.5px] h-2 w-2 rounded-full border border-accent bg-bg"
+                  className="absolute top-2 -left-[3.5px] h-2 w-2 rounded-full border border-accent bg-bg"
                 />
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <p className="font-medium text-fg">

@@ -21,7 +21,7 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)] items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-stretch md:gap-10 lg:gap-16">
         <div className="order-2 md:order-1">
-          <p className="enter mb-5 flex items-baseline leading-none gap-3 font-mono text-xs uppercase tracking-[0.16em] text-balance text-accent sm:tracking-[0.2em]">
+          <p className="enter mb-5 flex items-baseline leading-none gap-3 font-mono text-xs uppercase tracking-[0.16em] text-balance text-accent max-[380px]:tracking-[0.12em] sm:tracking-[0.2em]">
             <span aria-hidden="true" className="h-px w-8 shrink-0 -translate-y-[0.3em] bg-accent" />
             {hero.eyebrow}
           </p>

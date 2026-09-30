@@ -158,16 +158,16 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "job-platform",
-    title: "Job-market data platform & grounded LLM generation",
+    title: "Grounded LLM generation & a 1.1M-posting data platform",
     kind: "Personal project",
     summary:
       "A Python MCP server that crawls 63,000+ company job boards through 24 ATS adapters into 1.1M+ postings, plus an LLM document generator whose every claim must come from a versioned fact store.",
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer résumé scores from 5.1 to 6.3/10.",
+      "Coverage of postings' hard requirements rose from 54% to 100% of runs; blind LLM-reviewer scores for generated documents from 5.1 to 6.3/10.",
     ],
-    flow: ["Job boards", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
+    flow: ["Postings", "Normalize", "Fact vault", "LLM draft", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
     link: { label: "Read the write-up", href: "/writing/grounded-llm-generation" },
   },

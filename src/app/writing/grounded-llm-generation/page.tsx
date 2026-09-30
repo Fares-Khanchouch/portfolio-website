@@ -47,7 +47,7 @@ const articleJsonLd = {
 
 const RESULTS: [string, string, string][] = [
   ["Postings' hard requirements addressed", "54% of runs", "100% of runs"],
-  ["Résumé score, blind LLM reviewer panel", "5.1 / 10", "6.3 / 10"],
+  ["Generated-document score, blind LLM panel", "5.1 / 10", "6.3 / 10"],
   ["Bullets judged overclaimed", "6%", "0%"],
 ];
 
@@ -195,8 +195,7 @@ export default function Writeup() {
 
           <div className="prose-body">
             <p>
-              The panels score strictly: 5 is a typical application and 7 is one that gets
-              shortlisted. The remaining gap is mostly not wording. Reviewers asked for outcomes the
+              The panels score strictly: on their scale 5 is typical and 7 is strong. The remaining gap is mostly not wording. Reviewers asked for outcomes the
               fact vault doesn&apos;t hold yet, which is exactly the point: the system won&apos;t
               invent them.
             </p>

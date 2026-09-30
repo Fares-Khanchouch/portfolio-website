@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 // A project's pipeline as a row of steps; a highlight walks the steps in
-// order while the diagram is on screen. Static (every step lit) when the
+// order once when the diagram scrolls into view, then every step stays lit. Static (every step lit) when the
 // visitor prefers reduced motion. The list itself is plain, readable HTML.
 export default function FlowDiagram({ steps, label }: { steps: string[]; label: string }) {
   const ref = useRef<HTMLOListElement | null>(null);
@@ -19,10 +19,21 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
       if (timer) clearInterval(timer);
       timer = undefined;
     };
+    // Walk the steps once each time the diagram comes into view, then rest
+    // with every step lit (-1).
     const start = () => {
       if (timer || reduce.matches) return;
       setActive(0);
-      timer = setInterval(() => setActive((a) => (a + 1) % (steps.length + 2)), 900);
+      let step = 0;
+      timer = setInterval(() => {
+        step += 1;
+        if (step >= steps.length) {
+          stop();
+          setActive(-1);
+        } else {
+          setActive(step);
+        }
+      }, 700);
     };
     const io = new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()), {
       threshold: 0.4,
@@ -48,22 +59,30 @@ export default function FlowDiagram({ steps, label }: { steps: string[]; label: 
     <ol
       ref={ref}
       aria-label={label}
-      className="flex flex-col items-start md:grid md:items-stretch md:gap-x-3"
+      className="flex flex-col items-start md:grid md:items-stretch md:gap-x-4"
       style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
     >
       {steps.map((s, i) => (
         <li key={s} className="relative flex flex-col items-start md:block">
           {i > 0 && (
-            // Phones: vertical connector above the step. md+: horizontal
-            // connector in the gap to the left of the step.
+            // An arrow into this step: vertical above it on phones, horizontal
+            // in the gap to its left from md up.
             <span
               aria-hidden="true"
-              className="relative ml-5 block h-3 w-px overflow-hidden bg-line-strong md:absolute md:top-1/2 md:-left-3 md:ml-0 md:h-px md:w-3"
+              className="relative ml-5 flex h-4 w-px flex-col items-center md:absolute md:top-1/2 md:-left-4 md:ml-0 md:h-px md:w-4 md:-translate-y-1/2 md:flex-row"
             >
+              <span className="relative block h-full w-full overflow-hidden bg-line-strong">
+                <span
+                  className={cn(
+                    "absolute inset-0 origin-top bg-accent transition-transform duration-500 ease-out md:origin-left",
+                    lit(i) ? "scale-100" : "scale-y-0 md:scale-x-0 md:scale-y-100",
+                  )}
+                />
+              </span>
               <span
                 className={cn(
-                  "absolute inset-0 origin-top bg-accent transition-transform duration-500 ease-out md:origin-left",
-                  lit(i) ? "scale-100" : "scale-y-0 md:scale-x-0 md:scale-y-100",
+                  "block h-0 w-0 shrink-0 border-x-[3.5px] border-t-[4px] border-x-transparent transition-colors duration-500 md:border-x-0 md:border-t-0 md:border-y-[3.5px] md:border-l-[4px] md:border-y-transparent",
+                  lit(i) ? "border-t-accent md:border-l-accent" : "border-t-line-strong md:border-l-line-strong",
                 )}
               />
             </span>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { projects } from "@/data";
 import FlowDiagram from "./FlowDiagram";
 import Reveal from "./Reveal";
@@ -54,7 +54,7 @@ export default function Projects() {
                     ) : (
                       <Link href={p.link.href} className="group inline-flex items-center gap-1.5 text-sm font-medium text-accent">
                         {p.link.label}
-                        <ArrowUpRight size={15} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        <ArrowRight size={15} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5" />
                       </Link>
                     ))}
                 </div>

@@ -39,6 +39,17 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   images: { formats: ["image/avif", "image/webp"] },
+  // The write-up's first URL, renamed before launch; kept working in case it
+  // was shared.
+  async redirects() {
+    return [
+      {
+        source: "/writing/grounded-resume-generator",
+        destination: "/writing/grounded-llm-generation",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

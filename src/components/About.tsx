@@ -74,7 +74,7 @@ export default function About() {
                         {langs.map((l) => (
                           <span
                             key={l}
-                            className="rounded-full border border-line bg-bg/40 px-2.5 py-0.5 text-[13px] text-fg"
+                            className="rounded-lg border border-line bg-bg/40 px-2.5 py-0.5 text-[13px] text-fg"
                           >
                             {l}
                           </span>
@@ -93,8 +93,8 @@ export default function About() {
         </div>
 
         <Reveal className="mt-14">
-          <h3 className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
-            Tools I work with
+          <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
+            <h3>Tools I work with</h3>
             <span aria-hidden="true" className="h-px min-w-8 flex-1 bg-line" />
             <span className="flex items-center gap-2 text-[11px] tracking-[0.1em] normal-case">
               <span
@@ -103,7 +103,7 @@ export default function About() {
               />
               used in the projects above
             </span>
-          </h3>
+          </div>
           <div className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {about.skillGroups.map((g, i) => {
               const Icon = GROUP_ICONS[i % GROUP_ICONS.length];

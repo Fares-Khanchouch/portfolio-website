@@ -7,11 +7,11 @@ const edge = { fill: "none", stroke: "var(--fg-subtle)", strokeOpacity: 0.6, str
 
 export function DeliveryRail() {
   const phases = ["Scope", "Build", "UAT", "SAT", "Go-live", "Support"];
-  const x0 = 28;
-  const gap = 58;
+  const x0 = 30;
+  const gap = 62;
   const live = 4;
   return (
-    <svg viewBox="-6 0 362 84" aria-hidden="true" className="mx-auto h-auto w-full max-w-[420px]">
+    <svg viewBox="-8 0 382 84" aria-hidden="true" className="mx-auto h-auto w-full max-w-[420px]">
       <line x1={x0} y1={34} x2={x0 + gap * 5} y2={34} stroke="var(--line-strong)" strokeWidth={2} />
       <line x1={x0} y1={34} x2={x0 + gap * live} y2={34} stroke="var(--accent)" strokeWidth={2} />
       {phases.map((p, i) => {
@@ -21,7 +21,7 @@ export function DeliveryRail() {
           <g key={p}>
             {on && <circle cx={x} cy={34} r={13} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.4} />}
             <circle cx={x} cy={34} r={on ? 7 : 5} fill={i <= live ? "var(--accent)" : "var(--bg-raised)"} stroke="var(--accent)" strokeWidth={1.5} />
-            <text x={x} y={66} textAnchor="middle" fontSize={12} fontWeight={on ? 600 : 400} fill={on ? "var(--fg)" : "var(--fg-muted)"} style={mono}>
+            <text x={x} y={66} textAnchor="middle" fontSize={12} fill={on ? "var(--fg)" : "var(--fg-muted)"} style={mono}>
               {p}
             </text>
           </g>
@@ -58,19 +58,23 @@ export function IntegrationFlow() {
       {box(94, 11, 84, "C# REST", true)}
       <path {...edge} d="M178 26 H206" />
       {box(208, 11, 144, "credit workflow")}
-      {/* alerts branch, secured */}
-      <path {...edge} strokeDasharray="3 3" d="M280 41 V62 Q280 72 270 72 H206" />
-      {box(110, 58, 94, "SMS alerts")}
-      <g transform="translate(222 86)">
-        <rect x={0} y={5} width={11} height={9} rx={2} fill="none" stroke="var(--accent)" strokeWidth={1.3} />
-        <path d="M2.7 5 v-2.2 a2.8 2.8 0 0 1 5.6 0 v2.2" fill="none" stroke="var(--accent)" strokeWidth={1.3} />
+      {/* alerts, secured */}
+      <path {...edge} d="M136 41 V76" />
+      {box(94, 76, 84, "SMS alerts")}
+      <path {...edge} d="M178 91 H192" />
+      <g>
+        <rect x={194} y={72} width={158} height={38} rx={10} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.5} />
+        <g transform="translate(205 84)">
+          <rect x={0} y={5} width={11} height={9} rx={2} fill="none" stroke="var(--accent)" strokeWidth={1.3} />
+          <path d="M2.7 5 v-2.2 a2.8 2.8 0 0 1 5.6 0 v2.2" fill="none" stroke="var(--accent)" strokeWidth={1.3} />
+        </g>
+        <text x={224} y={88} fontSize={11} fill="var(--fg)" style={mono}>
+          OAuth · API keys
+        </text>
+        <text x={224} y={102} fontSize={11} fill="var(--fg-muted)" style={mono}>
+          IP whitelist
+        </text>
       </g>
-      <text x={240} y={98} fontSize={11.5} fill="var(--fg-muted)" style={mono}>
-        OAuth · API keys
-      </text>
-      <text x={240} y={111} fontSize={11.5} fill="var(--fg-muted)" style={mono}>
-        IP whitelist
-      </text>
     </svg>
   );
 }
@@ -81,15 +85,15 @@ function AgentToolingWide() {
   const skills = Array.from({ length: 11 }, (_, i) => i);
   const hot = new Set([3, 16, 22, 38, 47]);
   const nodes = [
-    [392, 150],
-    [422, 138],
-    [422, 162],
-    [456, 150],
-    [490, 140],
-    [522, 156],
+    [392, 146],
+    [422, 134],
+    [422, 156],
+    [456, 146],
+    [490, 136],
+    [522, 150],
   ];
   return (
-    <svg viewBox="0 0 560 232" aria-hidden="true" className="hidden h-auto w-full sm:block">
+    <svg viewBox="0 0 560 234" aria-hidden="true" className="hidden h-auto w-full sm:block">
       {/* agent */}
       <circle cx={44} cy={88} r={34} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
       <text x={44} y={92.5} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--fg)" style={mono}>
@@ -141,7 +145,7 @@ function AgentToolingWide() {
           <circle cx={x} cy={y} r={4.5} fill="var(--accent)" />
         </g>
       ))}
-      <text x={388} y={182} fontSize={11} fill="var(--fg-subtle)" style={mono}>
+      <text x={388} y={178} fontSize={11} fill="var(--fg-subtle)" style={mono}>
         provenance on every edge
       </text>
       {/* cited answers back to the agent */}
@@ -199,7 +203,7 @@ function AgentToolingTall() {
       <text x={82} y={276} textAnchor="middle" fontSize={11.5} fill="var(--fg)" style={mono}>
         knowledge base
       </text>
-      <rect x={156} y={238} width={124} height={76} rx={10} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <rect x={156} y={238} width={124} height={80} rx={10} fill="var(--bg-raised)" stroke="var(--line-strong)" />
       <text x={166} y={256} fontSize={11} fill="var(--fg)" style={mono}>
         dependency graph
       </text>

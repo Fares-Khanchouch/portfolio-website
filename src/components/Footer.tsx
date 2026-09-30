@@ -51,28 +51,7 @@ export default function Footer({ backToTop = true }: { backToTop?: boolean }) {
             )}
           </div>
         </div>
-        {/* Decorative wordmark; an SVG so it is plainly an image, not low-contrast text. */}
-        <svg aria-hidden="true" viewBox="0 0 1000 150" className="mt-10 block h-auto w-full select-none">
-          <defs>
-            <linearGradient id="footer-mark" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="var(--fg)" stopOpacity={0.14} />
-              <stop offset="1" stopColor="var(--fg)" stopOpacity={0.01} />
-            </linearGradient>
-          </defs>
-          <text
-            x="0"
-            y="120"
-            textLength="1000"
-            lengthAdjust="spacingAndGlyphs"
-            fontSize="150"
-            fontWeight={600}
-            letterSpacing="-6"
-            fill="url(#footer-mark)"
-          >
-            {site.name}
-          </text>
-        </svg>
-        <p className="mt-6 flex flex-col gap-1 font-mono text-xs text-fg-subtle sm:flex-row sm:justify-between">
+        <p className="mt-8 flex flex-col gap-1 border-t border-line pt-6 font-mono text-xs text-fg-subtle sm:flex-row sm:justify-between">
           <span>
             © {new Date().getFullYear()} {site.name}
           </span>

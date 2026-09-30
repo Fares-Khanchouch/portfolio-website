@@ -136,7 +136,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1 justify-self-end">
+        <div className="col-start-3 flex items-center gap-1 justify-self-end">
           <a
             href={social.resume}
             className="hidden h-10 items-center gap-2 rounded-full bg-accent-solid px-4 sm:inline-flex text-sm font-medium text-white shadow-accent transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"

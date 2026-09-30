@@ -44,7 +44,7 @@ function HighlightCard({ h, large = false }: { h: Highlight; large?: boolean }) 
           ))}
         </ul>
       )}
-      <div className={"mt-6 flex items-center rounded-xl border border-line bg-bg/40 p-3 " + (large ? "dot-field lg:flex-1 lg:p-6" : "lg:mt-auto")}>
+      <div className={"-mx-2 mt-6 flex items-center rounded-xl border border-line bg-bg/40 p-2 sm:mx-0 sm:p-3 " + (large ? "dot-field lg:flex-1 lg:p-6" : "lg:mt-auto")}>
         <Drawing />
       </div>
     </div>

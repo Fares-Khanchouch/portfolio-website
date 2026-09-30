@@ -34,8 +34,8 @@ export default function CareerLine() {
               />
             ))}
             <span className="absolute top-0 -right-px bottom-5 w-px bg-accent/70" />
-            <span className="absolute -top-0.5 right-0 flex translate-x-1/2 items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] text-accent uppercase">
-              <span className="live-dot" />
+            <span className="absolute -top-1 right-0 translate-x-1/2 font-mono text-[10px] tracking-[0.14em] text-accent uppercase">
+              now
             </span>
           </div>
 
@@ -82,8 +82,9 @@ export default function CareerLine() {
                         }}
                       >
                         {!wide && (
-                          <span className="absolute -top-5 left-1/2 hidden -translate-x-1/2 font-mono text-[10px] whitespace-nowrap text-fg-subtle sm:block">
+                          <span className="absolute bottom-full left-1/2 hidden -translate-x-1/2 flex-col items-center font-mono text-[10px] whitespace-nowrap text-fg-muted sm:flex">
                             {s.label}
+                            <span className="mt-0.5 h-1.5 w-px bg-accent/60" />
                           </span>
                         )}
                         {wide && (
@@ -118,10 +119,10 @@ export default function CareerLine() {
         {/* phones: the bars are too narrow for names, so list them */}
         <ul className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-y-2 border-t border-line pt-4 font-mono text-[11px] text-fg-muted sm:hidden">
           {[...timeline].reverse().map((s) => (
-            <li key={s.detail} className="flex items-center gap-2.5">
+            <li key={s.detail} className="flex items-start gap-2.5">
               <span
                 className={
-                  "h-2.5 w-2.5 shrink-0 rounded-sm border " +
+                  "mt-1 h-2.5 w-2.5 shrink-0 rounded-sm border " +
                   (s.end === null
                     ? "border-accent bg-accent-solid"
                     : s.kind === "study"
@@ -129,8 +130,9 @@ export default function CareerLine() {
                       : "border-accent/70 bg-accent/30")
                 }
               />
-              <span className="min-w-0 truncate">
-                <span className="text-fg">{s.label}</span> · {s.detail}
+              <span className="min-w-0">
+                <span className="block text-fg">{s.label}</span>
+                <span className="block text-fg-subtle">{s.detail}</span>
               </span>
               <span className="ml-auto shrink-0 text-fg-subtle">
                 {range(s)}

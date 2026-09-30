@@ -100,9 +100,9 @@ export default function Writeup() {
                 </Link>
                 <span className="max-sm:hidden"> ·</span>
               </span>
-              <time dateTime={writeup.date} className="max-sm:basis-full">
-                {date} · {writeup.readingMinutes} min read
-              </time>
+              <span className="max-sm:basis-full">
+                <time dateTime={writeup.date}>{date}</time> · {writeup.readingMinutes} min read
+              </span>
             </p>
             <h1 className="break-words text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">{writeup.title}</h1>
             <p className="mt-4 text-lg leading-relaxed text-fg-muted">{writeup.description}</p>
@@ -136,9 +136,9 @@ export default function Writeup() {
           </div>
 
           {/* Breaks out of the text column from lg up to show the wide layout. */}
-          <figure className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6 lg:-mx-24">
+          <figure data-toc-avoid className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6 lg:-mx-44 lg:p-0 lg:py-4">
             <GroundedDiagram />
-            <figcaption className="mt-4 text-center text-xs text-balance text-fg-subtle">
+            <figcaption className="mt-4 px-4 text-center text-xs text-balance text-fg-subtle">
               The whole system: ingest, grounded generation, and the evaluation harness that measures it.
             </figcaption>
           </figure>

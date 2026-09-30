@@ -11,10 +11,10 @@ function MetricBar({ before, after, scale }: { before: number; after: number; sc
   const pct = (v: number) => `${Math.max(0, Math.min(100, (v / scale) * 100))}%`;
   return (
     <dd aria-hidden="true" className="mt-3 space-y-1">
-      <div className="h-1 rounded-full bg-line">
-        <div className="h-full rounded-full bg-fg-subtle/50" style={{ width: pct(before) }} />
+      <div className="h-1.5 rounded-full bg-line">
+        <div className="h-full rounded-full bg-fg-subtle/60" style={{ width: pct(before) }} />
       </div>
-      <div className="h-1 rounded-full bg-line">
+      <div className="h-1.5 rounded-full bg-line">
         <div className="h-full rounded-full bg-accent" style={{ width: pct(after) }} />
       </div>
     </dd>
@@ -43,8 +43,8 @@ export default function Projects() {
                   <dl className={"mb-6 grid grid-cols-[minmax(0,1fr)] gap-3 " + (p.metrics.length > 1 ? "sm:grid-cols-3" : "sm:grid-cols-2")}>
                     {p.metrics.map((m) => (
                       <div key={m.label} className="flex flex-col rounded-xl border border-line bg-bg/40 px-4 py-3">
-                        <dt className="text-xs leading-snug text-fg-subtle">{m.label}</dt>
-                        <dd className="mt-auto flex flex-wrap items-baseline gap-x-2 pt-1.5 font-mono tabular-nums">
+                        <dt className="min-h-[2.5em] text-xs leading-snug text-fg-subtle">{m.label}</dt>
+                        <dd className="mt-1.5 flex flex-wrap items-baseline gap-x-2 font-mono tabular-nums">
                           <span className="text-sm text-fg-subtle line-through decoration-fg-subtle/60">{m.before}</span>
                           <span aria-hidden="true" className="text-fg-subtle">→</span>
                           <span className="sr-only">to</span>
@@ -58,8 +58,8 @@ export default function Projects() {
                     ))}
                     {p.conditions && (
                       <div className="flex flex-col rounded-xl border border-line bg-bg/40 px-4 py-3">
-                        <dt className="text-xs leading-snug text-fg-subtle">Health conditions reported</dt>
-                        <dd className="mt-auto pt-1.5 font-mono text-2xl font-semibold tracking-tight text-accent tabular-nums">
+                        <dt className="min-h-[2.5em] text-xs leading-snug text-fg-subtle">Health conditions reported</dt>
+                        <dd className="mt-1.5 font-mono text-2xl font-semibold tracking-tight text-accent tabular-nums">
                           {p.conditions.length}
                         </dd>
                         <dd className="mt-2 flex flex-wrap gap-1.5">

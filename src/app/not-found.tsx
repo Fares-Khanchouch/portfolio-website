@@ -61,7 +61,7 @@ export default function NotFound() {
       <Navbar home={false} />
       <main id="main" className="relative flex flex-1 items-center overflow-hidden">
         <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
-        <div className="relative mx-auto grid w-full max-w-5xl items-center gap-12 px-4 py-32 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="relative mx-auto grid w-full max-w-5xl items-center gap-12 px-4 pt-32 pb-12 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:pb-32">
           <div>
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-accent">Error 404</p>
           <h1 className="text-4xl font-semibold tracking-tight text-fg md:text-5xl">This page doesn&rsquo;t exist.</h1>

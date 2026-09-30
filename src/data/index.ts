@@ -47,16 +47,16 @@ export const hero = {
   eyebrow: "Integrations & LLM agent tooling",
   headline: "Forward Deployed Engineer",
   tagline:
-    "I connect core banking, credit platforms and SaaS APIs, and build the MCP tooling that lets an agent explain how they fit together.",
+    "I connect bank credit platforms to core banking and SaaS APIs, and build MCP tooling that lets an agent explain a live deployment and cite its sources.",
   photo: "/portrait.jpg",
   avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
   // Proof strip under the hero buttons (all from the fact vault).
   proof: [
+    { value: "2", label: "bank production releases" },
+    { value: "6+", label: "automation clients" },
     { value: "1.1M+", label: "job postings indexed" },
     { value: "1,200+", label: "automated tests" },
-    { value: "6+", label: "automation clients" },
-    { value: "2", label: "bank production releases" },
   ],
   toolingBadge: { value: "50", label: "typed MCP tools", detail: "11 Claude skills" },
 };
@@ -121,7 +121,7 @@ export const now = {
         "A queryable knowledge base parsed from a live deployment",
         "A dependency graph with provenance on every edge",
         "Skills that turn a BRD into screens, fields and stored procedures",
-        "Tool-call telemetry and a time-saved log on every call",
+        "Telemetry on every tool call, plus a time-saved log",
       ],
       text: "Python MCP servers exposing 50 typed tools and 11 Claude skills, so an agent can explain a live deployment and cite its sources.",
     },
@@ -160,7 +160,7 @@ export const before: Role[] = [
     company: "Independent",
     dates: "Sep 2024 – Nov 2025",
     summary:
-      "Automation projects for 6+ clients with n8n and Make: a 100,000+ row migration from Excel to Airtable, an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions) and KYC document pipelines with LLM/OCR extraction.",
+      "Automation projects for 6+ clients, mostly in n8n and Make: an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions), KYC document pipelines with LLM/OCR extraction, and a 100,000+ row Excel-to-Airtable migration via API scripts.",
     tags: ["n8n", "Make", "Airtable", "LLM APIs"],
   },
   {

@@ -9,7 +9,7 @@ export const contentType = "image/png";
 export default function OpengraphImage() {
   const results = [
     { value: "54% → 100%", label: "runs covering every hard requirement" },
-    { value: "5.1 → 6.3", label: "blind reviewer score, /10" },
+    { value: "5.1 → 6.3", label: "blind LLM-reviewer score, /10" },
     { value: "6% → 0%", label: "bullets judged overclaimed" },
   ];
   return new ImageResponse(

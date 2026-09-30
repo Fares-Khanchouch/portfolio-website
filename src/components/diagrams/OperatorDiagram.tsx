@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Caption, Diagram, Edge, Packet, useLive } from "./kit";
+import { Box, Caption, Diagram, Edge, Packet, useDiagramId, useLive } from "./kit";
 
 // Architecture of the n8n Kubernetes operator (facts: vault proj.n8nop.*).
 
@@ -28,7 +28,14 @@ function CustomResource({ x, y, w, h }: { x: number; y: number; w: number; h: nu
 
 function Operator({ x, y, w, h, cx, cy }: { x: number; y: number; w: number; h: number; cx: number; cy: number }) {
   const live = useLive();
+  const id = useDiagramId();
   const r = 46;
+  const pt = (deg: number, rad = r) => [cx + rad * Math.cos((deg * Math.PI) / 180), cy + rad * Math.sin((deg * Math.PI) / 180)];
+  const stages = [
+    { label: "observe", deg: -90, anchor: "middle" },
+    { label: "compare", deg: 30, anchor: "start" },
+    { label: "act", deg: 150, anchor: "end" },
+  ] as const;
   return (
     <g>
       <rect x={x} y={y} width={w} height={h} rx={10} fill="var(--bg-raised)" />
@@ -37,27 +44,47 @@ function Operator({ x, y, w, h, cx, cy }: { x: number; y: number; w: number; h: 
       <text x={x + w / 2} y={y + 26} textAnchor="middle" fontSize={13.5} fontWeight={600} fill="var(--fg)">
         Operator (Go)
       </text>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--accent)" strokeOpacity={0.35} strokeWidth={1.4} />
-      <g>
-        {/* the moving part of the reconcile loop */}
-        <path
-          d={`M${cx} ${cy - r} A${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-          fill="none"
-          stroke="var(--accent)"
-          strokeWidth={2}
-          strokeLinecap="round"
-        />
-        <path d={`M${cx + r - 5} ${cy - 6} L${cx + r} ${cy + 1} L${cx + r + 5} ${cy - 6}`} fill="none" stroke="var(--accent)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-        {live && (
-          <animateTransform attributeName="transform" type="rotate" from={`0 ${cx} ${cy}`} to={`360 ${cx} ${cy}`} dur="3s" repeatCount={2} />
-        )}
-      </g>
+      {/* observe -> compare -> act -> observe, as three arrowed arcs */}
+      {stages.map((st, i) => {
+        const next = stages[(i + 1) % 3];
+        const [ax, ay] = pt(st.deg + 16);
+        const [bx, by] = pt(next.deg - 16 + (next.deg < st.deg ? 360 : 0));
+        return (
+          <path
+            key={st.label}
+            d={`M${ax} ${ay} A${r} ${r} 0 0 1 ${bx} ${by}`}
+            fill="none"
+            stroke="var(--accent)"
+            strokeOpacity={0.75}
+            strokeWidth={1.6}
+            markerEnd={`url(#${id}-arrow-accent)`}
+          />
+        );
+      })}
+      {stages.map((st) => {
+        const [sx, sy] = pt(st.deg);
+        const [lx, ly] = pt(st.deg, r + 13);
+        return (
+          <g key={st.label}>
+            <circle cx={sx} cy={sy} r={4} fill="var(--bg-raised)" stroke="var(--accent)" strokeWidth={1.6} />
+            <Caption x={lx} y={ly + (st.deg === -90 ? -2 : 8)} anchor={st.anchor}>
+              {st.label}
+            </Caption>
+          </g>
+        );
+      })}
+      {live && (
+        <circle r={3.5} fill="var(--accent)">
+          <animateMotion
+            dur="3s"
+            repeatCount={2}
+            path={`M${cx} ${cy - r} A${r} ${r} 0 1 1 ${cx - 0.01} ${cy - r}`}
+          />
+        </circle>
+      )}
       <text x={cx} y={cy + 4} textAnchor="middle" fontSize={11} fill="var(--fg)" style={{ fontFamily: "var(--font-mono)" }}>
         reconcile
       </text>
-      <Caption x={cx} y={cy - r - 8} anchor="middle">observe</Caption>
-      <Caption x={cx + r + 10} y={cy + 20} anchor="start">compare</Caption>
-      <Caption x={cx - r - 10} y={cy + 20} anchor="end">act</Caption>
       <text x={x + w / 2} y={y + h - 14} textAnchor="middle" fontSize={10.5} fill="var(--fg-subtle)" style={{ fontFamily: "var(--font-mono)" }}>
         deleted resources are recreated
       </text>
@@ -78,7 +105,7 @@ export default function OperatorDiagram() {
   return (
     <Diagram
       title="Architecture: n8n Kubernetes operator"
-      description="One custom resource (replicas, n8n version, PostgreSQL, service or TLS ingress) is applied to the cluster. The Go operator's reconcile loop observes, compares and acts: it creates and updates n8n, PostgreSQL, secrets, persistent storage, a service and an optional TLS ingress in a namespace per instance, recreates anything deleted, and reports status (Ready, N8nReady, PostgresReady, access URLs) back on the custom resource."
+      description="One custom resource (replicas, n8n version, PostgreSQL, service or TLS ingress) is applied to the cluster. The Go operator's reconcile loop observes, compares and acts: it creates and updates n8n, PostgreSQL, secrets, persistent storage, a service and an optional TLS ingress in the instance's namespace, recreates anything deleted, and reports status (Ready, N8nReady, PostgresReady, access URLs) back on the custom resource."
       wide={{
         viewBox: "-8 0 976 344",
         children: (
@@ -95,11 +122,11 @@ export default function OperatorDiagram() {
             <Caption x={555} y={140} anchor="middle">manages</Caption>
 
             <rect x={588.5} y={14.5} width={367} height={271} rx={16} fill="none" stroke="var(--line-strong)" strokeDasharray="4 4" />
-            <Caption x={606} y={38}>one namespace per instance</Caption>
+            <Caption x={606} y={38}>isolated per instance</Caption>
             {resources.map(([t, l], i) => (
               <Box key={t} x={606 + (i % 2) * 174} y={56 + Math.floor(i / 2) * 66} w={164} h={54} title={t} lines={[l]} />
             ))}
-            <Caption x={440} y={336} anchor="middle">status: Ready · N8nReady · PostgresReady · access URLs</Caption>
+            <Caption x={440} y={336} anchor="middle" accent>status: Ready · N8nReady · PostgresReady · access URLs</Caption>
           </>
         ),
       }}
@@ -119,11 +146,11 @@ export default function OperatorDiagram() {
             <Caption x={194} y={420}>manages</Caption>
 
             <rect x={14.5} y={438.5} width={341} height={231} rx={16} fill="none" stroke="var(--line-strong)" strokeDasharray="4 4" />
-            <Caption x={30} y={460}>one namespace per instance</Caption>
+            <Caption x={30} y={460}>isolated per instance</Caption>
             {resources.map(([t, l], i) => (
               <Box key={t} x={26 + (i % 2) * 166} y={474 + Math.floor(i / 2) * 64} w={156} h={54} title={t} lines={[l]} />
             ))}
-            <Caption x={184} y={722} anchor="middle">status: Ready · N8nReady · PostgresReady</Caption>
+            <Caption x={184} y={722} anchor="middle" accent>status: Ready · N8nReady · PostgresReady</Caption>
           </>
         ),
       }}

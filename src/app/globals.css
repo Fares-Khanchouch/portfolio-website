@@ -315,7 +315,7 @@ section[id] {
   border-radius: inherit;
   padding: 1px;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent 10%, color-mix(in srgb, var(--accent) 45%, transparent) 50%, transparent 90%);
+  background: linear-gradient(90deg, transparent 10%, color-mix(in srgb, var(--accent) 60%, transparent) 50%, transparent 90%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

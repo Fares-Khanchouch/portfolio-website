@@ -38,8 +38,8 @@ function TunisTime() {
       <Clock size={14} aria-hidden="true" className="text-accent" />
       Tunis, Tunisia
       <span aria-hidden="true">·</span>
-      <span className="tabular-nums text-fg-muted">{now ?? "--:--"}</span>
-      <span>local time (UTC+1)</span>
+      {now && <span className="tabular-nums text-fg-muted">{now}</span>}
+      <span>{now ? "local time (UTC+1)" : "UTC+1"}</span>
     </p>
   );
 }
@@ -136,18 +136,21 @@ export default function Contact() {
           <Reveal className="flex flex-col gap-6">
             <p className="text-lg leading-relaxed text-pretty text-fg-muted">{contact.text}</p>
             <div data-spotlight className="group/email rounded-2xl border border-line bg-surface p-5 shadow-card transition-colors duration-200 hover:border-accent/50 md:p-6">
-              <p className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
-                <Mail size={14} aria-hidden="true" className="text-accent" />
-                Email
-              </p>
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="mb-1 flex items-center justify-between gap-3">
+                <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
+                  <Mail size={14} aria-hidden="true" className="text-accent" />
+                  Email
+                </p>
+                <CopyEmail email={social.email} />
+              </div>
+              <div>
                 <a
                   href={`mailto:${social.email}`}
-                  className="link-underline inline-flex min-h-11 items-center text-lg font-medium break-all text-fg transition-colors duration-200 hover:text-accent md:text-2xl"
+                  className="link-underline inline-block py-2 text-lg font-medium [overflow-wrap:anywhere] text-fg transition-colors duration-200 hover:text-accent lg:text-2xl"
                 >
-                  {social.email}
+                  {social.email.split("@")[0]}
+                  <wbr />@{social.email.split("@")[1]}
                 </a>
-                <CopyEmail email={social.email} />
               </div>
             </div>
             <ul className="flex flex-wrap gap-2">

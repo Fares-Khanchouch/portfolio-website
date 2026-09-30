@@ -120,7 +120,7 @@ export function Diagram({
           "tall",
           tall.viewBox,
           tall.children,
-          "mx-auto block h-auto w-full max-w-[380px] " +
+          "mx-auto block h-auto w-full max-w-[380px] md:max-w-[460px] " +
             (layout === "auto" ? "lg:hidden" : ""),
         )}
       </div>

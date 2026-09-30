@@ -95,7 +95,7 @@ export default function Hero() {
           {/* Art direction: phones load only the tight head-and-shoulders crop
               (left-aligned with the text, so the name and buttons stay above
               the fold); tablets and up load only the 3:4 portrait. */}
-          <div aria-hidden="true" className="absolute -inset-3 -z-10 hidden -rotate-2 rounded-[28px] border border-line bg-surface md:block" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 hidden translate-x-4 translate-y-4 rounded-2xl border border-accent/25 bg-accent-soft md:block" />
           <div aria-hidden="true" className="hero-grid-plate absolute -right-10 -bottom-10 -z-10 hidden h-40 w-40 md:block" />
           <div className="relative w-24 shrink-0 overflow-hidden rounded-xl shadow-[var(--photo-shadow-sm)] md:h-full md:w-[288px] md:rounded-2xl md:shadow-[var(--photo-shadow)] lg:w-[320px]">
             <picture>
@@ -130,7 +130,7 @@ export default function Hero() {
               {now.company} · {now.location}
             </p>
           </div>
-          <div aria-hidden="true" className="float-b absolute top-8 right-2 hidden lg:-right-6 items-center gap-3 rounded-2xl border border-line-strong bg-bg/85 py-2.5 pr-4 pl-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md md:flex">
+          <div aria-hidden="true" className="float-b absolute top-8 right-2 hidden xl:-right-6 items-center gap-3 rounded-2xl border border-line-strong bg-bg/85 py-2.5 pr-4 pl-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md md:flex">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent">
               <Bot size={18} />
             </span>

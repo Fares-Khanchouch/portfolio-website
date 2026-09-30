@@ -16,7 +16,8 @@ export default function Hero() {
       {/* Background: slow-drifting dotted grid and one soft glow. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="hero-grid grid-drift absolute inset-0" />
-        <div className="absolute -top-56 right-[5%] h-[460px] w-[460px] rounded-full bg-[var(--glow)] opacity-40 blur-[120px]" />
+        <div className="absolute top-16 right-[4%] h-[440px] w-[440px] rounded-full bg-[var(--glow)] opacity-70 blur-[110px] max-md:-top-24 max-md:opacity-40" />
+        <div className="absolute bottom-0 left-[8%] hidden h-[260px] w-[360px] md:block rounded-full bg-[var(--glow)] opacity-25 blur-[120px]" />
       </div>
 
       <div className="relative mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)] items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-stretch md:gap-10 lg:gap-16">
@@ -43,7 +44,7 @@ export default function Hero() {
           <div className="enter mt-9 flex flex-wrap items-center gap-3" style={enter(320)}>
             <a
               href="#projects"
-              className="group inline-flex h-11 items-center gap-2 rounded-full bg-accent-solid px-5 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
+              className="group inline-flex h-11 items-center gap-2 rounded-full bg-accent-solid px-5 text-sm font-medium text-white shadow-accent transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
             >
               See my work
               <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -55,7 +56,7 @@ export default function Hero() {
               <FileText size={16} aria-hidden="true" />
               Résumé
             </a>
-            <div className="flex items-center gap-1 max-sm:-ml-3 max-sm:basis-full">
+            <div className="flex items-center gap-1 max-sm:-ml-3 max-sm:mt-1 max-sm:basis-full">
               <a
                 href={social.github}
                 target="_blank"
@@ -77,12 +78,14 @@ export default function Hero() {
             </div>
           </div>
 
-          <dl className="enter mt-10 grid max-w-xl grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-4" style={enter(400)}>
+          <dl className="enter mt-10 grid max-w-xl grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-4" style={enter(400)}>
             {hero.proof.map((p) => (
-              <div key={p.label}>
-                <dt className="sr-only">{p.label}</dt>
-                <dd className="text-2xl font-semibold tracking-tight text-fg tabular-nums [overflow-wrap:anywhere]">{p.value}</dd>
-                <dd className="mt-1 text-xs leading-snug text-fg-subtle [overflow-wrap:anywhere]">{p.label}</dd>
+              <div
+                key={p.label}
+                className="relative flex flex-col-reverse justify-end border-t border-line pt-4 before:absolute before:-top-px before:left-0 before:h-0.5 before:w-6 before:rounded-full before:bg-accent"
+              >
+                <dt className="mt-1 text-[13px] leading-snug text-balance text-fg-muted [overflow-wrap:anywhere]">{p.label}</dt>
+                <dd className="text-3xl font-semibold tracking-tight text-fg tabular-nums [overflow-wrap:anywhere]">{p.value}</dd>
               </div>
             ))}
           </dl>
@@ -92,6 +95,8 @@ export default function Hero() {
           {/* Art direction: phones load only the tight head-and-shoulders crop
               (left-aligned with the text, so the name and buttons stay above
               the fold); tablets and up load only the 3:4 portrait. */}
+          <div aria-hidden="true" className="absolute -inset-3 -z-10 hidden -rotate-2 rounded-[28px] border border-line bg-surface md:block" />
+          <div aria-hidden="true" className="hero-grid-plate absolute -right-10 -bottom-10 -z-10 hidden h-40 w-40 md:block" />
           <div className="relative w-24 shrink-0 overflow-hidden rounded-xl shadow-[var(--photo-shadow-sm)] md:h-full md:w-[288px] md:rounded-2xl md:shadow-[var(--photo-shadow)] lg:w-[320px]">
             <picture>
               <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
@@ -125,7 +130,7 @@ export default function Hero() {
               {now.company} · {now.location}
             </p>
           </div>
-          <div aria-hidden="true" className="float-b absolute top-8 -right-6 hidden items-center gap-3 rounded-2xl border border-line-strong bg-bg/85 py-2.5 pr-4 pl-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md md:flex">
+          <div aria-hidden="true" className="float-b absolute top-8 right-2 hidden lg:-right-6 items-center gap-3 rounded-2xl border border-line-strong bg-bg/85 py-2.5 pr-4 pl-2.5 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md md:flex">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent">
               <Bot size={18} />
             </span>

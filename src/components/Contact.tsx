@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Check, Github, Linkedin, Mail, Send } from "lucide-react";
+import { ArrowUpRight, Check, Clock, Github, Linkedin, Mail, Send } from "lucide-react";
 import { contact, emailjs as ejs, social } from "@/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -21,6 +21,27 @@ function validate(name: string, email: string, message: string): FieldErrors {
   if (!EMAIL_RE.test(email)) errors.email = "Please add a valid email address.";
   if (message.length < 10) errors.message = "Please write at least 10 characters.";
   return errors;
+}
+
+// The visitor's clock is not the owner's; show the time in Tunis.
+function TunisTime() {
+  const [now, setNow] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Tunis" });
+    const tick = () => setNow(fmt.format(new Date()));
+    tick();
+    const t = window.setInterval(tick, 30_000);
+    return () => window.clearInterval(t);
+  }, []);
+  return (
+    <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs text-fg-subtle">
+      <Clock size={14} aria-hidden="true" className="text-accent" />
+      Tunis, Tunisia
+      <span aria-hidden="true">·</span>
+      <span className="tabular-nums text-fg-muted">{now ?? "--:--"}</span>
+      <span>local time (UTC+1)</span>
+    </p>
+  );
 }
 
 export default function Contact() {
@@ -103,7 +124,7 @@ export default function Contact() {
     ) : null;
 
   const field =
-    "w-full rounded-md border border-input-border bg-bg/40 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color] duration-200 focus:border-accent focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-[var(--danger)] sm:text-sm";
+    "min-h-11 w-full rounded-lg border border-input-border bg-bg/60 px-3.5 py-2.5 text-base text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 focus:border-accent focus:ring-4 focus:ring-accent/15 focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-[var(--danger)] sm:text-sm";
   const labelCls = "mb-1.5 block text-sm font-medium text-fg";
 
   return (
@@ -111,10 +132,10 @@ export default function Contact() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading index="04" label="Contact" title={contact.heading} />
 
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-2 md:items-start md:gap-14">
-          <Reveal className="space-y-6">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-2 md:items-stretch md:gap-14">
+          <Reveal className="flex flex-col gap-6">
             <p className="text-lg leading-relaxed text-pretty text-fg-muted">{contact.text}</p>
-            <div className="rounded-2xl border border-line bg-surface p-5 shadow-card">
+            <div data-spotlight className="group/email rounded-2xl border border-line bg-surface p-5 shadow-card transition-colors duration-200 hover:border-accent/50 md:p-6">
               <p className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
                 <Mail size={14} aria-hidden="true" className="text-accent" />
                 Email
@@ -122,7 +143,7 @@ export default function Contact() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <a
                   href={`mailto:${social.email}`}
-                  className="link-underline text-lg font-medium break-all text-fg transition-colors duration-200 hover:text-accent md:text-xl"
+                  className="link-underline inline-flex min-h-11 items-center text-lg font-medium break-all text-fg transition-colors duration-200 hover:text-accent md:text-2xl"
                 >
                   {social.email}
                 </a>
@@ -139,7 +160,7 @@ export default function Contact() {
                     href={href}
                     target="_blank"
                     rel="me noopener noreferrer"
-                    className="group inline-flex h-11 items-center gap-2 rounded-md border border-input-border px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-accent hover:text-fg"
+                    className="group inline-flex h-11 items-center gap-2 rounded-full border border-input-border px-4 text-sm text-fg-muted transition-colors duration-200 hover:border-accent hover:text-fg"
                   >
                     <Icon size={16} aria-hidden="true" />
                     {label}
@@ -148,10 +169,13 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
+            <div className="mt-auto border-t border-line pt-5">
+              <TunisTime />
+            </div>
           </Reveal>
 
-          <Reveal delay={80}>
-            <div className="rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
+          <Reveal delay={80} className="h-full">
+            <div className="h-full rounded-2xl border border-line bg-surface p-6 shadow-card md:p-8">
               {status === "sent" ? (
                 <div className="flex flex-col items-center gap-3 py-10 text-center">
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
@@ -194,7 +218,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-accent-solid px-6 text-sm font-medium text-white transition-[background-color] duration-200 hover:bg-accent-solid-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-solid px-6 text-sm font-medium text-white shadow-accent transition-[background-color] duration-200 hover:bg-accent-solid-hover disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <Send size={15} aria-hidden="true" />
                     {status === "sending" ? "Sending…" : "Send message"}

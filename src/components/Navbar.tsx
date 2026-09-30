@@ -86,18 +86,24 @@ export default function Navbar({ home = true }: { home?: boolean }) {
       <nav
         aria-label="Main"
         className={cn(
-          "mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full border pr-2 pl-5 transition-[background-color,border-color,box-shadow] duration-300",
+          "nav-pill mx-auto grid h-14 max-w-5xl grid-cols-[1fr_auto_1fr] items-center rounded-full border pr-2 pl-2.5 transition-[background-color,border-color,box-shadow] duration-300",
           scrolled || open
-            ? "border-line-strong bg-bg/80 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl"
-            : "border-line bg-bg/40 backdrop-blur-md",
+            ? "border-line-strong bg-bg/90 shadow-[inset_0_1px_0_0_var(--nav-sheen),0_12px_32px_-14px_rgba(0,0,0,0.55)] backdrop-blur-xl backdrop-saturate-150"
+            : "border-line bg-bg/60 shadow-[inset_0_1px_0_0_var(--nav-sheen)] backdrop-blur-md",
         )}
       >
         <Link
           href="/"
-          className="font-mono text-sm font-semibold tracking-wider text-fg transition-colors duration-200 hover:text-accent"
+          className="group flex items-center gap-2.5 justify-self-start rounded-full py-1 pr-3 text-fg"
         >
-          <span aria-hidden="true">
-            fk<span className="text-accent">.</span>
+          <span
+            aria-hidden="true"
+            className="grid h-9 w-9 place-items-center rounded-full bg-accent-soft font-mono text-[13px] font-bold text-accent ring-1 ring-accent/30 transition-colors duration-200 group-hover:bg-accent-solid group-hover:text-white"
+          >
+            fk
+          </span>
+          <span aria-hidden="true" className="hidden text-sm font-semibold tracking-tight lg:inline">
+            Fares Khanchouch
           </span>
           <span className="sr-only">Fares Khanchouch, home</span>
         </Link>
@@ -106,7 +112,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
           <span
             aria-hidden="true"
             className={cn(
-              "absolute top-1/2 h-8 -translate-y-1/2 rounded-full border border-line bg-surface-hover transition-[left,width,opacity] duration-300 ease-out",
+              "absolute top-1/2 h-10 -translate-y-1/2 rounded-full border border-accent/30 bg-accent-soft transition-[left,width,opacity] duration-300 ease-out",
               pill ? "opacity-100" : "opacity-0",
             )}
             style={pill ? { left: pill.left, width: pill.width } : undefined}
@@ -120,7 +126,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
                 href={href(l.id)}
                 aria-current={active === l.id ? "true" : undefined}
                 className={cn(
-                  "block rounded-full px-3.5 py-1.5 transition-colors duration-200 hover:text-fg",
+                  "flex h-10 items-center rounded-full px-3.5 transition-colors duration-200 hover:text-fg",
                   active === l.id && "text-fg",
                 )}
               >
@@ -130,10 +136,10 @@ export default function Navbar({ home = true }: { home?: boolean }) {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 justify-self-end">
           <a
             href={social.resume}
-            className="hidden h-10 items-center gap-2 rounded-full bg-accent-solid px-4 sm:inline-flex text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
+            className="hidden h-10 items-center gap-2 rounded-full bg-accent-solid px-4 sm:inline-flex text-sm font-medium text-white shadow-accent transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
           >
             <FileText size={15} aria-hidden="true" />
             Résumé
@@ -141,7 +147,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
           <button
             ref={toggleRef}
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-fg transition-colors hover:bg-surface-hover md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-surface-hover md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -152,6 +158,13 @@ export default function Navbar({ home = true }: { home?: boolean }) {
         </div>
       </nav>
 
+      {open && (
+        <div
+          aria-hidden="true"
+          onClick={() => setOpen(false)}
+          className="menu-backdrop fixed inset-0 -z-10 bg-bg/70 backdrop-blur-sm md:hidden"
+        />
+      )}
       {open && (
         <div
           id="mobile-menu"

@@ -7,6 +7,7 @@ import ResultsChart from "@/components/writing/ResultsChart";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ReadingProgress from "@/components/ReadingProgress";
+import { InlineToc, SideToc } from "@/components/writing/Toc";
 import { site, writeup } from "@/data";
 
 const path = `/writing/${writeup.slug}`;
@@ -24,13 +25,11 @@ export const metadata: Metadata = {
     description: writeup.description,
     publishedTime: writeup.date,
     authors: [site.name],
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: site.title }],
   },
   twitter: {
     card: "summary_large_image",
     title: writeup.title,
     description: writeup.description,
-    images: ["/opengraph-image"],
   },
 };
 
@@ -41,7 +40,7 @@ const articleJsonLd = {
   description: writeup.description,
   datePublished: writeup.date,
   author: { "@type": "Person", "@id": `${site.url}/#person`, name: site.name, url: site.url },
-  image: `${site.url}/opengraph-image`,
+  image: `${site.url}${path}/opengraph-image`,
   inLanguage: "en",
   isPartOf: { "@id": `${site.url}/#website` },
   mainEntityOfPage: `${site.url}${path}`,
@@ -60,7 +59,8 @@ function H2({ id, children }: { id: string; children: React.ReactNode }) {
   return (
     <h2 id={id} className="group scroll-mt-28">
       {children}
-      <a href={`#${id}`} className="ml-2 text-fg-subtle no-underline opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100" aria-label={`Link to section: ${String(children)}`}>
+      {/* A mouse convenience; the contents list is the keyboard route. */}
+      <a href={`#${id}`} aria-hidden="true" tabIndex={-1} className="ml-2 text-fg-subtle no-underline opacity-0 transition-opacity group-hover:opacity-100">
         #
       </a>
     </h2>
@@ -80,24 +80,10 @@ export default function Writeup() {
       <ReadingProgress />
       <main id="main" className="overflow-x-clip pt-28 pb-24 md:pt-36">
         <article className="relative mx-auto max-w-2xl px-4 sm:px-6">
-          {/* Contents, beside the article on wide screens. */}
-          <aside aria-label="Contents" className="absolute top-0 left-full hidden h-full w-52 xl:block">
-            <nav className="sticky top-32 ml-6 border-l border-line pl-4">
-              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">Contents</p>
-              <ol className="space-y-2 text-sm">
-                {TOC.map((t) => (
-                  <li key={t.id}>
-                    <a href={`#${t.id}`} className="text-fg-muted transition-colors duration-200 hover:text-fg">
-                      {t.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          </aside>
+          <SideToc items={TOC} />
           <Link
             href="/#projects"
-            className="group mb-10 inline-flex items-center gap-2 text-sm text-fg-muted transition-colors duration-200 hover:text-fg"
+            className="group mb-8 inline-flex min-h-11 items-center gap-2 text-sm text-fg-muted transition-colors duration-200 hover:text-fg"
           >
             <ArrowLeft size={15} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-0.5" />
             Back to projects
@@ -111,14 +97,18 @@ export default function Writeup() {
               <span>
                 <Link href="/" rel="author" className="underline-offset-4 hover:underline">
                   {site.name}
-                </Link>{" "}
-                ·
+                </Link>
+                <span className="max-sm:hidden"> ·</span>
               </span>
-              <time dateTime={writeup.date}>{date}</time>
+              <time dateTime={writeup.date} className="max-sm:basis-full">
+                {date} · {writeup.readingMinutes} min read
+              </time>
             </p>
             <h1 className="break-words text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">{writeup.title}</h1>
             <p className="mt-4 text-lg leading-relaxed text-fg-muted">{writeup.description}</p>
           </header>
+
+          <InlineToc items={TOC} />
 
           <div className="prose-body">
             <H2 id="problem">The problem</H2>
@@ -145,10 +135,11 @@ export default function Writeup() {
             </p>
           </div>
 
-          <figure className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6">
-            <GroundedDiagram layout="tall" />
-            <figcaption className="mt-4 text-center text-xs text-fg-subtle">
-              The whole system: ingest on top, grounded generation below, and the evaluation harness around it.
+          {/* Breaks out of the text column from lg up to show the wide layout. */}
+          <figure className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6 lg:-mx-24">
+            <GroundedDiagram />
+            <figcaption className="mt-4 text-center text-xs text-balance text-fg-subtle">
+              The whole system: ingest, grounded generation, and the evaluation harness that measures it.
             </figcaption>
           </figure>
 

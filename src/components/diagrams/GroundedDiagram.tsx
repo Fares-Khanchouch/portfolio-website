@@ -66,7 +66,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
             <Pill x={0} y={66} w={118} label="Greenhouse" />
             <Pill x={0} y={100} w={118} label="Workday" />
             <Pill x={0} y={134} w={118} label="SuccessFactors" />
-            <Caption x={59} y={184} anchor="middle">+ 21 more ATS</Caption>
+            <Caption x={59} y={184} anchor="middle">+ 21 more</Caption>
 
             <Box x={150} y={76} w={128} h={88} title="Crawler" lines={["63k+ boards", "rate limiting", "ETag caching"]} />
             <Store x={308} y={72} w={100} h={96} title="SQLite" lines={["1.1M+ postings", "normalized"]} />
@@ -116,7 +116,7 @@ export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" |
             <Pill x={0} y={26} w={112} label="Greenhouse" />
             <Pill x={124} y={26} w={112} label="Workday" />
             <Pill x={248} y={26} w={112} label="SuccessFactors" />
-            <Caption x={252} y={88}>+ 21 more ATS</Caption>
+            <Caption x={252} y={88}>+ 21 more</Caption>
 
             <Box x={40} y={96} w={280} h={64} title="Crawler" lines={["63k+ boards · rate limits · ETags"]} />
             <Store x={90} y={192} w={180} h={78} title="SQLite" lines={["1.1M+ postings, normalized"]} />

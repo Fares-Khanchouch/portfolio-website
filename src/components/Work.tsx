@@ -44,7 +44,7 @@ function HighlightCard({ h, large = false }: { h: Highlight; large?: boolean }) 
           ))}
         </ul>
       )}
-      <div className={"mt-5 rounded-xl border border-line bg-bg/40 p-3 lg:mt-auto " + (large ? "lg:p-5" : "")}>
+      <div className={"mt-6 flex items-center rounded-xl border border-line bg-bg/40 p-3 " + (large ? "dot-field lg:flex-1 lg:p-6" : "lg:mt-auto")}>
         <Drawing />
       </div>
     </div>
@@ -98,20 +98,28 @@ export default function Work() {
             Before
             <span aria-hidden="true" className="h-px flex-1 bg-line" />
           </h3>
-          <ol className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ol className="divide-y divide-line rounded-xl border border-line bg-surface shadow-card">
             {before.map((r) => (
-              <li key={r.role + r.dates} className="relative border-l border-line pl-5">
-                <span
-                  aria-hidden="true"
-                  className="absolute top-1.5 -left-[4.5px] h-2 w-2 rounded-full border border-accent bg-bg"
-                />
-                <p className="font-mono text-xs text-fg-subtle">{r.dates}</p>
-                <p className="mt-1 font-medium text-fg">
-                  {r.role}
-                  {" "}
-                  <span className="text-fg-subtle">·</span> <span className="text-fg-muted">{r.company}</span>
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{r.summary}</p>
+              <li
+                key={r.role + r.dates}
+                className="grid gap-x-8 gap-y-1.5 px-5 py-5 transition-colors duration-200 hover:bg-surface-hover md:grid-cols-[9rem_minmax(0,1fr)] md:px-6"
+              >
+                <p className="font-mono text-xs text-fg-subtle md:pt-1">{r.dates}</p>
+                <div className="min-w-0">
+                  <p className="font-medium [overflow-wrap:anywhere] text-fg">
+                    {r.role}
+                    {" "}
+                    <span className="text-fg-subtle">·</span> <span className="text-fg-muted">{r.company}</span>
+                  </p>
+                  <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-fg-muted">{r.summary}</p>
+                  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Tools">
+                    {r.tags.map((t) => (
+                      <li key={t} className="rounded-md border border-line bg-bg/40 px-2 py-0.5 font-mono text-[11px] text-fg-muted">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </li>
             ))}
           </ol>

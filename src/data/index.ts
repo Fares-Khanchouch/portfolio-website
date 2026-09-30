@@ -13,10 +13,10 @@ export const site = {
   name: "Fares Khanchouch",
   title: "Fares Khanchouch · Forward Deployed Engineer",
   description:
-    "Fares Khanchouch, Forward Deployed Engineer in Tunis. Enterprise integrations for banks, MCP servers, Claude skills and LLM agent tooling.",
+    "Fares Khanchouch, Integration Consultant in Tunis doing forward-deployed work: core-banking integrations and delivery for banks, MCP servers, Claude skills and LLM agent tooling.",
   locale: "en_US",
   // Bump when the content changes (sitemap lastmod, structured data).
-  updated: "2026-09-29",
+  updated: "2026-09-30",
 };
 
 export const social = {
@@ -47,24 +47,26 @@ export const hero = {
   eyebrow: "Integrations & LLM agent tooling",
   headline: "Forward Deployed Engineer",
   tagline:
-    "I ship the integrations and AI-agent tooling that connect enterprise systems to the people who run them.",
+    "I connect core banking, credit platforms and SaaS APIs, and build the MCP tooling that lets an agent explain how they fit together.",
   photo: "/portrait.jpg",
   avatar: "/avatar-512.jpg",
   photoAlt: "Portrait of Fares Khanchouch",
   // Proof strip under the hero buttons (all from the fact vault).
   proof: [
-    { value: "2", label: "production releases for banks" },
-    { value: "6+", label: "automation clients" },
     { value: "1.1M+", label: "job postings indexed" },
     { value: "1,200+", label: "automated tests" },
+    { value: "6+", label: "automation clients" },
+    { value: "2", label: "bank production releases" },
   ],
   toolingBadge: { value: "50", label: "typed MCP tools", detail: "11 Claude skills" },
 };
 
 export const about = {
   heading: "About",
+  // Shown large above the paragraphs.
+  lede: { text: "I work with client teams from the first scoping conversation", accent: "to go-live support." },
   paragraphs: [
-    "Hi, I’m Fares. Most of my work happens with client teams (bank IT, credit and business people), from the first scoping conversation to go-live support. I’ve also trained clients to build and run their own n8n workflows.",
+    "Hi, I’m Fares. The client teams are usually bank IT, credit and business people. I’ve also run a paid n8n training that took a client from zero to building their own workflows.",
     "Outside work I build LLM tooling and a Kubernetes operator for n8n.",
   ],
   facts: [
@@ -119,7 +121,7 @@ export const now = {
         "A queryable knowledge base parsed from a live deployment",
         "A dependency graph with provenance on every edge",
         "Skills that turn a BRD into screens, fields and stored procedures",
-        "Tool-call telemetry and a time-saved log, so adoption is measured",
+        "Tool-call telemetry and a time-saved log on every call",
       ],
       text: "Python MCP servers exposing 50 typed tools and 11 Claude skills, so an agent can explain a live deployment and cite its sources.",
     },
@@ -149,6 +151,7 @@ export type Role = {
   company: string;
   dates: string;
   summary: string;
+  tags: string[];
 };
 
 export const before: Role[] = [
@@ -157,7 +160,8 @@ export const before: Role[] = [
     company: "Independent",
     dates: "Sep 2024 – Nov 2025",
     summary:
-      "Automation projects for 6+ clients with n8n and Make, an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions) and KYC document pipelines with LLM/OCR extraction.",
+      "Automation projects for 6+ clients with n8n and Make: a 100,000+ row migration from Excel to Airtable, an AI content pipeline (LLM scripts, ElevenLabs voice-overs, Whisper captions) and KYC document pipelines with LLM/OCR extraction.",
+    tags: ["n8n", "Make", "Airtable", "LLM APIs"],
   },
   {
     role: "Cloud & DevSecOps Intern",
@@ -165,12 +169,14 @@ export const before: Role[] = [
     dates: "May – Aug 2024",
     summary:
       "AWS in Terraform, CI/CD with security scanning, Kubernetes deployments with network policies and RBAC.",
+    tags: ["AWS", "Terraform", "Kubernetes", "CI/CD"],
   },
   {
     role: "Full-Stack Web Development Intern",
     company: "WAY2CLOUD",
     dates: "May – Aug 2023",
     summary: "An e-commerce platform in React, Node.js and MongoDB, built solo.",
+    tags: ["React", "Node.js", "MongoDB"],
   },
   {
     role: "DevOps Intern",
@@ -178,6 +184,7 @@ export const before: Role[] = [
     dates: "Jun – Jul 2022",
     summary:
       "A Python REST API automating Kubernetes cluster operations, containerized and deployed with Helm.",
+    tags: ["Python", "Kubernetes", "Helm"],
   },
 ];
 
@@ -191,7 +198,8 @@ export type Project = {
   points: string[];
   flow: string[];
   tags: string[];
-  metrics?: { label: string; before: string; after: string }[];
+  /** `scale` (the value that fills the bar) turns a metric into a before/after bar. */
+  metrics?: { label: string; before: string; after: string; scale?: number; unit?: string }[];
   conditions?: string[];
   link?: { label: string; href: string; external?: boolean };
 };
@@ -208,9 +216,9 @@ export const projects: Project[] = [
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
     ],
     metrics: [
-      { label: "Postings’ hard requirements covered", before: "54%", after: "100%" },
-      { label: "Bullets judged overclaimed", before: "6%", after: "0%" },
-      { label: "Blind LLM-reviewer score", before: "5.1", after: "6.3" },
+      { label: "Runs covering every hard requirement", before: "54%", after: "100%", scale: 100 },
+      { label: "Bullets judged overclaimed", before: "6%", after: "0%", scale: 100 },
+      { label: "Blind LLM-reviewer score", before: "5.1", after: "6.3", scale: 10, unit: "/10" },
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
@@ -229,7 +237,7 @@ export const projects: Project[] = [
     metrics: [{ label: "To run n8n with PostgreSQL", before: "8+ manifests", after: "1 resource" }],
     conditions: ["Ready", "N8nReady", "PostgresReady"],
     flow: ["YAML", "CRD", "Reconcile", "Postgres", "n8n"],
-    tags: ["Go", "Kubernetes", "Operators"],
+    tags: ["Go", "Kubernetes", "Operators", "n8n", "PostgreSQL"],
     link: {
       label: "View on GitHub",
       href: "https://github.com/Fares-Khanchouch/n8n-operator",
@@ -249,4 +257,6 @@ export const writeup = {
   description:
     "How I built LLM generation where every claim traces to a versioned fact store, and an agent-in-the-loop harness with blind LLM reviewers to measure it.",
   date: "2026-09-29",
+  // ~660 words at 230 a minute, plus time on the figures.
+  readingMinutes: 4,
 };

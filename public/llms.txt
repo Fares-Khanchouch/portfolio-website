@@ -1,6 +1,6 @@
 # Fares Khanchouch
 
-> Forward Deployed Engineer based in Tunis, Tunisia, working on integrations and LLM agent tooling for enterprise systems.
+> Integration Consultant in Tunis, Tunisia, doing forward-deployed work: enterprise integrations for banks and LLM agent tooling (MCP servers, Claude skills).
 
 - Integration Consultant at Axe Finance (Dec 2025 – Present): credit-platform delivery for banks in Qatar and Saudi Arabia, core-banking integration over REST (C#), and Python MCP servers with 50 typed tools and 11 Claude skills.
 - Previously a freelance automation engineer (n8n, Make, LLM pipelines) and cloud/DevOps intern.

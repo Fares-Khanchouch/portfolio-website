@@ -14,14 +14,15 @@
   --fg: #f8fafc;
   --fg-muted: #a3b1c6;
   --fg-subtle: #8a98ae;
-  --accent: #7fb0d4;       /* accent used as text */
-  --accent-solid: #3d6d91; /* accent used as a fill behind white text */
-  --accent-soft: rgba(127, 176, 212, 0.12);
-  --glow: rgba(74, 127, 165, 0.35);
+  --accent: #86b8f0;       /* accent used as text; 9.2:1 on --bg */
+  --accent-solid: #2e6ec0; /* accent used as a fill behind white text; 5.1:1 */
+  --accent-soft: rgba(134, 184, 240, 0.12);
+  --glow: rgba(46, 110, 192, 0.45);
   --grid-dot: rgba(255, 255, 255, 0.07);
   --danger: #f0a3a3;
   --input-border: #5f6b82;
-  --accent-solid-hover: #46779b; /* lighter on dark; white text 4.8:1 */
+  --accent-solid-hover: #3272c2; /* lighter on dark; white text 4.9:1 */
+  --accent-shadow: rgba(46, 110, 192, 0.55);
   --card-shadow: none;
   --photo-ring: rgba(255, 255, 255, 0.1);
   --band: #0c1223;
@@ -41,17 +42,18 @@
     --fg: #0b1220;
     --fg-muted: #475569;
     --fg-subtle: #5b6b82;
-    --accent: #2f5f84;
-    --accent-solid: #3d6d91;
-    --accent-soft: rgba(61, 109, 145, 0.1);
-    --glow: rgba(74, 127, 165, 0.3);
+    --accent: #1f5fae;
+    --accent-solid: #2563a8;
+    --accent-soft: rgba(37, 99, 168, 0.09);
+    --glow: rgba(37, 99, 168, 0.28);
     --grid-dot: rgba(11, 18, 32, 0.09);
     --danger: #a12b2b;
     --input-border: #8792a4;
     --card-shadow: 0 1px 2px rgba(11, 18, 32, 0.06);
     --photo-ring: rgba(11, 18, 32, 0.1);
     --band: #eef1f5;
-    --accent-solid-hover: #2f5f84; /* darker on light; white text 6.4:1 */
+    --accent-solid-hover: #1d5796; /* darker on light; white text 7.2:1 */
+    --accent-shadow: rgba(37, 99, 168, 0.4);
     --photo-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.3);
     --photo-shadow-sm: 0 14px 28px -18px rgba(15, 23, 42, 0.3);
     color-scheme: light;
@@ -76,6 +78,7 @@
   --color-input-border: var(--input-border);
   --color-accent-solid-hover: var(--accent-solid-hover);
   --shadow-card: var(--card-shadow);
+  --shadow-accent: 0 8px 24px -10px var(--accent-shadow);
 }
 
 html {
@@ -109,10 +112,19 @@ section[id] {
 }
 
 /* Dotted grid behind the hero, faded out towards the edges. */
+/* The dots live on an oversized ::before layer that drifts by transform
+   (composited on the GPU), never by background-position (a repaint on
+   every frame, which cost ~3s of main-thread time per 5s on mobile). */
 .hero-grid {
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse 70% 60% at 30% 45%, #000 30%, transparent 75%);
+}
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: -48px 0 0 -48px;
   background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
   background-size: 24px 24px;
-  mask-image: radial-gradient(ellipse 70% 60% at 30% 45%, #000 30%, transparent 75%);
 }
 
 /* ---------- Motion ----------------------------------------------
@@ -154,8 +166,9 @@ section[id] {
     animation-delay: var(--enter-delay, 0ms);
   }
 
-  .grid-drift {
+  .grid-drift::before {
     animation: grid-drift 30s linear infinite;
+    will-change: transform;
   }
 }
 
@@ -175,8 +188,8 @@ section[id] {
 }
 
 @keyframes grid-drift {
-  from { background-position: 0 0; }
-  to { background-position: 48px 48px; }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(48px, 48px, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -287,4 +300,57 @@ section[id] {
 @media screen and (prefers-reduced-motion: no-preference) {
   a[class*="rounded-full"]:active,
   button:active { transform: scale(0.98); }
+}
+
+/* Navbar: faint top sheen and a gradient hairline that brightens mid-pill. */
+:root { --nav-sheen: rgba(255, 255, 255, 0.06); }
+@media (prefers-color-scheme: light) {
+  :root { --nav-sheen: rgba(255, 255, 255, 0.9); }
+}
+.nav-pill { position: relative; }
+.nav-pill::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 10%, color-mix(in srgb, var(--accent) 45%, transparent) 50%, transparent 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Dotted patch peeking out behind the hero portrait. */
+.hero-grid-plate {
+  background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
+  background-size: 14px 14px;
+  opacity: 0.35;
+  mask-image: radial-gradient(circle at 70% 70%, #000 30%, transparent 70%);
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .menu-backdrop { animation: fade-in 200ms ease both; }
+  #mobile-menu { animation: enter-soft 220ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* 404 site map: section nodes are links. */
+.sitemap-node circle { transition: fill 200ms ease, stroke 200ms ease; }
+.sitemap-node:hover circle,
+.sitemap-node:focus-visible circle { fill: var(--accent-soft); stroke: var(--accent); }
+.sitemap-node:focus-visible { outline: none; }
+.sitemap-node:focus-visible text { fill: var(--fg); text-decoration: underline; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .broken-ring { transform-origin: 372px 155px; animation: broken-pulse 3.2s ease-in-out infinite; }
+}
+@keyframes broken-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.06); }
+}
+
+/* Faint dot field behind a drawing, so a roomy frame reads as a canvas. */
+.dot-field {
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 16px 16px;
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Briefcase, FolderGit2, Mail, User } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
@@ -14,37 +15,43 @@ export const metadata: Metadata = {
 };
 
 // The site's pages as a small graph; the requested page is the broken node.
+// The section nodes are real links back into the home page.
 function SiteMap() {
-  const nodes: [string, number, number][] = [
-    ["Experience", 70, 60],
-    ["Projects", 330, 60],
-    ["About", 70, 250],
-    ["Contact", 330, 250],
+  const nodes: [string, string, number, number, typeof Briefcase][] = [
+    ["Experience", "work", 70, 60, Briefcase],
+    ["Projects", "projects", 330, 60, FolderGit2],
+    ["About", "about", 70, 250, User],
+    ["Contact", "contact", 330, 250, Mail],
   ];
   return (
-    <svg viewBox="0 0 420 320" aria-hidden="true" className="mx-auto h-auto w-full max-w-md" style={{ fontFamily: "var(--font-mono)" }}>
-      {nodes.map(([, x, y]) => (
-        <line key={x + "-" + y} x1={200} y1={155} x2={x} y2={y} stroke="var(--line-strong)" strokeWidth={1.4} />
-      ))}
-      <line x1={200} y1={155} x2={286} y2={155} stroke="var(--line-strong)" strokeWidth={1.4} strokeDasharray="4 5" />
-      <path d="M298 147 l10 16 M308 147 l-10 16" stroke="var(--danger)" strokeWidth={1.6} strokeLinecap="round" />
-      <circle cx={200} cy={155} r={34} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
-      <text x={200} y={159} textAnchor="middle" fontSize={12} fill="var(--fg)">
-        home
-      </text>
-      {nodes.map(([label, x, y]) => (
-        <g key={label}>
-          <circle cx={x} cy={y} r={26} fill="var(--bg-raised)" stroke="var(--line-strong)" />
-          <text x={x} y={y + 44} textAnchor="middle" fontSize={11} fill="var(--fg-muted)">
-            {label}
-          </text>
-        </g>
-      ))}
-      <circle cx={372} cy={155} r={30} fill="none" stroke="var(--danger)" strokeOpacity={0.7} strokeDasharray="5 5" />
-      <text x={372} y={159} textAnchor="middle" fontSize={12} fill="var(--danger)">
-        404
-      </text>
-    </svg>
+    <nav aria-label="Site sections">
+      <svg viewBox="0 0 420 320" className="mx-auto h-auto w-full max-w-md" style={{ fontFamily: "var(--font-mono)" }}>
+        {nodes.map(([label, , x, y]) => (
+          <line key={label} x1={200} y1={155} x2={x} y2={y} stroke="var(--line-strong)" strokeWidth={1.4} />
+        ))}
+        {/* the broken link: two segments that no longer meet */}
+        <path d="M234 155 H268 l6 -5" fill="none" stroke="var(--line-strong)" strokeWidth={1.4} strokeLinecap="round" />
+        <path d="M286 161 l4 -6 H340" fill="none" stroke="var(--danger)" strokeOpacity={0.6} strokeWidth={1.4} strokeDasharray="3 4" strokeLinecap="round" />
+        <circle cx={200} cy={155} r={34} fill="var(--bg-raised)" />
+        <circle cx={200} cy={155} r={34} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
+        <text x={200} y={159} textAnchor="middle" fontSize={12} fill="var(--fg)">
+          home
+        </text>
+        {nodes.map(([label, id, x, y, Icon]) => (
+          <a key={label} href={`/#${id}`} className="sitemap-node">
+            <circle cx={x} cy={y} r={26} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+            <Icon x={x - 10} y={y - 10} width={20} height={20} color="var(--accent)" aria-hidden="true" />
+            <text x={x} y={y + 44} textAnchor="middle" fontSize={11.5} fill="var(--fg-muted)">
+              {label}
+            </text>
+          </a>
+        ))}
+        <circle className="broken-ring" cx={372} cy={155} r={30} fill="none" stroke="var(--danger)" strokeOpacity={0.7} strokeDasharray="5 5" />
+        <text x={372} y={159} textAnchor="middle" fontSize={12} fill="var(--danger)">
+          404
+        </text>
+      </svg>
+    </nav>
   );
 }
 
@@ -79,7 +86,7 @@ export default function NotFound() {
           <SiteMap />
         </div>
       </main>
-      <Footer />
+      <Footer backToTop={false} />
     </div>
   );
 }

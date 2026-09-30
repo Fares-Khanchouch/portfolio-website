@@ -3,7 +3,7 @@
 type Row = { label: string; before: number; after: number; max: number; unit: string; better: "up" | "down" };
 
 const rows: Row[] = [
-  { label: "Postings’ hard requirements addressed", before: 54, after: 100, max: 100, unit: "%", better: "up" },
+  { label: "Runs addressing every hard requirement", before: 54, after: 100, max: 100, unit: "%", better: "up" },
   { label: "Résumé score, blind LLM reviewer panel", before: 5.1, after: 6.3, max: 10, unit: "/10", better: "up" },
   { label: "Bullets judged overclaimed", before: 6, after: 0, max: 20, unit: "%", better: "down" },
 ];
@@ -30,7 +30,7 @@ export default function ResultsChart() {
           const hi = Math.max(a, b);
           return (
             <li key={r.label}>
-              <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
+              <div className="mb-2 flex flex-col gap-1 text-sm sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                 <span className="text-fg-muted">{r.label}</span>
                 <span className="font-mono tabular-nums">
                   <span className="text-fg-subtle">
@@ -44,7 +44,7 @@ export default function ResultsChart() {
                   </span>
                 </span>
               </div>
-              <div aria-hidden="true" className="relative h-2 rounded-full bg-bg/60">
+              <div aria-hidden="true" className="relative mx-1.5 h-2 rounded-full bg-bg/60">
                 <div className="absolute inset-y-0 rounded-full bg-accent/35" style={{ left: `${lo}%`, width: `${hi - lo}%` }} />
                 <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-fg-subtle bg-bg" style={{ left: `${a}%` }} />
                 <span className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent ring-4 ring-accent-soft" style={{ left: `${b}%` }} />

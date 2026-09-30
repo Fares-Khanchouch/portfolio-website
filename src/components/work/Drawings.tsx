@@ -1,29 +1,33 @@
 // Small, static drawings of how each part of the current role works.
 // Theme tokens only; decorative (the card text says the same in words).
+// Labels are 12-13 units so they stay readable at the cards' real width.
 
 const mono = { fontFamily: "var(--font-mono)" } as const;
+const edge = { fill: "none", stroke: "var(--fg-subtle)", strokeOpacity: 0.6, strokeWidth: 1.4 } as const;
 
 export function DeliveryRail() {
   const phases = ["Scope", "Build", "UAT", "SAT", "Go-live", "Support"];
-  const gap = 56;
+  const x0 = 28;
+  const gap = 58;
+  const live = 4;
   return (
-    <svg viewBox="0 0 320 78" aria-hidden="true" className="h-auto w-full">
-      <line x1={20} y1={30} x2={20 + gap * 5} y2={30} stroke="var(--line-strong)" strokeWidth={2} />
-      <line x1={20} y1={30} x2={20 + gap * 4} y2={30} stroke="var(--accent)" strokeWidth={2} />
+    <svg viewBox="-6 0 362 84" aria-hidden="true" className="mx-auto h-auto w-full max-w-[420px]">
+      <line x1={x0} y1={34} x2={x0 + gap * 5} y2={34} stroke="var(--line-strong)" strokeWidth={2} />
+      <line x1={x0} y1={34} x2={x0 + gap * live} y2={34} stroke="var(--accent)" strokeWidth={2} />
       {phases.map((p, i) => {
-        const x = 20 + i * gap;
-        const live = i === 4;
+        const x = x0 + i * gap;
+        const on = i === live;
         return (
           <g key={p}>
-            <circle cx={x} cy={30} r={live ? 7 : 5} fill={i <= 4 ? "var(--accent)" : "var(--bg-raised)"} stroke="var(--accent)" strokeWidth={1.5} />
-            {live && <circle cx={x} cy={30} r={12} fill="none" stroke="var(--accent)" strokeOpacity={0.35} />}
-            <text x={x} y={58} textAnchor="middle" fontSize={10.5} fill={live ? "var(--fg)" : "var(--fg-muted)"} style={mono}>
+            {on && <circle cx={x} cy={34} r={13} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.4} />}
+            <circle cx={x} cy={34} r={on ? 7 : 5} fill={i <= live ? "var(--accent)" : "var(--bg-raised)"} stroke="var(--accent)" strokeWidth={1.5} />
+            <text x={x} y={66} textAnchor="middle" fontSize={12} fontWeight={on ? 600 : 400} fill={on ? "var(--fg)" : "var(--fg-muted)"} style={mono}>
               {p}
             </text>
           </g>
         );
       })}
-      <text x={20 + gap * 4} y={12} textAnchor="middle" fontSize={10} fill="var(--accent)" style={mono}>
+      <text x={x0 + gap * live} y={12} textAnchor="middle" fontSize={12} fill="var(--accent)" style={mono}>
         ×2 releases
       </text>
     </svg>
@@ -33,116 +37,196 @@ export function DeliveryRail() {
 export function IntegrationFlow() {
   const box = (x: number, y: number, w: number, label: string, accent = false) => (
     <g>
-      <rect x={x} y={y} width={w} height={28} rx={7} fill={accent ? "var(--accent-soft)" : "var(--bg-raised)"} stroke={accent ? "var(--accent)" : "var(--line-strong)"} strokeOpacity={accent ? 0.7 : 1} />
-      <text x={x + w / 2} y={y + 18} textAnchor="middle" fontSize={10.5} fill="var(--fg)" style={mono}>
+      <rect x={x} y={y} width={w} height={30} rx={8} fill={accent ? "var(--accent-soft)" : "var(--bg-raised)"} stroke={accent ? "var(--accent)" : "var(--line-strong)"} strokeOpacity={accent ? 0.7 : 1} />
+      <text x={x + w / 2} y={y + 19.5} textAnchor="middle" fontSize={12} fill="var(--fg)" style={mono}>
         {label}
       </text>
     </g>
   );
-  const lock = (x: number, y: number) => (
-    <g>
-      <rect x={x} y={y + 5} width={10} height={8} rx={1.5} fill="none" stroke="var(--accent)" strokeWidth={1.2} />
-      <path d={`M${x + 2.5} ${y + 5} v-2 a2.5 2.5 0 0 1 5 0 v2`} fill="none" stroke="var(--accent)" strokeWidth={1.2} />
-    </g>
-  );
   return (
-    <svg viewBox="0 0 340 92" aria-hidden="true" className="h-auto w-full">
-      <path d="M6 12 v20 a28 5 0 0 0 56 0 v-20" fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      <ellipse cx={34} cy={12} rx={28} ry={5} fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      <text x={34} y={31} textAnchor="middle" fontSize={9.5} fill="var(--fg-muted)" style={mono}>
+    <svg viewBox="0 0 356 112" aria-hidden="true" className="mx-auto h-auto w-full max-w-[420px]">
+      {/* core banking system */}
+      <path d="M4 12 v26 a30 6 0 0 0 60 0 v-26" fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <ellipse cx={34} cy={12} rx={30} ry={6} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={34} y={33} textAnchor="middle" fontSize={11} fill="var(--fg-muted)" style={mono}>
         core
       </text>
-      <text x={34} y={52} textAnchor="middle" fontSize={9.5} fill="var(--fg-subtle)" style={mono}>
+      <text x={34} y={62} textAnchor="middle" fontSize={11} fill="var(--fg-subtle)" style={mono}>
         banking
       </text>
-      <path fill="none" d="M62 24 H92" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.3} />
-      {box(94, 10, 80, "C# REST", true)}
-      <path fill="none" d="M174 24 H204" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.3} />
-      {box(206, 10, 108, "credit workflow")}
-      <path fill="none" d="M260 38 V58 H232" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.3} strokeDasharray="3 3" />
-      {box(150, 58, 80, "SMS alerts")}
-      {lock(240, 64)}
-      <text x={256} y={72} fontSize={9.5} fill="var(--fg-muted)" style={mono}>
-        OAuth · API key
+      <path {...edge} d="M64 26 H92" />
+      {box(94, 11, 84, "C# REST", true)}
+      <path {...edge} d="M178 26 H206" />
+      {box(208, 11, 144, "credit workflow")}
+      {/* alerts branch, secured */}
+      <path {...edge} strokeDasharray="3 3" d="M280 41 V62 Q280 72 270 72 H206" />
+      {box(110, 58, 94, "SMS alerts")}
+      <g transform="translate(222 86)">
+        <rect x={0} y={5} width={11} height={9} rx={2} fill="none" stroke="var(--accent)" strokeWidth={1.3} />
+        <path d="M2.7 5 v-2.2 a2.8 2.8 0 0 1 5.6 0 v2.2" fill="none" stroke="var(--accent)" strokeWidth={1.3} />
+      </g>
+      <text x={240} y={98} fontSize={11.5} fill="var(--fg-muted)" style={mono}>
+        OAuth · API keys
       </text>
-      <text x={256} y={85} fontSize={9.5} fill="var(--fg-muted)" style={mono}>
+      <text x={240} y={111} fontSize={11.5} fill="var(--fg-muted)" style={mono}>
         IP whitelist
       </text>
     </svg>
   );
 }
 
-export function AgentTooling() {
-  // 50 typed tools as a 10x5 grid; 11 skills as a row of larger chips.
+function AgentToolingWide() {
+  // 50 typed tools as a 10x5 grid; 11 skills as a row of chips.
   const tools = Array.from({ length: 50 }, (_, i) => i);
   const skills = Array.from({ length: 11 }, (_, i) => i);
+  const hot = new Set([3, 16, 22, 38, 47]);
+  const nodes = [
+    [392, 150],
+    [422, 138],
+    [422, 162],
+    [456, 150],
+    [490, 140],
+    [522, 156],
+  ];
   return (
-    <svg viewBox="0 0 560 210" aria-hidden="true" className="h-auto w-full">
+    <svg viewBox="0 0 560 232" aria-hidden="true" className="hidden h-auto w-full sm:block">
       {/* agent */}
-      <circle cx={46} cy={86} r={30} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
-      <text x={46} y={90} textAnchor="middle" fontSize={11} fill="var(--fg)" style={mono}>
+      <circle cx={44} cy={88} r={34} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
+      <text x={44} y={92.5} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--fg)" style={mono}>
         agent
       </text>
-      {/* agent -> MCP servers */}
-      <path fill="none" d="M76 86 H120" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.4} />
+      <path {...edge} d="M78 88 H116" />
       {/* MCP servers with 50 tools */}
-      <rect x={122} y={28} width={196} height={116} rx={10} fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      <text x={136} y={48} fontSize={11.5} fontWeight={600} fill="var(--fg)">
+      <rect x={118} y={22} width={212} height={132} rx={12} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={134} y={46} fontSize={13} fontWeight={600} fill="var(--fg)">
         MCP servers
       </text>
-      <text x={304} y={48} textAnchor="end" fontSize={10} fill="var(--accent)" style={mono}>
+      {tools.map((t) => (
+        <rect
+          key={t}
+          x={134 + (t % 10) * 18.2}
+          y={60 + Math.floor(t / 10) * 17}
+          width={12}
+          height={12}
+          rx={3}
+          fill="var(--accent)"
+          opacity={hot.has(t) ? 1 : 0.28 + ((t * 37) % 10) / 40}
+        />
+      ))}
+      <text x={118} y={176} fontSize={12} fill="var(--accent)" style={mono}>
+        50 typed tools
+      </text>
+      {/* skills */}
+      {skills.map((s) => (
+        <rect key={s} x={118 + s * 19.4} y={190} width={14} height={14} rx={4} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
+      ))}
+      <text x={336} y={201.5} fontSize={12} fill="var(--accent)" style={mono}>
+        11 Claude skills
+      </text>
+      {/* MCP -> knowledge base + dependency graph */}
+      <path {...edge} d="M330 58 C352 58 352 44 372 44" />
+      <path {...edge} d="M330 118 C352 118 352 132 372 132" />
+      <path d="M374 22 v34 a88 9 0 0 0 176 0 v-34" fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <ellipse cx={462} cy={22} rx={88} ry={9} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={462} y={52} textAnchor="middle" fontSize={12} fill="var(--fg)" style={mono}>
+        knowledge base
+      </text>
+      <rect x={374} y={96} width={176} height={96} rx={12} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={388} y={118} fontSize={12} fill="var(--fg)" style={mono}>
+        dependency graph
+      </text>
+      {nodes.map(([x, y], i, a) => (
+        <g key={i}>
+          {i > 0 && <line x1={a[i - 1][0]} y1={a[i - 1][1]} x2={x} y2={y} stroke="var(--accent)" strokeOpacity={0.5} />}
+          <circle cx={x} cy={y} r={4.5} fill="var(--accent)" />
+        </g>
+      ))}
+      <text x={388} y={182} fontSize={11} fill="var(--fg-subtle)" style={mono}>
+        provenance on every edge
+      </text>
+      {/* cited answers back to the agent */}
+      <path d="M44 122 V206 H104" fill="none" stroke="var(--accent)" strokeOpacity={0.8} strokeWidth={1.4} strokeDasharray="4 4" />
+      <text x={30} y={226} fontSize={12} fill="var(--fg-subtle)" style={mono}>
+        cited answers
+      </text>
+    </svg>
+  );
+}
+
+// Phones: the same picture stacked top to bottom, so labels stay >= 11px.
+function AgentToolingTall() {
+  const tools = Array.from({ length: 50 }, (_, i) => i);
+  const skills = Array.from({ length: 11 }, (_, i) => i);
+  const hot = new Set([3, 16, 22, 38, 47]);
+  const nodes = [
+    [170, 280],
+    [194, 270],
+    [194, 290],
+    [222, 280],
+    [246, 272],
+    [268, 286],
+  ];
+  return (
+    <svg viewBox="0 0 300 364" aria-hidden="true" className="mx-auto h-auto w-full max-w-[360px] sm:hidden">
+      <circle cx={150} cy={34} r={30} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
+      <text x={150} y={38.5} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--fg)" style={mono}>
+        agent
+      </text>
+      <path {...edge} d="M150 64 V92" />
+      <rect x={20} y={94} width={260} height={118} rx={12} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={36} y={118} fontSize={13} fontWeight={600} fill="var(--fg)">
+        MCP servers
+      </text>
+      <text x={264} y={118} textAnchor="end" fontSize={12} fill="var(--accent)" style={mono}>
         50 typed tools
       </text>
       {tools.map((t) => (
         <rect
           key={t}
-          x={138 + (t % 10) * 17.2}
-          y={62 + Math.floor(t / 10) * 15}
-          width={10}
-          height={10}
-          rx={2.5}
+          x={36 + (t % 10) * 23}
+          y={132 + Math.floor(t / 10) * 15}
+          width={12}
+          height={11}
+          rx={3}
           fill="var(--accent)"
-          opacity={0.35 + ((t * 37) % 10) / 20}
+          opacity={hot.has(t) ? 1 : 0.28 + ((t * 37) % 10) / 40}
         />
       ))}
-      {/* MCP -> knowledge base + dependency graph */}
-      <path d="M318 62 C350 62 350 46 380 46" fill="none" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.4} />
-      <path d="M318 110 C350 110 350 126 380 126" fill="none" stroke="var(--fg-subtle)" strokeOpacity={0.6} strokeWidth={1.4} />
-      <path d="M382 30 v28 a44 7 0 0 0 88 0 v-28" fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      <ellipse cx={426} cy={30} rx={44} ry={7} fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      <text x={426} y={54} textAnchor="middle" fontSize={10.5} fill="var(--fg)" style={mono}>
+      <path {...edge} d="M82 212 V236" />
+      <path {...edge} d="M218 212 V236" />
+      <path d="M20 244 v40 a62 7 0 0 0 124 0 v-40" fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <ellipse cx={82} cy={244} rx={62} ry={7} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={82} y={276} textAnchor="middle" fontSize={11.5} fill="var(--fg)" style={mono}>
         knowledge base
       </text>
-      {/* dependency graph */}
-      <rect x={382} y={100} width={170} height={52} rx={10} fill="var(--bg-raised)" stroke="var(--line-strong)" />
-      {[
-        [400, 126],
-        [432, 112],
-        [432, 140],
-        [466, 126],
-        [498, 114],
-        [530, 130],
-      ].map(([x, y], i, a) => (
+      <rect x={156} y={238} width={124} height={76} rx={10} fill="var(--bg-raised)" stroke="var(--line-strong)" />
+      <text x={166} y={256} fontSize={11} fill="var(--fg)" style={mono}>
+        dependency graph
+      </text>
+      {nodes.map(([x, y], i, a) => (
         <g key={i}>
           {i > 0 && <line x1={a[i - 1][0]} y1={a[i - 1][1]} x2={x} y2={y} stroke="var(--accent)" strokeOpacity={0.5} />}
           <circle cx={x} cy={y} r={4} fill="var(--accent)" />
         </g>
       ))}
-      <text x={467} y={168} textAnchor="middle" fontSize={10} fill="var(--fg-subtle)" style={mono}>
-        dependency graph · provenance
+      <text x={166} y={306} fontSize={11} fill="var(--fg-subtle)" style={mono}>
+        with provenance
       </text>
-      {/* skills */}
-      <text x={122} y={172} fontSize={10} fill="var(--accent)" style={mono}>
+      <text x={20} y={338} fontSize={12} fill="var(--accent)" style={mono}>
         11 Claude skills
       </text>
       {skills.map((s) => (
-        <rect key={s} x={122 + s * 18} y={182} width={13} height={13} rx={3.5} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
+        <rect key={s} x={20 + s * 19.6} y={346} width={14} height={14} rx={4} fill="var(--accent-soft)" stroke="var(--accent)" strokeOpacity={0.7} />
       ))}
-      {/* cited answer back to the agent */}
-      <path d="M46 116 V190 H116" fill="none" stroke="var(--accent)" strokeOpacity={0.8} strokeWidth={1.4} strokeDasharray="4 4" />
-      <text x={52} y={206} fontSize={9.5} fill="var(--fg-subtle)" style={mono}>
-        cited answers
-      </text>
     </svg>
+  );
+}
+
+export function AgentTooling() {
+  return (
+    <>
+      <AgentToolingWide />
+      <AgentToolingTall />
+    </>
   );
 }

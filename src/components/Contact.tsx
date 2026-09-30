@@ -5,6 +5,7 @@ import { ArrowUpRight, Check, Github, Linkedin, Mail, Send } from "lucide-react"
 import { contact, emailjs as ejs, social } from "@/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
+import CopyEmail from "./CopyEmail";
 
 const LIMITS = { name: 100, email: 200, message: 4000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -113,13 +114,21 @@ export default function Contact() {
         <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-2 md:items-start md:gap-14">
           <Reveal className="space-y-6">
             <p className="text-lg leading-relaxed text-pretty text-fg-muted">{contact.text}</p>
-            <a
-              href={`mailto:${social.email}`}
-              className="group inline-flex items-center gap-2 break-all text-fg transition-colors duration-200 hover:text-accent"
-            >
-              <Mail size={18} aria-hidden="true" className="shrink-0 text-accent" />
-              {social.email}
-            </a>
+            <div className="rounded-2xl border border-line bg-surface p-5 shadow-card">
+              <p className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
+                <Mail size={14} aria-hidden="true" className="text-accent" />
+                Email
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <a
+                  href={`mailto:${social.email}`}
+                  className="link-underline text-lg font-medium break-all text-fg transition-colors duration-200 hover:text-accent md:text-xl"
+                >
+                  {social.email}
+                </a>
+                <CopyEmail email={social.email} />
+              </div>
+            </div>
             <ul className="flex flex-wrap gap-2">
               {[
                 { label: "GitHub", href: social.github, Icon: Github },

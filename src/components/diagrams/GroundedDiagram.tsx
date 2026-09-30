@@ -34,9 +34,10 @@ const TALL = {
   refused: "M24 596 H8 V469 H22",
 };
 
-export default function GroundedDiagram() {
+export default function GroundedDiagram({ layout = "auto" }: { layout?: "auto" | "tall" }) {
   return (
     <Diagram
+      layout={layout}
       title="Architecture: job-market data platform and grounded LLM generation"
       description="Ingest: a crawler reads 63,000+ company job boards through 24 applicant-tracking-system adapters, with rate limiting, ETag caching and resumable runs, into a normalized SQLite store of 1.1M+ postings. Generate: a brief (the posting's key terms and requirements plus a menu of facts) goes to the LLM, which picks and rewords facts from a versioned fact vault. Guards check every claim against the vault for invented numbers, invented technologies and cross-document consistency; refused text goes back for a rewrite. Accepted output is rendered to a one-page PDF. An evaluation harness runs AI agents through the real pipeline on 12 benchmark postings and scores the output with blind LLM reviewer panels."
       wide={{

@@ -133,7 +133,7 @@ export default function Navbar({ home = true }: { home?: boolean }) {
         <div className="flex items-center gap-1">
           <a
             href={social.resume}
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-accent-solid px-4 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
+            className="hidden h-10 items-center gap-2 rounded-full bg-accent-solid px-4 sm:inline-flex text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-solid-hover"
           >
             <FileText size={15} aria-hidden="true" />
             Résumé
@@ -180,6 +180,15 @@ export default function Navbar({ home = true }: { home?: boolean }) {
                 </a>
               </li>
             ))}
+            <li className="mt-1 border-t border-line pt-2">
+              <a
+                href={social.resume}
+                className="flex items-center justify-between rounded-2xl bg-accent-solid px-4 py-3.5 text-base font-medium text-white"
+              >
+                Résumé (PDF)
+                <FileText size={16} aria-hidden="true" />
+              </a>
+            </li>
           </ul>
         </div>
       )}

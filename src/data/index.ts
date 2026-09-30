@@ -74,23 +74,29 @@ export const about = {
       value:
         "Engineering degree in Computer Science · ISTY, Université Paris-Saclay · 2021 – 2024",
     },
-    { label: "Languages", value: "Arabic (native) · French · English" },
+    { label: "Languages", value: "Arabic (native) · French (C1) · English (C1, TOEIC 985/990)" },
   ],
-  skills: [
-    "Python", "TypeScript", "C#", "Go", "T-SQL",
-    "MCP / Claude agent skills", "REST APIs", "n8n",
-    "Docker", "Kubernetes", "Terraform", "AWS",
+  // Grouped the way the fact vault groups them (skills.*).
+  skillGroups: [
+    { name: "AI & agents", items: ["MCP servers", "Claude agent skills", "LLM APIs", "Local embeddings (ONNX)"] },
+    { name: "Integration", items: ["REST APIs", "Webhooks", "OAuth / API keys", "n8n", "Make"] },
+    { name: "Languages", items: ["Python", "TypeScript", "C#", "Go", "T-SQL"] },
+    { name: "Platform", items: ["Docker", "Kubernetes", "Terraform", "AWS", "PostgreSQL"] },
   ],
+  get skills() {
+    return this.skillGroups.flatMap((g) => g.items);
+  },
 };
 
 export type Highlight = {
   title: string;
   text: string;
+  details?: string[];
   icon: "delivery" | "integration" | "agent";
 };
 
 export const now = {
-  heading: "Where I work",
+  heading: "Delivery, integrations and agent tooling",
   role: "Integration Consultant",
   company: "Axe Finance",
   dates: "Dec 2025 – Present",
@@ -109,10 +115,34 @@ export const now = {
     {
       icon: "agent",
       title: "Agent tooling",
+      details: [
+        "A queryable knowledge base parsed from a live deployment",
+        "A dependency graph with provenance on every edge",
+        "Skills that turn a BRD into screens, fields and stored procedures",
+        "Tool-call telemetry and a time-saved log, so adoption is measured",
+      ],
       text: "Python MCP servers exposing 50 typed tools and 11 Claude skills, so an agent can explain a live deployment and cite its sources.",
     },
   ] as Highlight[],
 };
+
+// Career timeline (months are 1-12; a null end means "present").
+export type Span = {
+  label: string;
+  detail: string;
+  start: [number, number];
+  end: [number, number] | null;
+  kind: "work" | "study";
+};
+
+export const timeline: Span[] = [
+  { label: "ISTY, Université Paris-Saclay", detail: "Engineering degree", start: [2021, 9], end: [2024, 8], kind: "study" },
+  { label: "WAY2CLOUD", detail: "DevOps Intern", start: [2022, 6], end: [2022, 7], kind: "work" },
+  { label: "WAY2CLOUD", detail: "Full-Stack Intern", start: [2023, 5], end: [2023, 8], kind: "work" },
+  { label: "Nuage Up", detail: "Cloud & DevSecOps Intern", start: [2024, 5], end: [2024, 8], kind: "work" },
+  { label: "Independent", detail: "Freelance Automation Engineer", start: [2024, 9], end: [2025, 11], kind: "work" },
+  { label: "Axe Finance", detail: "Integration Consultant", start: [2025, 12], end: null, kind: "work" },
+];
 
 export type Role = {
   role: string;
@@ -161,6 +191,8 @@ export type Project = {
   points: string[];
   flow: string[];
   tags: string[];
+  metrics?: { label: string; before: string; after: string }[];
+  conditions?: string[];
   link?: { label: string; href: string; external?: boolean };
 };
 
@@ -174,7 +206,11 @@ export const projects: Project[] = [
     points: [
       "Every generated claim traces to a versioned fact store; invented numbers and technologies are rejected.",
       "An agent-in-the-loop evaluation harness: AI agents run the real pipeline and blind LLM reviewer panels score the output.",
-      "Measured end to end: coverage of postings’ hard requirements rose from 54% to 100% of runs, and overclaimed bullets fell from 6% to 0%.",
+    ],
+    metrics: [
+      { label: "Postings’ hard requirements covered", before: "54%", after: "100%" },
+      { label: "Bullets judged overclaimed", before: "6%", after: "0%" },
+      { label: "Blind LLM-reviewer score", before: "5.1", after: "6.3" },
     ],
     flow: ["Postings", "Brief", "Fact vault", "LLM payload", "Guards", "PDF"],
     tags: ["Python", "MCP", "SQLite", "ONNX", "LLM evals"],
@@ -190,6 +226,8 @@ export const projects: Project[] = [
       "A custom resource provisions PostgreSQL, n8n, secrets and networking, with isolated multi-instance setups.",
       "A reconciliation loop keeps each instance healthy and reports its status.",
     ],
+    metrics: [{ label: "To run n8n with PostgreSQL", before: "8+ manifests", after: "1 resource" }],
+    conditions: ["Ready", "N8nReady", "PostgresReady"],
     flow: ["YAML", "CRD", "Reconcile", "Postgres", "n8n"],
     tags: ["Go", "Kubernetes", "Operators"],
     link: {

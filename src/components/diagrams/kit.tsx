@@ -20,9 +20,12 @@ export function Diagram({
   description,
   wide,
   tall,
+  layout = "auto",
 }: {
   title: string;
   description: string;
+  /** "tall" forces the portrait layout (e.g. in a narrow article column). */
+  layout?: "auto" | "tall";
   wide: { viewBox: string; children: ReactNode };
   tall: { viewBox: string; children: ReactNode };
 }) {
@@ -74,8 +77,8 @@ export function Diagram({
     <LiveContext.Provider value={live}>
       <IdContext.Provider value={id}>
         <div ref={ref} className={live ? "dg is-live" : "dg"}>
-          {svg("wide", wide.viewBox, wide.children, "hidden h-auto w-full md:block")}
-          {svg("tall", tall.viewBox, tall.children, "mx-auto block h-auto w-full max-w-[380px] md:hidden")}
+          {layout === "auto" && svg("wide", wide.viewBox, wide.children, "hidden h-auto w-full md:block")}
+          {svg("tall", tall.viewBox, tall.children, "mx-auto block h-auto w-full max-w-[380px] " + (layout === "auto" ? "md:hidden" : ""))}
         </div>
       </IdContext.Provider>
     </LiveContext.Provider>

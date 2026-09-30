@@ -8,9 +8,9 @@ import SectionHeading from "./SectionHeading";
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-14 md:py-20">
+    <section id="projects" className="border-y border-line bg-[var(--band)] py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHeading index="02" label="Projects" title="Selected work" />
+        <SectionHeading index="02" label="Projects" title="Built end to end, and measured" />
 
         <div className="flex flex-col gap-6">
           {projects.map((p, i) => (
@@ -23,6 +23,35 @@ export default function Projects() {
                 <div className="my-6 rounded-xl border border-line bg-bg/40 p-4 md:p-6">
                   {p.id === "n8n-operator" ? <OperatorDiagram /> : <GroundedDiagram />}
                 </div>
+
+                {p.metrics && (
+                  <dl className={"mb-6 grid grid-cols-[minmax(0,1fr)] gap-3 " + (p.metrics.length > 1 ? "sm:grid-cols-3" : "sm:grid-cols-2")}>
+                    {p.metrics.map((m) => (
+                      <div key={m.label} className="rounded-xl border border-line bg-bg/40 px-4 py-3">
+                        <dt className="text-xs leading-snug text-fg-subtle">{m.label}</dt>
+                        <dd className="mt-1.5 flex flex-wrap items-baseline gap-x-2 font-mono tabular-nums">
+                          <span className="text-sm text-fg-subtle line-through decoration-fg-subtle/60">{m.before}</span>
+                          <span aria-hidden="true" className="text-fg-subtle">→</span>
+                          <span className="sr-only">to</span>
+                          <span className="min-w-0 text-2xl font-semibold tracking-tight break-words text-accent">{m.after}</span>
+                        </dd>
+                      </div>
+                    ))}
+                    {p.conditions && (
+                      <div className="rounded-xl border border-line bg-bg/40 px-4 py-3">
+                        <dt className="text-xs leading-snug text-fg-subtle">Health conditions reported</dt>
+                        <dd className="mt-2 flex flex-wrap gap-1.5">
+                          {p.conditions.map((c) => (
+                            <span key={c} className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent-soft px-2.5 py-0.5 font-mono text-[11px] text-fg">
+                              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
+                              {c}
+                            </span>
+                          ))}
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
 
                 <ul className="space-y-2">
                   {p.points.map((pt) => (

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import FlowDiagram from "@/components/FlowDiagram";
+import GroundedDiagram from "@/components/diagrams/GroundedDiagram";
+import GuardExample from "@/components/writing/GuardExample";
+import ResultsChart from "@/components/writing/ResultsChart";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ReadingProgress from "@/components/ReadingProgress";
-import { projects, site, writeup } from "@/data";
+import { site, writeup } from "@/data";
 
 const path = `/writing/${writeup.slug}`;
 
@@ -45,11 +47,25 @@ const articleJsonLd = {
   mainEntityOfPage: `${site.url}${path}`,
 };
 
-const RESULTS: [string, string, string][] = [
-  ["Postings’ hard requirements addressed", "54% of runs", "100% of runs"],
-  ["Generated-document score, blind LLM panel", "5.1 / 10", "6.3 / 10"],
-  ["Bullets judged overclaimed", "6%", "0%"],
+
+const TOC = [
+  { id: "problem", title: "The problem" },
+  { id: "facts", title: "Facts in, slots out" },
+  { id: "postings", title: "Where the postings come from" },
+  { id: "measuring", title: "Measuring it: agents in the loop" },
+  { id: "takeaways", title: "What I took from it" },
 ];
+
+function H2({ id, children }: { id: string; children: React.ReactNode }) {
+  return (
+    <h2 id={id} className="group scroll-mt-28">
+      {children}
+      <a href={`#${id}`} className="ml-2 text-fg-subtle no-underline opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100" aria-label={`Link to section: ${String(children)}`}>
+        #
+      </a>
+    </h2>
+  );
+}
 
 export default function Writeup() {
   const date = new Date(writeup.date).toLocaleDateString("en-US", {
@@ -62,8 +78,23 @@ export default function Writeup() {
     <>
       <Navbar home={false} />
       <ReadingProgress />
-      <main id="main" className="pt-28 pb-24 md:pt-36">
-        <article className="mx-auto max-w-2xl px-4 sm:px-6">
+      <main id="main" className="overflow-x-clip pt-28 pb-24 md:pt-36">
+        <article className="relative mx-auto max-w-2xl px-4 sm:px-6">
+          {/* Contents, beside the article on wide screens. */}
+          <aside aria-label="Contents" className="absolute top-0 left-full hidden h-full w-52 xl:block">
+            <nav className="sticky top-32 ml-6 border-l border-line pl-4">
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">Contents</p>
+              <ol className="space-y-2 text-sm">
+                {TOC.map((t) => (
+                  <li key={t.id}>
+                    <a href={`#${t.id}`} className="text-fg-muted transition-colors duration-200 hover:text-fg">
+                      {t.title}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </aside>
           <Link
             href="/#projects"
             className="group mb-10 inline-flex items-center gap-2 text-sm text-fg-muted transition-colors duration-200 hover:text-fg"
@@ -90,7 +121,7 @@ export default function Writeup() {
           </header>
 
           <div className="prose-body">
-            <h2>The problem</h2>
+            <H2 id="problem">The problem</H2>
             <p>
               Ask a language model to tailor a document to a specific reader (I used résumés against
               real job postings, because the facts are easy to check) and it will happily do it. It
@@ -104,7 +135,7 @@ export default function Writeup() {
               not just whether it looks good to the person who built it.
             </p>
 
-            <h2>Facts in, slots out</h2>
+            <H2 id="facts">Facts in, slots out</H2>
             <p>
               Everything the documents may say lives in a <strong>versioned fact vault</strong>: every
               role, bullet, project and skill, in English and French, with a full snapshot kept on
@@ -114,13 +145,12 @@ export default function Writeup() {
             </p>
           </div>
 
-          <div className="my-8 rounded-xl border border-line bg-surface p-4 md:p-5">
-            <FlowDiagram
-              label="Generation pipeline"
-              steps={projects[0].flow}
-              compact
-            />
-          </div>
+          <figure className="my-8 rounded-xl border border-line bg-surface p-4 shadow-card md:p-6">
+            <GroundedDiagram layout="tall" />
+            <figcaption className="mt-4 text-center text-xs text-fg-subtle">
+              The whole system: ingest on top, grounded generation below, and the evaluation harness around it.
+            </figcaption>
+          </figure>
 
           <div className="prose-body">
             <p>Deterministic code then checks the payload and renders it:</p>
@@ -142,12 +172,17 @@ export default function Writeup() {
                 content until it fits the page limit, never dropping a whole role.
               </li>
             </ul>
+          </div>
+
+          <GuardExample />
+
+          <div className="prose-body">
             <p>
               A document is a pure function of the template version, the vault version and the
               payload, so any document can be rebuilt later and checked against a stored hash.
             </p>
 
-            <h2>Where the postings come from</h2>
+            <H2 id="postings">Where the postings come from</H2>
             <p>
               The same system is a Python MCP server that crawls 63,000+ company job boards through 24
               applicant-tracking-system adapters into a local database of 1.1M+ postings, normalized
@@ -156,7 +191,7 @@ export default function Writeup() {
               hands.
             </p>
 
-            <h2>Measuring it: agents in the loop</h2>
+            <H2 id="measuring">Measuring it: agents in the loop</H2>
             <p>
               Unit tests can prove a guard works. They can&rsquo;t tell you whether a reader finds the output convincing. So the evaluation harness runs the real pipeline end to end: AI agents act as the
               user on a fixed benchmark of 12 real postings, calling the same tools a person would,
@@ -172,32 +207,7 @@ export default function Writeup() {
             </p>
           </div>
 
-          <div
-            tabIndex={0}
-            role="region"
-            aria-label="Results before and after"
-            className="my-8 overflow-x-auto rounded-xl border border-line bg-surface shadow-card">
-            <table className="w-full text-left text-sm tabular-nums">
-              <caption className="sr-only">Results before and after, same benchmark and reviewer briefs</caption>
-              <thead className="border-b border-line font-mono text-xs uppercase tracking-wider text-fg-subtle">
-                <tr>
-                  <th scope="col" className="px-4 py-3 font-medium">Measure</th>
-                  <th scope="col" className="px-4 py-3 font-medium">Before</th>
-                  <th scope="col" className="px-4 py-3 font-medium">After</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {RESULTS.map(([m, a, b]) => (
-                  <tr key={m}>
-                    <th scope="row" className="px-4 py-3 font-normal text-fg-muted">{m}</th>
-                    <td className="px-4 py-3 whitespace-nowrap text-fg-subtle">{a}</td>
-                    <td className="px-4 py-3 whitespace-nowrap font-medium text-fg">{b}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="-mt-5 mb-8 text-xs text-fg-subtle">Panel scores: 11–12 postings per version.</p>
+          <ResultsChart />
 
           <div className="prose-body">
             <p>
@@ -206,7 +216,7 @@ export default function Writeup() {
               invent them.
             </p>
 
-            <h2>What I took from it</h2>
+            <H2 id="takeaways">What I took from it</H2>
             <ul>
               <li>
                 Put the model where judgment is needed (what to emphasize, how to phrase it) and keep

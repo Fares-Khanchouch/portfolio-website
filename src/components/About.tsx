@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section id="about" className="py-14 md:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHeading index="03" label="About" title="A bit about me" />
+        <SectionHeading index="03" label="About" title="The short version" />
 
         <div className="grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-[3fr_2fr] md:gap-14">
           <Reveal className="space-y-5">
@@ -30,17 +30,24 @@ export default function About() {
         </div>
 
         <Reveal className="mt-12">
-          <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-fg-subtle">Tools I work with</h3>
-          <ul className="flex flex-wrap gap-2">
-            {about.skills.map((s) => (
-              <li
-                key={s}
-                className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-muted"
-              >
-                {s}
-              </li>
+          <h3 className="mb-5 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.2em] text-fg-subtle">
+            Tools I work with
+            <span aria-hidden="true" className="h-px flex-1 bg-line" />
+          </h3>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {about.skillGroups.map((g) => (
+              <div key={g.name}>
+                <h4 className="mb-2.5 text-sm font-medium text-fg">{g.name}</h4>
+                <ul className="flex flex-wrap gap-1.5">
+                  {g.items.map((s) => (
+                    <li key={s} className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-muted">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </Reveal>
       </div>
     </section>
